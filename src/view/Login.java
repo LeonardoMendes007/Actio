@@ -4,10 +4,10 @@ package view;
 import java.io.FileInputStream;
 
 import controller.LoginController;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,19 +16,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Login extends Application {
 
@@ -39,6 +34,7 @@ public class Login extends Application {
 	private PasswordField txtSenha;
 	private Label lblErro;
 	private Button btLogar;
+	private FadeTransition ft;
 	private LoginController loginController = new LoginController(this);
 
 	@Override
@@ -93,6 +89,14 @@ public class Login extends Application {
 		btLogar.setPrefWidth(120);
 		btLogar.setPrefHeight(45);
 		btLogar.setStyle(btLogar.getStyle());
+		
+		 ft = new FadeTransition(Duration.millis(3000), btLogar);
+	     ft.setFromValue(1.0);
+	     ft.setToValue(0.3);
+	     ft.setCycleCount(4);
+	     ft.setAutoReverse(true);
+	     
+	     
 
 		initEvents();
 
@@ -122,7 +126,10 @@ public class Login extends Application {
 
 	private void initEvents() {
 
-		btLogar.addEventHandler(ActionEvent.ACTION, (x) -> loginController.logar(x));
+		btLogar.addEventHandler(ActionEvent.ACTION, (x) -> {
+			loginController.logar(x);
+			ft.play();
+		});
 		txtEmail.textProperty().addListener((x) -> isNotBlank(txtEmail));
 		txtSenha.textProperty().addListener((x) -> isNotBlank(txtSenha));
 	}
