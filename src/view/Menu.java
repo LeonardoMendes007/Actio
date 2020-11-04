@@ -28,9 +28,6 @@ public class Menu {
 	private Button btAtividade;
 	private Button btDisciplina;
 	private Button btTurma;
-	private Button btLupaMais;
-	private Button btLupaMenos;
-	private GridPane gridMaisMenos;
 	private ImageView ivUser;
 	private Label lblNome;
 	
@@ -109,8 +106,6 @@ public class Menu {
 		
 		initMenuButtons();
 		
-		initGridMaisMenos();
-		
 		initGridLateralCentral();
 	
 		initBorderPaneLeft();
@@ -151,7 +146,6 @@ public class Menu {
 		initLabelActio();
 		
 		borderLeft.setCenter(grid);
-		borderLeft.setBottom(gridMaisMenos);
 		borderLeft.setTop(lblActio);
 	}
 
@@ -180,43 +174,15 @@ public class Menu {
 		
 	}
 
-
-	private void initGridMaisMenos() {
-		gridMaisMenos = new GridPane();
-		gridMaisMenos.setHgap(15);
-		
-		gridMaisMenos.setAlignment(Pos.CENTER);
-		gridMaisMenos.add(btLupaMais, 0, 0);
-		gridMaisMenos.add(btLupaMenos, 1, 0);	
-		
-	}
-
-
 	private void initMenuButtons() {
 	    btAtividade = new Button("Atividade");
 		btDisciplina = new Button("Disciplina");
-		btLupaMais = new Button("+");
-		btLupaMenos = new Button("-");
 		
-		
-		initButtonMaisMenos(new Button[] {btLupaMais,btLupaMenos});
 		Util.initButtons(new Button[] {btAtividade,btDisciplina});
 		
 		clearCurrentScreen();
 		
 	}
-
-
-	private void initButtonMaisMenos(Button[] buttons) {
-		
-		
-		for (Button button : buttons) {
-			button.setPrefWidth(30);
-			button.setPrefHeight(30);
-			gridMaisMenos.setMargin(button, new Insets(0, 0, 15, 0));
-		}
-	}
-
 
 	public BorderPane getBorderConteudo() {
 		return borderConteudo;

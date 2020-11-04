@@ -1,4 +1,24 @@
-#border{
-  -fx-background-image: url("moon.jpg");
+.lbl-login{
+  -fx-font-weight: bold
+}
+
+.text-fields{
+  -fx-border-radius: 13px; 
+  -fx-background-radius: 13px;
+  -fx-box-sizing: border-box; 
+  -fx-background: #D7D7D7; 
+  -fx-font-size: 1.4em; 
+  -fx-border-color: #C2C2C2; 
+  -fx-border-style: solid; 
+  -fx-border-width: 2px;
+
+}
+
+.bt-logar{
+
+  -fx-background-color: #F1862A;
+  -fx-border-radius: 62px; 
+  -fx-background-radius: 62px;
+  
 
 }
