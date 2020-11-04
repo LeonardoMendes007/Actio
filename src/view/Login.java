@@ -2,6 +2,7 @@ package view;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import controller.LoginController;
 import javafx.animation.FadeTransition;
@@ -28,8 +29,8 @@ import javafx.util.Duration;
 public class Login extends Application {
 
 	private Scene scn;
-	private BorderPane border;
-	private GridPane grid;
+	private BorderPane borderPrincipal;
+	private GridPane gridForm;
 	private TextField txtEmail;
 	private PasswordField txtSenha;
 	private Label lblErro;
@@ -39,25 +40,12 @@ public class Login extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		border = new BorderPane();
-		border.setId("border");
+		borderPrincipal = new BorderPane();
+		borderPrincipal.setId("borderPrincipal");
 
-		scn = new Scene(border, 900, 600);
+		scn = new Scene(borderPrincipal, 900, 600);
 		
-		FileInputStream input = new FileInputStream("src\\view\\img\\fundo.png");
-
-		// create a image
-		Image image = new Image(input);
-
-		// create a background image
-		BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
-				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(100, 100, true, true, true, true));
-
-		// create Background
-		Background background = new Background(backgroundimage);
-
-		// set background
-		border.setBackground(background);
+		setBackground();
 
 		initLogin();
 
@@ -67,51 +55,84 @@ public class Login extends Application {
 
 	}
 
+	private void setBackground() throws FileNotFoundException{
+		
+		FileInputStream input = new FileInputStream("src\\view\\img\\dragon.jpg");
+
+		Image image = new Image(input);
+
+		BackgroundImage backgroundimage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(100, 100, true, true, true, true));
+
+		Background background = new Background(backgroundimage);
+
+		borderPrincipal.setBackground(background);
+		
+	}
+
 	private void initLogin() {
-
-		grid = new GridPane();
-		grid.setHgap(20);
-		grid.setVgap(30);
-
-		grid.setAlignment(Pos.CENTER);
-
-		btLogar = new Button("Entrar");
-		btLogar.setAlignment(Pos.CENTER);
+		
+		initGridForm();
+		
+		initBtLogar();
 
 		initTextFields();
+		
+		initLblErro();
 
+		initEvents();
+		
+		setNodesInGridForm();
+
+		borderPrincipal.setCenter(gridForm);
+
+	}
+
+	private void setNodesInGridForm() {
+		gridForm.add(txtEmail, 0, 0);
+		gridForm.add(txtSenha, 0, 1);
+		gridForm.add(btLogar, 0, 2);
+		gridForm.add(lblErro, 0, 3);
+
+		gridForm.setHalignment(lblErro, HPos.CENTER);
+		gridForm.setHalignment(btLogar, HPos.CENTER);
+		gridForm.setHalignment(txtEmail, HPos.CENTER);
+		gridForm.setHalignment(txtSenha, HPos.CENTER);
+		
+	}
+
+	private void initLblErro() {
 		lblErro = new Label();
 
 		initTextFields(new TextField[] { txtEmail, txtSenha });
+		
+	}
 
-		Util.initButtons(new Button[] { btLogar });
-
+	private void initBtLogar() {
+		btLogar = new Button("Entrar");
+		btLogar.setAlignment(Pos.CENTER);
+		
+		Util.initButtons(new Button[] { btLogar }); 
+		
 		btLogar.setPrefWidth(120);
 		btLogar.setPrefHeight(45);
 		btLogar.setStyle(btLogar.getStyle());
 		
-		 ft = new FadeTransition(Duration.millis(3000), btLogar);
-	     ft.setFromValue(1.0);
-	     ft.setToValue(0.3);
-	     ft.setCycleCount(4);
-	     ft.setAutoReverse(true);
-	     
-	     
+		ft = new FadeTransition(Duration.millis(3000), btLogar);
+		ft.setFromValue(1.0);
+		ft.setToValue(0.3);
+		ft.setCycleCount(4);
+		ft.setAutoReverse(true);
+		
+	}
 
-		initEvents();
+	private void initGridForm() {
+		gridForm = new GridPane();
+		gridForm.setHgap(20);
+		gridForm.setVgap(30);
 
-		grid.add(txtEmail, 0, 0);
-		grid.add(txtSenha, 0, 1);
-		grid.add(btLogar, 0, 2);
-		grid.add(lblErro, 0, 3);
-
-		grid.setHalignment(lblErro, HPos.CENTER);
-		grid.setHalignment(btLogar, HPos.CENTER);
-		grid.setHalignment(txtEmail, HPos.CENTER);
-		grid.setHalignment(txtSenha, HPos.CENTER);
-
-		border.setCenter(grid);
-
+		gridForm.setAlignment(Pos.CENTER);
+		
 	}
 
 	private void initTextFields() {

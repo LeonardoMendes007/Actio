@@ -40,12 +40,14 @@ public class Menu {
 		this.scn = scn;
 		initNewScene();
 		initMenu();
+		
 		try {
 			initBarraSuperior();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		initConteudo();
 		
 		controller.btHomeAction();
