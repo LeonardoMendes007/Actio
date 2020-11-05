@@ -10,8 +10,7 @@ public class Util {
 
 		for (Button button : buttons) {
 			button.setAlignment(Pos.CENTER);
-//			button.setStyle("-fx-cursor: hand; -fx-font-size: 1.5em; -fx-font-weight: bolder;");
-			button.setPrefWidth(150);
+			button.setPrefWidth(200);
 			button.setPrefHeight(50);
 		}
 

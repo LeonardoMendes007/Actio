@@ -31,7 +31,7 @@ public class Menu {
 	private ImageView ivUser;
 	private Label lblNome;
 	
-	private MenuController controller = new MenuController(this);
+	private MenuController menuController = new MenuController(this);
 	
 	public Menu(Scene scn) {
 		this.scn = scn;
@@ -47,7 +47,7 @@ public class Menu {
 		
 		initConteudo();
 		
-		controller.btHomeAction();
+		menuController.btHomeAction();
 		
 	}
 
@@ -55,6 +55,7 @@ public class Menu {
 	private void initConteudo() {
        
 		borderConteudo = new BorderPane();
+		borderConteudo.setStyle("-fx-background: #EAEAEA;");
 		
 		borderCentral.setCenter(borderConteudo);
 		
@@ -63,6 +64,7 @@ public class Menu {
 
 	private void initNewScene() {
 		borderPrincipal = new BorderPane();
+		borderPrincipal.setStyle("-fx-background-color: #1D5959;");
 		scn.setRoot(borderPrincipal);		
 	}
 
@@ -70,6 +72,7 @@ public class Menu {
 	private void initBarraSuperior() throws FileNotFoundException {
 	    
 		borderCentral = new BorderPane();
+		borderCentral.setStyle("-fx-background-color: #EAEAEA; -fx-background-radius: 35px 0px 0px 35px; -fx-border-radius: 15px;");
         
 		
 		Image imagem = new Image(new FileInputStream("C:\\Users\\mende\\Downloads\\l.png"));
@@ -77,6 +80,7 @@ public class Menu {
 		ivUser = new ImageView(imagem);
 		ivUser.setFitWidth(50.0);
 		ivUser.setFitHeight(50.0);
+		ivUser.setStyle("-fx-background-radius: 20px; -fx-border-radius: 20px;");
 		lblNome = new Label("Fulano");
 		lblNome.setStyle("-fx-cursor: hand; -fx-font-size: 1.4em ;");
 		
@@ -120,27 +124,27 @@ public class Menu {
 	private void initEvents() {
 
 		lblActio.setOnMouseClicked(x -> {
-			controller.btHomeAction();
+			menuController.btHomeAction();
 			clearCurrentScreen();
 		});
 		
 		btAtividade.setOnMouseClicked(x -> {
-			controller.btAtividadeAction();
+			menuController.btAtividadeAction();
 			currentScreen(btAtividade);
 		});
 		
 		btDisciplina.setOnMouseClicked(x -> {
-			controller.btDisciplinaAction(); 
+			menuController.btDisciplinaAction(); 
 			currentScreen(btDisciplina);
 		});
-//		btLupaMais.setOnMouseClicked(x -> controller.btAumentarFonte());
-//		btLupaMenos.setOnMouseClicked(x -> controller.btDiminuirFonte());
+//		btLupaMais.setOnMouseClicked(x -> menuController.btAumentarFonte());
+//		btLupaMenos.setOnMouseClicked(x -> menuController.btDiminuirFonte());
 	}
 
 
 	private void initBorderPaneLeft() {
 		borderLeft = new BorderPane();
-		borderLeft.setStyle("-fx-background-color: gray;");
+		borderLeft.setStyle("-fx-background-color: #1D5959;");
 		
 		
 		initLabelActio();
@@ -154,10 +158,9 @@ public class Menu {
 		lblActio = new Label("Actio");
 		lblActio.setAlignment(Pos.TOP_CENTER);
 		lblActio.setStyle("-fx-cursor: hand; -fx-font-size: 2em ; -fx-font-weight: bolder;");
-		lblActio.setPrefWidth(120);
-		lblActio.setPrefHeight(40);
-		lblActio.setPadding(new Insets(10, 0, 0, 30));
-		
+		lblActio.setPrefWidth(200);
+		lblActio.setPrefHeight(50);
+		lblActio.setAlignment(Pos.BOTTOM_CENTER);
 	}
 
 
@@ -165,7 +168,7 @@ public class Menu {
 		grid = new GridPane();
 		grid.setVgap(20);
 		grid.setAlignment(Pos.TOP_CENTER);
-		grid.setStyle("-fx-background-color: gray;");
+		grid.setStyle("-fx-background-color: #1D5959;");
 		
 		
 		grid.add(btAtividade, 0, 3);
@@ -178,11 +181,23 @@ public class Menu {
 	    btAtividade = new Button("Atividade");
 		btDisciplina = new Button("Disciplina");
 		
+		setConfigButtons(new Button[] {btAtividade,btDisciplina});
+		
+		
 		Util.initButtons(new Button[] {btAtividade,btDisciplina});
 		
 		clearCurrentScreen();
 		
 	}
+
+	private void setConfigButtons(Button[] buttons) {
+		
+		for (Button button : buttons) {
+			button.setStyle("-fx-background-color: #1D5959;");
+		}
+		
+	}
+
 
 	public BorderPane getBorderConteudo() {
 		return borderConteudo;
@@ -193,12 +208,22 @@ public class Menu {
 		this.borderConteudo = borderConteudo;
 	}
 	
+	public String getLblNomeUsuario() {
+		return lblNome.getText();
+	}
+
+
+	public void setLblNomeUsuario(String nome) {
+		this.lblNome.setText(nome);
+	}
+
+
 	public void currentScreen(Button button) {
 		
 		clearCurrentScreen();
 		
-		button.setStyle("-fx-cursor: hand; -fx-font-size: 1.8em ; -fx-background-color: white; -fx-font-weight: bolder;");
-		
+		button.setStyle("-fx-cursor: hand; -fx-font-size: 1.8em ; -fx-background-color: #53BDBE; -fx-font-weight: bolder;");
+		button.setPrefWidth(200);
 	}
 
 
@@ -207,7 +232,7 @@ public class Menu {
 		Button[] buttons = {btAtividade, btDisciplina};
 		
 		for (Button button : buttons) {
-			button.setStyle("-fx-cursor: hand; -fx-font-size: 1.6em; -fx-font-weight: bolder; -fx-background-color: gray;");
+			button.setStyle("-fx-cursor: hand; -fx-font-size: 1.6em; -fx-font-weight: bolder; -fx-background-color: #1D5959;");
 		}
 	}
 	

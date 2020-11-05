@@ -1,16 +1,13 @@
 package view;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import controller.LoginController;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.WritableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -34,16 +31,10 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sun.security.action.GetLongAction;
 
 public class Login extends Application {
 
@@ -61,27 +52,44 @@ public class Login extends Application {
 	private FadeTransition ft;
 	private LoginController loginController = new LoginController(this);
 	private Timeline timeline;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		borderPrincipal = new BorderPane();
 		borderPrincipal.setId("borderPrincipal");
 
-		scn = new Scene(borderPrincipal, 900, 600);
+		scn = new Scene(borderPrincipal, 1000, 600);
 
-
-		
 		borderPrincipal.getStylesheets().add(getClass().getResource("css//login.css").toExternalForm());
 
 		setBackground();
 
 		initLogin();
 
+		stage = configStage(stage);
 		stage.setScene(scn);
-		stage.setTitle("actio");
+		
 		stage.show();
-		
-		
 
+	}
+
+	private Stage configStage(Stage stage) {
+		
+		stage.setTitle("actio");
+		
+		stage.setMinWidth(700);
+		stage.setMinHeight(600);
+//		stage.initStyle(StageStyle.UNDECORATED);
+		
+		try {
+			stage.getIcons().add(new Image(new FileInputStream(new File("src\\view\\img\\icon2.png"))));
+		}catch (FileNotFoundException e) {
+			new FileNotFoundException("Erro ao carregar o icone na barra superior");
+		}
+		
+		
+		return stage;
+		
 	}
 
 	private void setBackground() throws FileNotFoundException {
