@@ -5,11 +5,17 @@ import java.io.FileNotFoundException;
 
 import controller.LoginController;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.WritableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,14 +28,22 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import sun.security.action.GetLongAction;
 
 public class Login extends Application {
 
@@ -46,7 +60,7 @@ public class Login extends Application {
 	private Label lblSenha;
 	private FadeTransition ft;
 	private LoginController loginController = new LoginController(this);
-
+	private Timeline timeline;
 	@Override
 	public void start(Stage stage) throws Exception {
 		borderPrincipal = new BorderPane();
@@ -54,6 +68,8 @@ public class Login extends Application {
 
 		scn = new Scene(borderPrincipal, 900, 600);
 
+
+		
 		borderPrincipal.getStylesheets().add(getClass().getResource("css//login.css").toExternalForm());
 
 		setBackground();
@@ -63,6 +79,8 @@ public class Login extends Application {
 		stage.setScene(scn);
 		stage.setTitle("actio");
 		stage.show();
+		
+		
 
 	}
 
@@ -119,14 +137,44 @@ public class Login extends Application {
 
 		initEvents();
 
+		initMouseEvents();
+		
 		setNodesNoGridForm();
-
+		
+		//setAnimation(stackPane);
+		
 		borderPrincipal.setCenter(stackPane);
+		
 
+	}
+	
+	
+	private void setAnimation(Node p) {
+//		Timeline timeline = new Timeline();
+//		timeline.setCycleCount(Timeline.);
+//		timeline.setAutoReverse(false);
+//		
+//		
+//		p.setLayoutY(p.getLayoutY() + 500);
+//		final KeyValue kv = new KeyValue(p.layoutYProperty(), 0);
+//		final KeyFrame kf = new KeyFrame(Duration.millis(3000), kv);
+//		timeline.getKeyFrames().add(kf);
+//		timeline.play();
+		
+		FadeTransition ft = new FadeTransition(Duration.millis(2000), p);
+		ft.setFromValue(0);
+		ft.setToValue(1);
+		ft.setCycleCount(1);
+		ft.setAutoReverse(false);
+		ft.setDelay(Duration.millis(3500));
+		ft.play();
 	}
 
 	private void setNodesNoGridForm() {
 		
+		//Definindo fonte padrão (do google fonts)
+		gridForm.getStylesheets().add("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 		gridForm.add(lblLogin, 0, 0);
 		gridForm.add(lblEmail, 0, 1);
 		gridForm.add(txtEmail, 0, 2);
@@ -143,14 +191,16 @@ public class Login extends Application {
 		BackgroundFill fill = new BackgroundFill(Color.web("#EAEAEA", 1), new CornerRadii(20), new Insets(0, 0, 0, 0));
 
 		gridForm.setBackground(new Background(fill));
+		
 
 	}
 
 	private void initLblErro() {
-//		Font font = new Font(arg0, arg1)
+
 		
 		lblErro = new Label();
 		lblLogin = new Label("Login");
+	
 		lblEmail = new Label("Email");
 		lblSenha = new Label("Senha");
 		
@@ -159,20 +209,22 @@ public class Login extends Application {
 		lblSenha.getStyleClass().add("lbl-senha");
 		
 		
-		
+	
 
-		setFontePadrao(new Label[] {lblEmail,lblSenha}, new Font("Poppins", 20));
-		setFontePadrao(new Label[] {lblLogin}, new Font("Poppins", 40));
-		setFontePadrao(new Label[] {lblErro}, new Font("Poppins", 15));
+		setFontePadrao(new Label[] {lblEmail,lblSenha}, 20);
+		setFontePadrao(new Label[] {lblLogin}, 40);
+		setFontePadrao(new Label[] {lblErro}, 15);
+		setFontePadrao(new Button[] {btLogar}, 25);
 		
 		initTextFields(new TextField[] { txtEmail, txtSenha });
 
 	}
 
-	private void setFontePadrao(Label[] texts, Font font) {
+	private void setFontePadrao(Node[] texts, int tamanho) {
 		
-		for (Label text : texts) {
-			text.setFont(font);
+		for (Node text : texts) {
+			text.setStyle("-fx-font-family: Poppins; "
+					+ "-fx-font-size: " + tamanho + " ;");
 		}
 	}
 
@@ -183,9 +235,7 @@ public class Login extends Application {
 		Util.initButtons(new Button[] { btLogar });
 		btLogar.getStyleClass().add("bt-logar");
 		btLogar.setTextFill(Color.WHITE);
-		btLogar.setStyle("-fx-font-size: 20px; -fx-font-family: Poppins;");
-
-		btLogar.setPrefWidth(120);
+		btLogar.setPrefWidth(140);
 		btLogar.setPrefHeight(45);
 
 	}
@@ -195,12 +245,13 @@ public class Login extends Application {
 
 		gridForm = new GridPane();
 		gridForm.setHgap(20);
-		gridForm.setVgap(20);
+		gridForm.setVgap(18);
 		gridForm.setId("grid-form");
 
 		gridForm.setAlignment(Pos.CENTER);
 
 		stackPane.getChildren().add(gridForm);
+		stackPane.setOpacity(1);
 		stackPane.setMaxWidth(400);
 		stackPane.setMaxHeight(450);
 		stackPane.setAlignment(Pos.CENTER);
@@ -221,12 +272,29 @@ public class Login extends Application {
 
 		btLogar.addEventHandler(ActionEvent.ACTION, (x) -> {
 			loginController.logar();
+			
 		});
 
 		txtEmail.textProperty().addListener((x) -> isNotBlank(txtEmail));
 		txtSenha.textProperty().addListener((x) -> isNotBlank(txtSenha));
 		txtEmail.setOnKeyPressed((x) -> loginController.verifiqueKeyPressed(x));
 		txtSenha.setOnKeyPressed((x) -> loginController.verifiqueKeyPressed(x));
+
+	}
+	
+	//Eventos do mouse (hover)
+	private void initMouseEvents() {
+		
+		btLogar.setOnMousePressed((x) -> {
+			btLogar.setScaleX(btLogar.getScaleX() + 0.05);
+			btLogar.setScaleY(btLogar.getScaleY() + 0.05);
+
+		});
+		
+		btLogar.setOnMouseReleased((x) -> {
+			btLogar.setScaleX(btLogar.getScaleX() - 0.05);
+			btLogar.setScaleY(btLogar.getScaleY() - 0.05);
+		});
 	}
 
 	private void initLabels(Label[] labels) {
@@ -240,11 +308,13 @@ public class Login extends Application {
 
 		for (TextField textField : textFields) {
 			textField.setPrefWidth(450);
-			textField.setPrefHeight(50);
-			textField.getStyleClass().add("text-fields");
-			textField.setStyle("-fx-border-color: #C2C2C2");
+			textField.setPrefHeight(40);
+			
+			textField.setBackground(new Background(new BackgroundFill(Color.web("#D7D7D7", 1), CornerRadii.EMPTY, Insets.EMPTY)));
+
 		}
 
+		setFontePadrao(textFields, 20);
 	}
 
 	public static void main(String[] args) {
@@ -252,17 +322,18 @@ public class Login extends Application {
 	}
 
 	public void senhaIsBlank() {
-		txtSenha.setStyle(txtSenha.getStyle().replaceAll("-fx-border-color: #C2C2C2", "-fx-border-color: red;"));
+		txtSenha.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, null)));
 
 	}
 
 	public void emailIsBlank() {
-		txtEmail.setStyle(txtEmail.getStyle().replaceAll("-fx-border-color: #C2C2C2", "-fx-border-color: red;"));
+		txtEmail.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, null)));
+		
 	}
 
 	private void isNotBlank(TextField txt) {
 
-		txt.setStyle(txt.getStyle().replaceAll("-fx-border-color: red;", "-fx-border-color: #C2C2C2;"));
+		txt.setBorder(null);
 
 	}
 

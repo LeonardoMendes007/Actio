@@ -18,8 +18,8 @@ public class LoginController {
 
 	public void logar() {
 
-		if (!login.getEmail().isBlank()) {
-			if (!login.getSenha().isBlank()) {
+		if (!login.getEmail().isEmpty()) {//MUDEI de isBlank pra isEmpty pq isBlank n funcionou
+			if (!login.getSenha().isEmpty()) {//MUDEI de isBlank pra isEmpty pq isBlank n funcionou
 
 				verificarAutenticidade(login.getEmail(), login.getSenha());
 
@@ -29,7 +29,7 @@ public class LoginController {
 
 		} else {
 			login.emailIsBlank();
-			if (login.getSenha().isBlank()) {
+			if (login.getSenha().isEmpty()) {	//MUDEI de isBlank pra isEmpty pq isBlank n funcionou
 				login.senhaIsBlank();
 			}
 		}
