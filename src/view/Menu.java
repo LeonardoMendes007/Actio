@@ -3,6 +3,8 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import controller.MenuController;
 import javafx.geometry.Insets;
@@ -12,6 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -80,7 +87,7 @@ public class Menu {
 		ivUser = new ImageView(imagem);
 		ivUser.setFitWidth(50.0);
 		ivUser.setFitHeight(50.0);
-		ivUser.setStyle("-fx-background-radius: 20px; -fx-border-radius: 20px;");
+		ivUser.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px;");
 		lblNome = new Label("Fulano");
 		lblNome.setStyle("-fx-cursor: hand; -fx-font-size: 1.4em ;");
 		
@@ -122,7 +129,7 @@ public class Menu {
 
 
 	private void initEvents() {
-
+		
 		lblActio.setOnMouseClicked(x -> {
 			menuController.btHomeAction();
 			clearCurrentScreen();
@@ -151,13 +158,22 @@ public class Menu {
 		
 		borderLeft.setCenter(grid);
 		borderLeft.setTop(lblActio);
+		borderLeft.setMargin(lblActio, new Insets(40, 0, 0, 0));
 	}
 
 
 	private void initLabelActio() {
-		lblActio = new Label("Actio");
+		lblActio = new Label();
 		lblActio.setAlignment(Pos.TOP_CENTER);
-		lblActio.setStyle("-fx-cursor: hand; -fx-font-size: 2em ; -fx-font-weight: bolder;");
+		FileInputStream input;
+		try {
+			input = new FileInputStream("src\\view\\img\\icon.png");
+			lblActio.setBackground(new Background(new BackgroundImage(new Image(input), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER , new BackgroundSize(35, 35, true, true, true, false))));
+		} catch (FileNotFoundException e) {
+			lblActio.setText("Actio");
+		}
+		
+		lblActio.setStyle("-fx-cursor: hand;");
 		lblActio.setPrefWidth(200);
 		lblActio.setPrefHeight(50);
 		lblActio.setAlignment(Pos.BOTTOM_CENTER);

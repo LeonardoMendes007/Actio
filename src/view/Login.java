@@ -77,7 +77,7 @@ public class Login extends Application {
 		
 		stage.setTitle("actio");
 		
-		stage.setMinWidth(700);
+		stage.setMinWidth(800);
 		stage.setMinHeight(600);
 //		stage.initStyle(StageStyle.UNDECORATED);
 		
