@@ -2,6 +2,7 @@ package view;
 
 
 
+import controller.DisciplinaController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -10,9 +11,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
+import view.cardDisciplina.CardDisciplina;
 
 public class Disciplina {
 
@@ -25,6 +25,8 @@ public class Disciplina {
 	private TilePane tileDisciplina;
 	
 	private ScrollPane scrollDisciplina;
+	
+	private DisciplinaController controller = new DisciplinaController(this);
 
 	public Disciplina(BorderPane border) {
 		this.border = border;
@@ -44,6 +46,7 @@ public class Disciplina {
 		
 		initEventResponsivel();
 		
+		controller.addCards();
 		
 	}
 
@@ -54,20 +57,10 @@ public class Disciplina {
 	}
 
 	private void initTileDisciplina() {
-	    tileDisciplina = new TilePane(20,20);
-	    tileDisciplina.setAlignment(Pos.CENTER);
+	    tileDisciplina = new TilePane(30,30);
 	    tileDisciplina.setPadding(new Insets(20));
 	    tileDisciplina.setOrientation(Orientation.HORIZONTAL);
 	    tileDisciplina.setPrefColumns(2);
-
-	    
-	    for (int i = 0; i < 5; i++) {
-			StackPane stack = new StackPane();
-			stack.setPrefSize(325, 200);
-			stack.setStyle("-fx-background-color: red; -fx-background-radius: 20px; -fx-border-radius: 20px;");
-			
-			tileDisciplina.getChildren().add(stack);
-		}
 	    
 	    
 	    scrollDisciplina.setContent(tileDisciplina);
@@ -103,5 +96,10 @@ public class Disciplina {
 		
 		
 		
+	}
+	
+	public void addCard(CardDisciplina card) {
+		
+		tileDisciplina.getChildren().add(card.getCar());
 	}
 }

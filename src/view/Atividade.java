@@ -140,7 +140,7 @@ public class Atividade {
 		lblFiltro.setPadding(new Insets(-40, 0, 0, 0));
 		
 		Util.setFontePadrao(new Label[] {lblFiltro}, 25);
-		Util.setFontePadrao(new Label[] { lblStatus, lblDisciplina,lblPessoas}, 15);
+		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblPessoas}, 15);
 		
 		gridFiltro.add(lblFiltro, 0, 1);
 		gridFiltro.add(lblStatus, 1, 0);
@@ -190,4 +190,6 @@ public class Atividade {
 		border.setMargin(gridAtividade, new Insets(-30, 15, 0, 15));
 
 	}
+	
+	
 }
