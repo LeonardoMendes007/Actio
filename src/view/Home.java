@@ -74,7 +74,17 @@ public class Home {
 		initVBoxInternoNotificacoes();
 
 		initLabels();
+		
+		initEventsResponsivel();
 
+	}
+
+	private void initEventsResponsivel() {
+		
+		borderPrincipal.widthProperty().addListener((x) -> vboxNotificacoes.setMinWidth(0.30*borderPrincipal.getWidth()));
+		scrollNotificacoes.widthProperty().addListener((x) -> vboxInternoNotificacoes.setMinWidth(0.97*scrollNotificacoes.getWidth()));
+		borderPrincipal.heightProperty().addListener((x) -> hboxAtividades.setMinHeight(0.30*borderPrincipal.getHeight()));
+		
 	}
 
 	private void initVBoxInternoNotificacoes() {
@@ -84,10 +94,10 @@ public class Home {
 		vboxInternoNotificacoes.setPadding(new Insets(3));
 		
 		
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 20; i++) {
 			Pane pane = new Pane();
 			pane.setStyle("-fx-background-color: #C2C2C2; -fx-background-radius: 20px; -fx-border-radius: 20px;");
-			pane.setPrefSize(210, 45);
+			pane.setPrefSize(240, 60);
 			
 			vboxInternoNotificacoes.getChildren().add(pane);
 		}
@@ -140,9 +150,7 @@ public class Home {
 	private void initVBoxNotificacoes() {
 		vboxNotificacoes = new VBox();
 		vboxNotificacoes.setPrefHeight(1000);
-		vboxNotificacoes.setPrefWidth(245);
-		vboxNotificacoes.setMaxWidth(300);
-		vboxNotificacoes.setMinWidth(250);
+		vboxNotificacoes.setMinWidth(280);
 		
 
 		vboxNotificacoes.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
@@ -154,9 +162,8 @@ public class Home {
 	private void initHBoxAtividades() {
 
 		hboxAtividades = new HBox();
-		hboxAtividades.setMinHeight(190);
-		hboxAtividades.setMaxHeight(250);
-		hboxAtividades.setPrefWidth(600);
+		hboxAtividades.setMaxHeight(600);
+		hboxAtividades.setPrefWidth(1000);
 
 		hboxAtividades.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 

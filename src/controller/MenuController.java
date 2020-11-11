@@ -32,8 +32,6 @@ public class MenuController {
 		new Disciplina(menu.getBorderConteudo());
 
 	}
-	
-	
 
 	private void clearChildren() {
 
