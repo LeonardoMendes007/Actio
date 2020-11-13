@@ -3,8 +3,8 @@ package controller;
 import java.util.Date;
 
 import view.Home;
-import view.card.home.CardTarefa;
 import view.card.notificacao.CardNotificacao;
+import view.card.tarefa.CardTarefa;
 
 public class HomeController {
 

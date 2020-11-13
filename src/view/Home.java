@@ -84,17 +84,11 @@ public class Home {
 	}
 
 	private void initEventsResponsivel() {
-		
+
 		borderPrincipal.widthProperty()
 				.addListener((x) -> vboxNotificacoes.setMinWidth(0.30 * borderPrincipal.getWidth()));
 		scrollNotificacoes.widthProperty()
 				.addListener((x) -> vboxInternoNotificacoes.setMinWidth(0.97 * scrollNotificacoes.getWidth()));
-		borderPrincipal.heightProperty()
-				.addListener((x) -> hboxAtividades.setMinHeight(0.30 * borderPrincipal.getHeight()));
-		borderPrincipal.widthProperty()
-				.addListener((x) -> hboxAtividades.setMaxWidth(hboxInternoAtividades.getWidth()));
-		borderPrincipal.heightProperty()
-				.addListener((x) -> vboxNotificacoes.setMaxHeight(vboxInternoNotificacoes.getHeight() + 20));
 
 	}
 
@@ -122,6 +116,7 @@ public class Home {
 	private void initScrollNotificacoes() {
 
 		scrollNotificacoes = new ScrollPane();
+
 		scrollNotificacoes.setStyle("-fx-background-color: #D7D7D7; -fx-hbar-policy : never;");
 
 		vboxNotificacoes.getChildren().add(scrollNotificacoes);
@@ -143,8 +138,6 @@ public class Home {
 
 	private void initVBoxNotificacoes() {
 		vboxNotificacoes = new VBox();
-		vboxNotificacoes.setPrefHeight(1000);
-		vboxNotificacoes.setMinWidth(280);
 
 		vboxNotificacoes
 				.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
@@ -156,9 +149,6 @@ public class Home {
 	private void initHBoxAtividades() {
 
 		hboxAtividades = new HBox();
-		hboxAtividades.setMaxHeight(600);
-		hboxAtividades.setMinWidth(250);
-		hboxAtividades.setPrefWidth(1000);
 
 		hboxAtividades.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 
@@ -185,6 +175,7 @@ public class Home {
 		gridAtividades.setVgap(10);
 		gridAtividades.setStyle("-fx-background-radius: 20px; -fx-border-radius: 20px;");
 		gridAtividades.setPadding(new Insets(20, 0, 5, 20));
+
 		borderInterno.setTop(gridAtividades);
 		borderInterno.setMargin(gridAtividades, new Insets(-70, 15, 0, 20));
 
