@@ -1,12 +1,14 @@
-package view.cardDisciplina;
+package view.card.disciplina;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import view.Util;
+import view.card.ICard;
 
-public class CardDisciplina {
+public class CardDisciplina implements ICard{
 	
 	private BorderPane borderPrincipal;
 
@@ -45,10 +47,11 @@ public class CardDisciplina {
 		borderPrincipal.setMargin(lblDisciplina, new Insets(0, 0, 20, 15));
 	}
 
-	public BorderPane getCar() {
-		
+	@Override
+	public Node getCard() {
 		return borderPrincipal;
-		
 	}
+
+	
 
 }

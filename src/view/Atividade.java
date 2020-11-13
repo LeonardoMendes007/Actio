@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 
 public class Atividade {
 
-	private BorderPane border;
+	private BorderPane borderPrincipal;
 
 	private GridPane gridAtividade;
 
@@ -48,12 +48,12 @@ public class Atividade {
 	private TilePane tileAtividade;
 	
 	public Atividade(BorderPane border) {
-		this.border = border;
+		this.borderPrincipal = border;
 
-		initAtividade();
+		initTela();
 	}
 
-	public void initAtividade() {
+	public void initTela() {
 
 		initGridAtividade();
 
@@ -186,10 +186,16 @@ public class Atividade {
 
 		gridAtividade.setPadding(new Insets(0, 0, 5, 20));
 
-		border.setCenter(gridAtividade);
-		border.setMargin(gridAtividade, new Insets(-30, 15, 0, 15));
+		borderPrincipal.setCenter(gridAtividade);
+		borderPrincipal.setMargin(gridAtividade, new Insets(-30, 15, 0, 15));
 
 	}
+
+	public BorderPane getBorderPrincipal() {
+		return borderPrincipal;
+	}
+	
+	
 	
 	
 }

@@ -1,7 +1,7 @@
 package controller;
 
 import view.Disciplina;
-import view.cardDisciplina.CardDisciplina;
+import view.card.disciplina.CardDisciplina;
 
 public class DisciplinaController {
 
@@ -16,7 +16,7 @@ public class DisciplinaController {
 		String[][] professores = {{"Antonio Carvalho", "Programação\nOrientada a Ódio"}, {"Ricardo Satohi", "Lógica\nde Programação"}, {"Leandro Colevati", "Banco\nde Dados"}, {"Cristina", "Engenharia\nde Software II"}, {"Paulinho", "Sistemas\nda Informação"}};
 
 		for (int i = 0; i < professores.length; i++) {
-			CardDisciplina card = new CardDisciplina(290.0, 175.0, professores[i][1], professores[i][0]);
+			CardDisciplina card = new CardDisciplina(330.0, 175.0, professores[i][1], professores[i][0]);
 			disciplina.addCard(card);
 		}
 	}

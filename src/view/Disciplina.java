@@ -5,18 +5,18 @@ package view;
 import controller.DisciplinaController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import view.cardDisciplina.CardDisciplina;
+import view.card.disciplina.CardDisciplina;
 
 public class Disciplina {
 
-	private BorderPane border;
+	private BorderPane borderPrincipal;
 	
 	private GridPane gridDisciplina;
 	
@@ -29,12 +29,12 @@ public class Disciplina {
 	private DisciplinaController controller = new DisciplinaController(this);
 
 	public Disciplina(BorderPane border) {
-		this.border = border;
+		this.borderPrincipal = border;
 		
-		initDisciplina();
+		initTela();
 	}
 
-	public void initDisciplina() {
+	public void initTela() {
 		
 		initGridDisciplina();
 		
@@ -91,8 +91,8 @@ public class Disciplina {
 		
 		gridDisciplina.setPadding(new Insets(0, 0, 5, 20));
 		
-		border.setCenter(gridDisciplina);
-		border.setMargin(gridDisciplina, new Insets(-30, 15, 0, 20));
+		borderPrincipal.setCenter(gridDisciplina);
+		borderPrincipal.setMargin(gridDisciplina, new Insets(-30, 15, 0, 20));
 		
 		
 		
@@ -100,6 +100,11 @@ public class Disciplina {
 	
 	public void addCard(CardDisciplina card) {
 		
-		tileDisciplina.getChildren().add(card.getCar());
+		tileDisciplina.getChildren().add(card.getCard());
 	}
+
+	public BorderPane getBorderPrincipal() {
+		return borderPrincipal;
+	}
+	
 }

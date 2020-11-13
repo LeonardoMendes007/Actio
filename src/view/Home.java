@@ -12,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import view.card.ICard;
+import view.card.disciplina.CardDisciplina;
 
 public class Home {
 
@@ -48,10 +50,10 @@ public class Home {
 	public Home(BorderPane border) {
 		this.borderPrincipal = border;
 
-		initHome();
+		initTela();
 	}
 
-	public void initHome() {
+	public void initTela() {
 
 		initBorderInterno();
 
@@ -74,17 +76,26 @@ public class Home {
 		initVBoxInternoNotificacoes();
 
 		initLabels();
-		
+
 		initEventsResponsivel();
+
+		controller.addCards();
 
 	}
 
 	private void initEventsResponsivel() {
 		
-		borderPrincipal.widthProperty().addListener((x) -> vboxNotificacoes.setMinWidth(0.30*borderPrincipal.getWidth()));
-		scrollNotificacoes.widthProperty().addListener((x) -> vboxInternoNotificacoes.setMinWidth(0.97*scrollNotificacoes.getWidth()));
-		borderPrincipal.heightProperty().addListener((x) -> hboxAtividades.setMinHeight(0.30*borderPrincipal.getHeight()));
-		
+		borderPrincipal.widthProperty()
+				.addListener((x) -> vboxNotificacoes.setMinWidth(0.30 * borderPrincipal.getWidth()));
+		scrollNotificacoes.widthProperty()
+				.addListener((x) -> vboxInternoNotificacoes.setMinWidth(0.97 * scrollNotificacoes.getWidth()));
+		borderPrincipal.heightProperty()
+				.addListener((x) -> hboxAtividades.setMinHeight(0.30 * borderPrincipal.getHeight()));
+		borderPrincipal.widthProperty()
+				.addListener((x) -> hboxAtividades.setMaxWidth(hboxInternoAtividades.getWidth()));
+		borderPrincipal.heightProperty()
+				.addListener((x) -> vboxNotificacoes.setMaxHeight(vboxInternoNotificacoes.getHeight() + 20));
+
 	}
 
 	private void initVBoxInternoNotificacoes() {
@@ -92,15 +103,6 @@ public class Home {
 		vboxInternoNotificacoes.setStyle("-fx-background-color: #D7D7D7;");
 		vboxInternoNotificacoes.setAlignment(Pos.CENTER);
 		vboxInternoNotificacoes.setPadding(new Insets(3));
-		
-		
-		for (int i = 0; i < 20; i++) {
-			Pane pane = new Pane();
-			pane.setStyle("-fx-background-color: #C2C2C2; -fx-background-radius: 20px; -fx-border-radius: 20px;");
-			pane.setPrefSize(240, 60);
-			
-			vboxInternoNotificacoes.getChildren().add(pane);
-		}
 
 		scrollNotificacoes.setContent(vboxInternoNotificacoes);
 
@@ -112,14 +114,6 @@ public class Home {
 		hboxInternoAtividades.setStyle("-fx-background-color: #D7D7D7;");
 		hboxInternoAtividades.setAlignment(Pos.CENTER);
 		hboxInternoAtividades.setPadding(new Insets(0, 0, 20, 0));
-		
-		for (int i = 0; i < 5; i++) {
-			Pane pane = new Pane();
-			pane.setStyle("-fx-background-color: #FF9DBA; -fx-background-radius: 20px; -fx-border-radius: 20px;");
-			pane.setPrefSize(210, 150);
-			
-			hboxInternoAtividades.getChildren().add(pane);
-		}
 
 		scrollAtividades.setContent(hboxInternoAtividades);
 
@@ -140,7 +134,7 @@ public class Home {
 
 		scrollAtividades = new ScrollPane();
 		scrollAtividades.setStyle("-fx-background-color: #D7D7D7; -fx-vbar-policy : never;");
-		
+
 		hboxAtividades.getChildren().add(scrollAtividades);
 		hboxAtividades.setPadding(new Insets(10, 10, 10, 10));
 		hboxAtividades.setHgrow(scrollAtividades, Priority.ALWAYS);
@@ -151,9 +145,9 @@ public class Home {
 		vboxNotificacoes = new VBox();
 		vboxNotificacoes.setPrefHeight(1000);
 		vboxNotificacoes.setMinWidth(280);
-		
 
-		vboxNotificacoes.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
+		vboxNotificacoes
+				.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 
 		gridNotificacoes.add(vboxNotificacoes, 0, 1);
 
@@ -163,6 +157,7 @@ public class Home {
 
 		hboxAtividades = new HBox();
 		hboxAtividades.setMaxHeight(600);
+		hboxAtividades.setMinWidth(250);
 		hboxAtividades.setPrefWidth(1000);
 
 		hboxAtividades.setStyle("-fx-background-color: #D7D7D7; -fx-background-radius: 20px; -fx-border-radius: 20px;");
@@ -177,7 +172,7 @@ public class Home {
 		gridCalendario.setVgap(10);
 		gridCalendario.setStyle(" -fx-background-radius: 20px; -fx-border-radius: 20px;");
 		gridCalendario.setPadding(new Insets(20, 0, 5, 20));
-		
+
 		borderInterno.setCenter(gridCalendario);
 		borderInterno.setMargin(gridCalendario, new Insets(0, 15, 15, 15));
 
@@ -212,11 +207,10 @@ public class Home {
 		lblAtividade = new Label("Atividades");
 		lblNotificacoes = new Label("Notificacoes");
 		lblCalendario = new Label("Calendario");
-		
+
 		lblAtividade.setPadding(new Insets(0, 0, 0, 10));
 		lblNotificacoes.setPadding(new Insets(0, 0, 0, 10));
 		lblCalendario.setPadding(new Insets(0, 0, 0, 10));
-		
 
 		setFontePadrao(new Label[] { lblAtividade, lblNotificacoes, lblCalendario }, 25);
 
@@ -239,6 +233,20 @@ public class Home {
 
 		borderPrincipal.setCenter(borderInterno);
 
+	}
+
+	public BorderPane getBorderPrincipal() {
+		return borderPrincipal;
+	}
+
+	public void addCardAtividade(ICard card) {
+
+		hboxInternoAtividades.getChildren().add(card.getCard());
+	}
+
+	public void addCardNotificacao(ICard card) {
+
+		vboxInternoNotificacoes.getChildren().add(card.getCard());
 	}
 
 }
