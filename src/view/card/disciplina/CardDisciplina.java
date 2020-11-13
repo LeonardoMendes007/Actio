@@ -20,7 +20,7 @@ public class CardDisciplina implements ICard{
 		
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(width, height);
-		this.borderPrincipal.setStyle("-fx-background-color: red; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
+		this.borderPrincipal.setStyle("-fx-background-color: red; -fx-background-radius: 50px; -fx-border-radius: 20px; -fx-cursor: hand;");
 		
 		initLabel(disciplina,professor);
 		
