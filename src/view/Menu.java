@@ -2,8 +2,6 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 import controller.MenuController;
 import javafx.geometry.Insets;
@@ -14,12 +12,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class Menu {
 
@@ -36,7 +37,9 @@ public class Menu {
 	private Button btTurma;
 	private ImageView ivUser;
 	private Label lblNome;
-
+	private Background azulEscuro;
+	private Background azulClaro;
+	
 	private MenuController menuController = new MenuController(this);
 
 	public Menu(Scene scn) {
@@ -63,9 +66,6 @@ public class Menu {
 		initBarraSuperior();
 		
 		initConteudo();
-		
-		
-		
 		
 
 		borderPrincipal.setLeft(borderLeft);
@@ -130,7 +130,8 @@ public class Menu {
 
 	}
 
-	private void initEvents() {
+	
+private void initEvents() {
 
 		lblActio.setOnMouseClicked(x -> {
 			menuController.btHomeAction();
@@ -140,14 +141,32 @@ public class Menu {
 		btAtividade.setOnMouseClicked(x -> {
 			menuController.btAtividadeAction();
 			currentScreen(btAtividade);
+			
+		});
+
+		btAtividade.setOnMouseEntered(x -> {
+			btAtividade.setBackground(azulClaro);
+			
+		});
+		
+		btAtividade.setOnMouseExited(x -> {
+			btAtividade.setBackground(azulEscuro);
 		});
 
 		btDisciplina.setOnMouseClicked(x -> {
 			menuController.btDisciplinaAction();
 			currentScreen(btDisciplina);
 		});
-//		btLupaMais.setOnMouseClicked(x -> menuController.btAumentarFonte());
-//		btLupaMenos.setOnMouseClicked(x -> menuController.btDiminuirFonte());
+		
+		btDisciplina.setOnMouseEntered(x -> {
+			btDisciplina.setBackground(azulClaro);
+			
+		});
+		
+		btDisciplina.setOnMouseExited(x -> {
+			btDisciplina.setBackground(azulEscuro);
+		});
+		
 	}
 
 	private void initBorderPaneLeft() {
@@ -192,8 +211,14 @@ public class Menu {
 	}
 
 	private void initMenuButtons() {
+		
+		//Seta as cores do fundo
+		
 		btAtividade = new Button("Atividade");
 		btDisciplina = new Button("Disciplina");
+
+		azulEscuro = new Background(new BackgroundFill(Color.web("#1D5959"), CornerRadii.EMPTY, Insets.EMPTY));
+		azulClaro  = new Background(new BackgroundFill(Color.web("#53BDBE"), CornerRadii.EMPTY, Insets.EMPTY));
 
 		setConfigButtons(new Button[] { btAtividade, btDisciplina });
 
@@ -206,7 +231,10 @@ public class Menu {
 	private void setConfigButtons(Button[] buttons) {
 
 		for (Button button : buttons) {
-			button.setStyle("-fx-background-color: #1D5959;");
+		
+			button.setBackground(azulEscuro);
+			
+			changeButtonIcon(button, false);
 		}
 
 	}
@@ -226,23 +254,73 @@ public class Menu {
 	public void setLblNomeUsuario(String nome) {
 		this.lblNome.setText(nome);
 	}
+	
+
+	public void changeButtonIcon(Button b, boolean selected) {
+		FileInputStream iconeBotao;
+		
+		///Se o botão foi selecionado muda os ícones para a versão escura
+		if(selected) {
+			try {	
+				if((b.getText().equals("Atividade"))){
+					 iconeBotao = new FileInputStream("src\\view\\img\\pencil - azul.png");
+					 b.setGraphic(new ImageView(new Image(iconeBotao, 25, 25, true, false)));
+					 
+				}else {
+					 iconeBotao = new FileInputStream("src\\view\\img\\book - azul.png");
+					 b.setGraphic(new ImageView(new Image(iconeBotao, 25, 25, true, false)));
+				}
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}		
+		}else {
+			try {	
+				if((b.getText().equals("Atividade"))){
+					 iconeBotao = new FileInputStream("src\\view\\img\\pencil - branco.png");
+					 b.setGraphic(new ImageView(new Image(iconeBotao, 25, 25, true, false)));
+					 
+				}else {
+					 iconeBotao = new FileInputStream("src\\view\\img\\book - branco.png");
+					 b.setGraphic(new ImageView(new Image(iconeBotao, 25, 25, true, false)));
+				}
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+
 
 	public void currentScreen(Button button) {
-
 		clearCurrentScreen();
 
-		button.setStyle(
-				"-fx-cursor: hand; -fx-font-size: 1.8em ; -fx-background-color: #53BDBE; -fx-font-weight: bolder;");
+
+		button.setStyle("-fx-cursor: hand; -fx-background-color: #53BDBE; -fx-font-size: 1.8em ; -fx-font-weight: bolder;");
+		button.setTextFill(Color.web("#1D5959"));
+		
+		changeButtonIcon(button, true);
+
+
 		button.setPrefWidth(200);
 	}
 
 	private void clearCurrentScreen() {
 
-		Button[] buttons = { btAtividade, btDisciplina };
+		
+		Button[] buttons = {btAtividade, btDisciplina};
 
 		for (Button button : buttons) {
-			button.setStyle(
-					"-fx-cursor: hand; -fx-font-size: 1.6em; -fx-font-weight: bolder; -fx-background-color: #1D5959;");
+
+			button.setBackground(azulEscuro);
+
+			button.setStyle("-fx-cursor: hand; -fx-font-size: 1.6em; -fx-font-weight: bolder;");
+			button.setTextFill(Color.web("#F4F4F4"));
+			changeButtonIcon(button, false);
+
+			
 		}
 	}
 
