@@ -1,23 +1,17 @@
 package view;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.sun.javafx.collections.ObservableListWrapper;
-
+import controller.AtividadeController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import view.card.ICard;
+import view.card.tarefa.CardTarefaHorizontal;
 
 public class Atividade {
 
@@ -45,7 +39,9 @@ public class Atividade {
 	
 	private ScrollPane scrollAtividade;
 	
-	private TilePane tileAtividade;
+	private VBox vboxAtividade;
+	
+	private AtividadeController control = new AtividadeController(this);
 	
 	public Atividade(BorderPane border) {
 		this.borderPrincipal = border;
@@ -67,26 +63,31 @@ public class Atividade {
 		
 		initScrollAtividade();
 
-		initTileAtividade();
+		initVboxAtividade();
 		
 		initEventResposivel();
+		
+		control.addCards();
+		
+		
 
 	}
 
-	private void initTileAtividade() {
 	
-		tileAtividade = new TilePane();
-		tileAtividade.setPrefColumns(1);
-		tileAtividade.setStyle("-fx-background-color: #D9D6D6;");
 
-		scrollAtividade.setContent(tileAtividade);
+	private void initVboxAtividade() {
+	
+		vboxAtividade = new VBox(10);
+		vboxAtividade.setPadding(new Insets(15));
+		vboxAtividade.setStyle("-fx-background-color: #D9D6D6;");
+
+		scrollAtividade.setContent(vboxAtividade);
 		
 	}
 
 	private void initScrollAtividade() {
 		
 		scrollAtividade = new ScrollPane();
-		
 		
 		scrollAtividade.setStyle("-fx-background-color: #D9D6D6;");
 		
@@ -195,6 +196,27 @@ public class Atividade {
 		return borderPrincipal;
 	}
 	
+	public void addCardAtvidade(CardTarefaHorizontal card) {
+		
+		initEventCard(card);
+
+		vboxAtividade.getChildren().add(card.getCard());
+	}
+
+	private void initEventCard(CardTarefaHorizontal card) {
+		
+		gridFiltro.widthProperty().addListener((x) -> {
+			
+			if(borderPrincipal.getWidth() > 800) {
+				card.getHboxPrincipal().setMinWidth(gridFiltro.getWidth()-10);
+			}else {
+				card.getHboxPrincipal().setMinWidth(800);
+			}
+			
+		});
+		
+	}
+
 	
 	
 	
