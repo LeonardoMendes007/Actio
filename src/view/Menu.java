@@ -195,8 +195,8 @@ private void initEvents() {
 
 		lblActio.setStyle("-fx-cursor: hand;");
 		lblActio.setPrefWidth(200);
-		lblActio.setPrefHeight(50);
-		lblActio.setAlignment(Pos.BOTTOM_CENTER);
+		lblActio.setPrefHeight(80);
+		lblActio.setAlignment(Pos.CENTER);
 	}
 
 	private void initGridLateralCentral() {

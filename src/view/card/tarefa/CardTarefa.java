@@ -10,9 +10,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
@@ -33,12 +37,17 @@ public class CardTarefa implements ICard {
 
 	private Label lblNumDeDias;
 
-	public CardTarefa(String titulo, String legenda, String disciplina, Date prazo, boolean group) {
+	private Color corDisciplina;
+	
+	public CardTarefa(String titulo, String legenda, String disciplina,String corHexa, Date prazo,  boolean group) {
 
+		corDisciplina = Color.web(corHexa);
+		
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(280, 150);
-		this.borderPrincipal.setStyle("-fx-background-color: #9DC4FF; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
-        this.borderPrincipal.setPadding(new Insets(5));
+		this.borderPrincipal.setStyle("-fx-background-color: "+corHexa+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		//this.borderPrincipal.setBackground(new Background(new BackgroundFill(corDisciplina, CornerRadii.EMPTY, Insets.EMPTY)));
+		this.borderPrincipal.setPadding(new Insets(5));
 
 	
         
@@ -57,14 +66,17 @@ public class CardTarefa implements ICard {
 	private void initPrazoDeEntrega(Date prazo) {
 		
 	    lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
-		lblNumDeDias = new Label("Faltam " + 2 + " dias");
+	    lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
+	    
+	    lblNumDeDias = new Label("Faltam " + 2 + " dias");
+		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
 		
-		lblDataDeEntrega.setAlignment(Pos.CENTER_RIGHT);
 		
-		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.NORMAL);
+		lblDataDeEntrega.setAlignment(Pos.TOP_RIGHT);
+		
+		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12, FontWeight.NORMAL);
 
-		
 		GridPane gridData = new GridPane();
 		
 		gridData.add(lblDataDeEntrega, 0, 0);
@@ -105,25 +117,30 @@ public class CardTarefa implements ICard {
 
 	private void initDisciplina(String disciplina) {
 
+
+		
 		lblDisciplina = new Label(disciplina);
-		Util.setFontePadrao(new Label[] { lblDisciplina }, 12, FontWeight.LIGHT);
+		Util.setFontePadrao(new Label[] { lblDisciplina }, 12, FontWeight.NORMAL);
 
 		lblDisciplina.setPadding(new Insets(5));
 		lblDisciplina.setStyle(lblDisciplina.getStyle()
 				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px; ");
 
 
+		lblDisciplina.setTextFill(corDisciplina);
 
 		borderPrincipal.setBottom(lblDisciplina);
 		borderPrincipal.setAlignment(lblDisciplina, Pos.CENTER);
 
-	}
+	}  
 
 	private void initCentroCard(String titulo, String legenda) {
 
 		lblTitulo = new Label(titulo);
+		lblTitulo.setTextFill(Color.web("#000000", 0.5));
 		
 		lblLegenda = new Label(legenda);
+		lblLegenda.setTextFill(Color.web("#000000", 0.5));
 		
 		Util.setFontePadrao(new Label[] { lblTitulo }, 15, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblLegenda }, 10, FontWeight.LIGHT);
@@ -132,7 +149,7 @@ public class CardTarefa implements ICard {
 		GridPane gridInterno = new GridPane();
 		gridInterno.add(lblTitulo, 0, 0);
 		gridInterno.add(lblLegenda, 0, 1);
-        gridInterno.setPadding(new Insets(0, 0, 0, 10));
+        gridInterno.setPadding(new Insets(6, 0, 0, 10));
 		
 		borderPrincipal.setCenter(gridInterno);
 		borderPrincipal.setAlignment(gridInterno, Pos.BOTTOM_LEFT);

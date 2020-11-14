@@ -4,12 +4,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +22,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 import view.Util;
 import view.card.ICard;
 
@@ -39,12 +46,16 @@ public class CardTarefaHorizontal implements ICard {
 	
 	private GridPane gridData;
 
-	public CardTarefaHorizontal(String titulo, String legenda, String disciplina, Date prazo, boolean group) {
+	private Color corDisciplina;
+	
+	public CardTarefaHorizontal(String titulo, String legenda, String disciplina, String corHexa, Date prazo, boolean group) {
 
+		corDisciplina = Color.web(corHexa);
+		
 		this.hboxPrincipal = new HBox(15);
 		this.hboxPrincipal.setPrefSize(500, 50);
 		this.hboxPrincipal.setStyle(
-				"-fx-background-color: #9DC4FF; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+				"-fx-background-color: "+corHexa +"; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
         this.hboxPrincipal.setPadding(new Insets(5));
         
         verificarGroup(group);
@@ -54,6 +65,8 @@ public class CardTarefaHorizontal implements ICard {
 		initDisciplina(disciplina);
 		
 		initPrazoDeEntrega(prazo);
+		
+		initEvent();
 		
 		initReponsivelCar();
 	}
@@ -77,12 +90,18 @@ public class CardTarefaHorizontal implements ICard {
 	private void initPrazoDeEntrega(Date prazo) {
 		
 	    lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
-		lblNumDeDias = new Label("Faltam " + 2 + " dias");
+		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
+
+	    lblNumDeDias = new Label("Faltam " + 2 + " dias");
+	    lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
+	    
+		lblDataDeEntrega.setAlignment(Pos.CENTER);
+		lblNumDeDias.setAlignment(Pos.CENTER);
 		
-		lblDataDeEntrega.setAlignment(Pos.CENTER_RIGHT);
-		lblNumDeDias.setAlignment(Pos.CENTER_RIGHT);
-		
-		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.NORMAL);
+		    
+		  
+			
+		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12, FontWeight.NORMAL);
 
 		
@@ -117,8 +136,8 @@ public class CardTarefaHorizontal implements ICard {
 			Image imagem = new Image(new FileInputStream(path));
 
 			ivGroup = new ImageView(imagem);
-			ivGroup.setFitWidth(40.0);
-			ivGroup.setFitHeight(40.0);
+			ivGroup.setFitWidth(35.0);
+			ivGroup.setFitHeight(35.0);
 			hboxPrincipal.getChildren().add(ivGroup);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -131,6 +150,8 @@ public class CardTarefaHorizontal implements ICard {
 	private void initDisciplina(String disciplina) {
 
 		lblDisciplina = new Label(disciplina);
+		lblDisciplina.setTextFill(Color.web("#000000", 0.5));
+		
 		Util.setFontePadrao(new Label[] { lblDisciplina }, 11, FontWeight.NORMAL);
 
 		lblDisciplina.setPadding(new Insets(5));
@@ -138,6 +159,7 @@ public class CardTarefaHorizontal implements ICard {
 		lblDisciplina.setStyle(lblDisciplina.getStyle()
 				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px;");
 
+		lblDisciplina.setTextFill(corDisciplina);
 		hboxPrincipal.getChildren().add(lblDisciplina);
 
 	}
@@ -146,7 +168,10 @@ public class CardTarefaHorizontal implements ICard {
 
 		lblTitulo = new Label(titulo);
 		lblTitulo.setPadding(new Insets(0, 0, 0, 10));
+		lblTitulo.setTextFill(Color.web("#000000", 0.5));
+		
 		lblLegenda = new Label(legenda);
+		lblLegenda.setTextFill(Color.web("#000000", 0.5));
 
 		Util.setFontePadrao(new Label[] { lblTitulo }, 16, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblLegenda }, 10, FontWeight.LIGHT);
@@ -157,6 +182,34 @@ public class CardTarefaHorizontal implements ICard {
 	private void initEvent() {
 		hboxPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblTitulo.getText()));
 
+		ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(0.0);
+         
+        
+        hboxPrincipal.setEffect(colorAdjust);
+        
+		hboxPrincipal.setOnMouseEntered((x) -> {
+ 
+             Timeline fadeIN = new Timeline(
+                     new KeyFrame(Duration.millis(0), 
+                             new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
+                             new KeyFrame(Duration.millis(500), new KeyValue(colorAdjust.brightnessProperty(), -0.3, Interpolator.LINEAR)
+                             ));
+    
+       
+             fadeIN.play();
+	          
+		});
+		
+		hboxPrincipal.setOnMouseExited((x) -> {
+			 Timeline fadeOUT = new Timeline(
+                     new KeyFrame(Duration.millis(0), 
+                             new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
+                             new KeyFrame(Duration.millis(500), new KeyValue(colorAdjust.brightnessProperty(), 0, Interpolator.LINEAR)
+                             ));
+
+             fadeOUT.play();
+		});
 	}
 
 	public HBox getHboxPrincipal() {

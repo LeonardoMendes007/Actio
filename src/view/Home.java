@@ -196,7 +196,7 @@ public class Home {
 	private void initLabels() {
 
 		lblAtividade = new Label("Atividades");
-		lblNotificacoes = new Label("Notificacoes");
+		lblNotificacoes = new Label("Notificações");
 		lblCalendario = new Label("Calendario");
 
 		lblAtividade.setPadding(new Insets(0, 0, 0, 10));

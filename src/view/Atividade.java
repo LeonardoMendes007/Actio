@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import view.card.ICard;
 import view.card.tarefa.CardTarefaHorizontal;
@@ -120,7 +121,7 @@ public class Atividade {
 		cbDisciplina = new ComboBox<>();
 
 		cbStatus.getItems().addAll("Aberto","Fechado");
-		cbPessoas.getItems().addAll("Uma","Duas","Três","Quatro","Cinco");
+		cbPessoas.getItems().addAll("Individual", "Grupo");
 		cbDisciplina.getItems().addAll("Banco de Dados","Programação orientada a disgraça");
 		
 		gridFiltro.add(cbStatus, 1, 1);
@@ -135,13 +136,18 @@ public class Atividade {
 		lblDisciplina = new Label("Disciplina");
 		lblPessoas = new Label("Pessoas");
 		
+		lblFiltro.setTextFill(Color.WHITE);
+		lblStatus.setTextFill(Color.WHITE);
+		lblDisciplina.setTextFill(Color.WHITE);
+		lblPessoas.setTextFill(Color.WHITE);
+		
 		lblFiltro.setAlignment(Pos.CENTER_LEFT);
 
 		lblFiltro.setMinWidth(140);
 
-		lblFiltro.setPadding(new Insets(-40, 0, 0, 0));
+		lblFiltro.setPadding(new Insets(-25, 0, 0, 0));
 		
-		Util.setFontePadrao(new Label[] {lblFiltro}, 25, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] {lblFiltro}, 20, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblPessoas}, 15, FontWeight.NORMAL);
 		
 		gridFiltro.add(lblFiltro, 0, 1);
