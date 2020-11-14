@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
 
@@ -36,10 +37,11 @@ public class CardTarefa implements ICard {
 
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(280, 150);
-		this.borderPrincipal.setStyle(
-				"-fx-background-color: #9DC4FF; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		this.borderPrincipal.setStyle("-fx-background-color: #9DC4FF; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
         this.borderPrincipal.setPadding(new Insets(5));
-		
+
+	
+        
 		paneGroupEPrazo = new Pane();
 		borderPrincipal.setTop(paneGroupEPrazo);
 		
@@ -59,8 +61,8 @@ public class CardTarefa implements ICard {
 		
 		lblDataDeEntrega.setAlignment(Pos.CENTER_RIGHT);
 		
-		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12);
-		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12);
+		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12, FontWeight.NORMAL);
 
 		
 		GridPane gridData = new GridPane();
@@ -104,11 +106,13 @@ public class CardTarefa implements ICard {
 	private void initDisciplina(String disciplina) {
 
 		lblDisciplina = new Label(disciplina);
-		Util.setFontePadrao(new Label[] { lblDisciplina }, 12);
+		Util.setFontePadrao(new Label[] { lblDisciplina }, 12, FontWeight.LIGHT);
 
 		lblDisciplina.setPadding(new Insets(5));
 		lblDisciplina.setStyle(lblDisciplina.getStyle()
-				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px;");
+				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px; ");
+
+
 
 		borderPrincipal.setBottom(lblDisciplina);
 		borderPrincipal.setAlignment(lblDisciplina, Pos.CENTER);
@@ -118,10 +122,12 @@ public class CardTarefa implements ICard {
 	private void initCentroCard(String titulo, String legenda) {
 
 		lblTitulo = new Label(titulo);
+		
 		lblLegenda = new Label(legenda);
-
-		Util.setFontePadrao(new Label[] { lblTitulo }, 16);
-		Util.setFontePadrao(new Label[] { lblLegenda }, 12);
+		
+		Util.setFontePadrao(new Label[] { lblTitulo }, 15, FontWeight.BOLD);
+		Util.setFontePadrao(new Label[] { lblLegenda }, 10, FontWeight.LIGHT);
+		
 
 		GridPane gridInterno = new GridPane();
 		gridInterno.add(lblTitulo, 0, 0);

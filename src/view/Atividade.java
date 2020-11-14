@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 import view.card.ICard;
 import view.card.tarefa.CardTarefaHorizontal;
 
@@ -140,8 +141,8 @@ public class Atividade {
 
 		lblFiltro.setPadding(new Insets(-40, 0, 0, 0));
 		
-		Util.setFontePadrao(new Label[] {lblFiltro}, 25);
-		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblPessoas}, 15);
+		Util.setFontePadrao(new Label[] {lblFiltro}, 25, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblPessoas}, 15, FontWeight.NORMAL);
 		
 		gridFiltro.add(lblFiltro, 0, 1);
 		gridFiltro.add(lblStatus, 1, 0);

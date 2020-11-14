@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -33,6 +34,10 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -158,17 +163,7 @@ public class Login extends Application {
 	
 	
 	private void setAnimation(Node p) {
-//		Timeline timeline = new Timeline();
-//		timeline.setCycleCount(Timeline.);
-//		timeline.setAutoReverse(false);
-//		
-//		
-//		p.setLayoutY(p.getLayoutY() + 500);
-//		final KeyValue kv = new KeyValue(p.layoutYProperty(), 0);
-//		final KeyFrame kf = new KeyFrame(Duration.millis(3000), kv);
-//		timeline.getKeyFrames().add(kf);
-//		timeline.play();
-		
+	
 		FadeTransition ft = new FadeTransition(Duration.millis(2000), p);
 		ft.setFromValue(0);
 		ft.setToValue(1);
@@ -219,21 +214,25 @@ public class Login extends Application {
 		
 	
 
-		setFontePadrao(new Label[] {lblEmail,lblSenha}, 20);
-		setFontePadrao(new Label[] {lblLogin}, 40);
-		setFontePadrao(new Label[] {lblErro}, 15);
-		setFontePadrao(new Button[] {btLogar}, 25);
-		
+		setFontePadrao(new Label[] {lblEmail,lblSenha}, 20, FontWeight.NORMAL);
+		setFontePadrao(new Label[] {lblLogin}, 40, FontWeight.BOLD);
+		setFontePadrao(new Label[] {lblErro}, 15, FontWeight.LIGHT);
+		setFontePadrao(new Button[] {btLogar}, 25, FontWeight.BOLD);
+	
 		initTextFields(new TextField[] { txtEmail, txtSenha });
 
 	}
 
-	private void setFontePadrao(Node[] texts, int tamanho) {
+	private void setFontePadrao(Node[] texts, int tamanho, FontWeight peso) {
+
 		
 		for (Node text : texts) {
 			text.setStyle("-fx-font-family: Poppins; "
-					+ "-fx-font-size: " + tamanho + " ;");
+					+ "-fx-font-size: " + tamanho + " ;"
+					+"-fx-font-weight: " +peso.getWeight() +";");
+	
 		}
+		
 	}
 
 	private void initBtLogar() {
@@ -322,7 +321,7 @@ public class Login extends Application {
 
 		}
 
-		setFontePadrao(textFields, 20);
+		setFontePadrao(textFields, 20, FontWeight.NORMAL);
 	}
 
 	public static void main(String[] args) {

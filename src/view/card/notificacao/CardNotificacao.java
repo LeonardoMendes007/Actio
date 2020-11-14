@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
 
@@ -46,7 +47,7 @@ public class CardNotificacao implements ICard{
 		
 		lblData = new Label(data.getDay() + "/" + data.getMonth() + " - " + "12:50");
 		
-		Util.setFontePadrao(new Label[] { lblClique }, 10);
+		Util.setFontePadrao(new Label[] { lblClique }, 10, FontWeight.NORMAL);
 		
 		borderPrincipal.setTop(lblData);
 		borderPrincipal.setAlignment(lblData, Pos.TOP_RIGHT);
@@ -58,7 +59,7 @@ public class CardNotificacao implements ICard{
 		
 		lblClique = new Label(clique);
 		
-		Util.setFontePadrao(new Label[] { lblClique }, 12);
+		Util.setFontePadrao(new Label[] { lblClique }, 12, FontWeight.LIGHT);
 		
 		lblClique.setStyle(lblClique.getStyle()
 				+ "-fx-background-color: rgba(0, 0, 0, 1); -fx-background-radius: 10px; -fx-border-radius: 10px;");
@@ -72,7 +73,7 @@ public class CardNotificacao implements ICard{
 		
 		lblTitulo = new Label(titulo);
 		
-		Util.setFontePadrao(new Label[] { lblTitulo }, 12);
+		Util.setFontePadrao(new Label[] { lblTitulo }, 12, FontWeight.NORMAL);
 		
 		borderPrincipal.setCenter(lblTitulo);
 		

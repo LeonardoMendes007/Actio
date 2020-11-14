@@ -4,6 +4,7 @@ package view;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.text.FontWeight;
 
 public class Util {
 	
@@ -17,11 +18,16 @@ public class Util {
 
 	}
     
-    public static void setFontePadrao(Node[] texts, int tamanho) {
+	public static void  setFontePadrao(Node[] texts, int tamanho, FontWeight peso) {
 
+		
 		for (Node text : texts) {
-			text.setStyle("-fx-font-weight: bolder; -fx-font-family: Poppins; " + "-fx-font-size: " + tamanho + " ;");
+			text.setStyle("-fx-font-family: Poppins; "
+					+ "-fx-font-size: " + tamanho + " ;"
+					+"-fx-font-weight: " +peso.getWeight() +";");
+	
 		}
+		
 	}
 
 

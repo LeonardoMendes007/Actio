@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
 
@@ -81,8 +82,8 @@ public class CardTarefaHorizontal implements ICard {
 		lblDataDeEntrega.setAlignment(Pos.CENTER_RIGHT);
 		lblNumDeDias.setAlignment(Pos.CENTER_RIGHT);
 		
-		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12);
-		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12);
+		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12, FontWeight.NORMAL);
 
 		
 		gridData = new GridPane();
@@ -130,7 +131,7 @@ public class CardTarefaHorizontal implements ICard {
 	private void initDisciplina(String disciplina) {
 
 		lblDisciplina = new Label(disciplina);
-		Util.setFontePadrao(new Label[] { lblDisciplina }, 11);
+		Util.setFontePadrao(new Label[] { lblDisciplina }, 11, FontWeight.NORMAL);
 
 		lblDisciplina.setPadding(new Insets(5));
 		lblDisciplina.setAlignment(Pos.CENTER);
@@ -147,8 +148,8 @@ public class CardTarefaHorizontal implements ICard {
 		lblTitulo.setPadding(new Insets(0, 0, 0, 10));
 		lblLegenda = new Label(legenda);
 
-		Util.setFontePadrao(new Label[] { lblTitulo }, 16);
-		Util.setFontePadrao(new Label[] { lblLegenda }, 10);
+		Util.setFontePadrao(new Label[] { lblTitulo }, 16, FontWeight.BOLD);
+		Util.setFontePadrao(new Label[] { lblLegenda }, 10, FontWeight.LIGHT);
 		
         hboxPrincipal.getChildren().addAll(lblTitulo, lblLegenda);
 	}

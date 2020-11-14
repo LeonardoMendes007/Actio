@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
 
@@ -38,8 +39,8 @@ public class CardDisciplina implements ICard{
 		lblProfessor = new Label(professor);
 		lblProfessor.setPadding(new Insets(0, 0, 10, 15));
 		
-		Util.setFontePadrao(new Label[] {lblDisciplina}, 19);
-		Util.setFontePadrao(new Label[] {lblProfessor}, 14);
+		Util.setFontePadrao(new Label[] {lblDisciplina}, 19, FontWeight.BOLD);
+		Util.setFontePadrao(new Label[] {lblProfessor}, 14, FontWeight.LIGHT);
 		
 		borderPrincipal.setCenter(lblDisciplina);
 		borderPrincipal.setBottom(lblProfessor);
