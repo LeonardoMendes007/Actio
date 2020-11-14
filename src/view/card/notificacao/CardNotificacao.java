@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
@@ -30,7 +31,7 @@ public class CardNotificacao implements ICard{
 	public CardNotificacao(String titulo, String clique, Date data) {
 
 		this.borderPrincipal = new BorderPane();
-		this.borderPrincipal.setPrefSize(240, 60);
+		this.borderPrincipal.setPrefSize(260, 60);
 		this.borderPrincipal.setStyle(
 				"-fx-background-color: #C2C2C2; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
         this.borderPrincipal.setPadding(new Insets(5));
@@ -47,7 +48,8 @@ public class CardNotificacao implements ICard{
 		
 		lblData = new Label(data.getDay() + "/" + data.getMonth() + " - " + "12:50");
 		
-		Util.setFontePadrao(new Label[] { lblClique }, 10, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] { lblData }, 10, FontWeight.LIGHT);
+		lblData.setTextFill(Color.web("#000000", 0.5));
 		
 		borderPrincipal.setTop(lblData);
 		borderPrincipal.setAlignment(lblData, Pos.TOP_RIGHT);
@@ -59,10 +61,13 @@ public class CardNotificacao implements ICard{
 		
 		lblClique = new Label(clique);
 		
-		Util.setFontePadrao(new Label[] { lblClique }, 12, FontWeight.LIGHT);
+		Util.setFontePadrao(new Label[] { lblClique }, 11, FontWeight.BOLD);
 		
 		lblClique.setStyle(lblClique.getStyle()
-				+ "-fx-background-color: rgba(0, 0, 0, 1); -fx-background-radius: 10px; -fx-border-radius: 10px;");
+				+ "-fx-background-color: rgba(0, 0, 0, 0.2); -fx-background-radius: 10px; -fx-border-radius: 10px;");
+				
+		lblClique.setPadding(new Insets(1, 7, 1, 7));
+		lblClique.setTextFill(Color.web("#1D5959"));
 		
 		borderPrincipal.setBottom(lblClique);
 		borderPrincipal.setAlignment(lblClique, Pos.CENTER);
@@ -72,10 +77,13 @@ public class CardNotificacao implements ICard{
 	private void initLabelTitulo(String titulo) {
 		
 		lblTitulo = new Label(titulo);
+		lblTitulo.setPadding(new Insets(5, 10, 10, 10));
+
+		//lblTitulo.setMaxWidth(220);
 		
 		Util.setFontePadrao(new Label[] { lblTitulo }, 12, FontWeight.NORMAL);
 		
-		borderPrincipal.setCenter(lblTitulo);
+		borderPrincipal.setLeft(lblTitulo);
 		
 	}
 

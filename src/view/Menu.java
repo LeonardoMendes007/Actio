@@ -21,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
 
 public class Menu {
 
@@ -31,12 +32,14 @@ public class Menu {
 	private BorderPane borderConteudo;
 	private GridPane grid;
 	private GridPane gridUsuario;
+	private GridPane gridAtrrbUsuario;
 	private Label lblActio;
 	private Button btAtividade;
 	private Button btDisciplina;
 	private Button btTurma;
 	private ImageView ivUser;
 	private Label lblNome;
+	private Label lblTipoUsuario;
 	private Background azulEscuro;
 	private Background azulClaro;
 	
@@ -78,13 +81,21 @@ public class Menu {
 			Image imagem = new Image(new FileInputStream("src\\view\\img\\icon2.png"));
 		
 
-		ivUser = new ImageView(imagem);
-		ivUser.setFitWidth(50.0);
-		ivUser.setFitHeight(50.0);
-		ivUser.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px;");
-		lblNome = new Label("Fulano");
-		lblNome.setStyle("-fx-cursor: hand; -fx-font-size: 1.4em ;");
-		
+			ivUser = new ImageView(imagem);
+			ivUser.setFitWidth(50.0);
+			ivUser.setFitHeight(50.0);
+			ivUser.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px;");
+			
+			lblNome = new Label("Fulano");
+			lblNome.setStyle("-fx-cursor: hand;");
+			Util.setFontePadrao(new Label [] { lblNome }, 15, FontWeight.NORMAL);
+
+			lblTipoUsuario = new Label("Aluno");
+			lblTipoUsuario.setStyle("-fx-cursor: hand;");
+			lblTipoUsuario.setTextFill(Color.web("#1D5959"));
+			Util.setFontePadrao(new Label [] { lblTipoUsuario }, 15, FontWeight.BOLD);
+
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -121,17 +132,27 @@ public class Menu {
 		gridUsuario = new GridPane();
 		gridUsuario.setAlignment(Pos.CENTER_RIGHT);
 		gridUsuario.setPadding(new Insets(5, 15, 10, 10));
-		gridUsuario.setHgap(15);
+		gridUsuario.setHgap(0);
 
-		gridUsuario.add(lblNome, 0, 0);
+		//Grid com o nome e o tipo do usuário
+		gridAtrrbUsuario = new GridPane();
+		gridAtrrbUsuario.setAlignment(Pos.CENTER_RIGHT);
+		gridAtrrbUsuario.setPadding(new Insets(0, 10, 0, 0));
+		gridAtrrbUsuario.setVgap(0);
+
+		gridAtrrbUsuario.add(lblNome, 0, 0);
+		gridAtrrbUsuario.add(lblTipoUsuario, 0, 1);
+		
+		
+		gridUsuario.add(gridAtrrbUsuario, 0, 0);
 		gridUsuario.add(ivUser, 1, 0);
-
+		
 		borderCentral.setTop(gridUsuario);
 
 	}
 
 	
-private void initEvents() {
+	private void initEvents() {
 
 		lblActio.setOnMouseClicked(x -> {
 			menuController.btHomeAction();
