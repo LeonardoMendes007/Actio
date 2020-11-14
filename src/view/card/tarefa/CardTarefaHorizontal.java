@@ -61,9 +61,13 @@ public class CardTarefaHorizontal implements ICard {
 		
 		hboxPrincipal.widthProperty().addListener((x) -> {
 			
-		    lblTitulo.setMinWidth(hboxPrincipal.getWidth() * 0.18);
-		    lblLegenda.setMinWidth(hboxPrincipal.getWidth() * 0.29);
-		    lblDisciplina.setMinWidth(hboxPrincipal.getWidth() * 0.27);
+			double largura = hboxPrincipal.getWidth();
+			
+		    lblTitulo.setMinWidth(largura * 0.22);
+		    lblLegenda.setMinWidth(largura * 0.24);
+		    lblDisciplina.setMinWidth(largura * 0.26);
+		    lblDataDeEntrega.setMinWidth((largura - 70) * 0.15);
+		    lblNumDeDias.setMinWidth((largura - 70) * 0.15);
 		    
 		});
 		
@@ -74,7 +78,8 @@ public class CardTarefaHorizontal implements ICard {
 	    lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
 		lblNumDeDias = new Label("Faltam " + 2 + " dias");
 		
-		lblDataDeEntrega.setAlignment(Pos.CENTER);
+		lblDataDeEntrega.setAlignment(Pos.CENTER_RIGHT);
+		lblNumDeDias.setAlignment(Pos.CENTER_RIGHT);
 		
 		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12);
 		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12);

@@ -207,10 +207,10 @@ public class Atividade {
 		
 		gridFiltro.widthProperty().addListener((x) -> {
 			
-			if(borderPrincipal.getWidth() > 800) {
+			if(borderPrincipal.getWidth() > 830) {
 				card.getHboxPrincipal().setMinWidth(gridFiltro.getWidth()-10);
 			}else {
-				card.getHboxPrincipal().setMinWidth(800);
+				card.getHboxPrincipal().setMinWidth(830);
 			}
 			
 		});
