@@ -1,9 +1,9 @@
-package controller;
+package professor.controller;
 
 import java.util.Date;
 
 import professor.view.card.tarefa.CardTarefaHorizontal;
-import view.Atividade;
+import professor.view.Atividade;
 
 public class AtividadeController {
 

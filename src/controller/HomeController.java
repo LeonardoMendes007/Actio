@@ -2,16 +2,16 @@ package controller;
 
 import java.util.Date;
 
+import professor.view.card.tarefa.CardTarefa;
 import view.Home;
 import view.card.notificacao.CardNotificacao;
-import view.card.tarefa.CardTarefa;
 
 public class HomeController {
 
 	private Home home;
 
-	public HomeController(Home home) {
-		this.home = home;
+	public HomeController(Home home2) {
+		this.home = home2;
 	}
 
 	public void addCards() {

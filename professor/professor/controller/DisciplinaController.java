@@ -1,7 +1,7 @@
-package controller;
+package professor.controller;
 
+import professor.view.Disciplina;
 import professor.view.card.disciplina.CardDisciplina;
-import view.Disciplina;
 
 public class DisciplinaController {
 

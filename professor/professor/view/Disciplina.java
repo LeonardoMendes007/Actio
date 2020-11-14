@@ -1,8 +1,8 @@
-package view;
+package professor.view;
 
 
 
-import controller.DisciplinaController;
+import professor.controller.DisciplinaController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;

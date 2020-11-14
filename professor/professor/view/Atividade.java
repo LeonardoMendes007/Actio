@@ -1,6 +1,6 @@
-package view;
+package professor.view;
 
-import controller.AtividadeController;
+import professor.controller.AtividadeController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import professor.view.card.tarefa.CardTarefaHorizontal;
+import view.Util;
 import view.card.ICard;
 
 public class Atividade {

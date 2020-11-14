@@ -50,7 +50,11 @@ public class LoginController {
 
 		if (email.equals("a") && senha.equals("b")) {
 			Menu menu = new Menu(login.getScene());
-		} else {
+		}else if(email.equals("p") && senha.equals("p")){
+			professor.view.Menu menuProfessor = new professor.view.Menu(login.getScene());
+		}
+		
+		else {
 			login.setErro("Email ou Senha incorretos.");
 		}
 
