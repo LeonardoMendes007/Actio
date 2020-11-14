@@ -13,10 +13,15 @@ public class DisciplinaController {
 	
 	public void addCards() {
 		
-		String[][] professores = {{"Antonio Carvalho", "Programação\nOrientada a Ódio"}, {"Ricardo Satohi", "Lógica\nde Programação"}, {"Leandro Colevati", "Banco\nde Dados"}, {"Cristina", "Engenharia\nde Software II"}, {"Paulinho", "Sistemas\nda Informação"}};
+		String[][] professores = {
+				{"Antonio Carvalho", "Programação Orientada a Ódio", "#FF9DBA"}, 
+				{"Ricardo Satohi", "Lógica de Programação", "#9DC4FF"}, 
+				{"Leandro Colevati", "Banco de Dados", "#9DFFA1"}, 
+				{"Cristina", "Engenharia de Software II", "#FFDE9D"}, 
+				{"Paulinho", "Sistemas da Informação", "#FFBA9D"}};
 
 		for (int i = 0; i < professores.length; i++) {
-			CardDisciplina card = new CardDisciplina(330.0, 175.0, professores[i][1], professores[i][0]);
+			CardDisciplina card = new CardDisciplina(330.0, 175.0, professores[i][1], professores[i][0], professores[i][2]);
 			disciplina.addCard(card);
 		}
 	}

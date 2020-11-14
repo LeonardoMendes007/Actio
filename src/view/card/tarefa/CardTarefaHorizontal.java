@@ -182,34 +182,7 @@ public class CardTarefaHorizontal implements ICard {
 	private void initEvent() {
 		hboxPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblTitulo.getText()));
 
-		ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setBrightness(0.0);
-         
-        
-        hboxPrincipal.setEffect(colorAdjust);
-        
-		hboxPrincipal.setOnMouseEntered((x) -> {
- 
-             Timeline fadeIN = new Timeline(
-                     new KeyFrame(Duration.millis(0), 
-                             new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
-                             new KeyFrame(Duration.millis(500), new KeyValue(colorAdjust.brightnessProperty(), -0.3, Interpolator.LINEAR)
-                             ));
-    
-       
-             fadeIN.play();
-	          
-		});
-		
-		hboxPrincipal.setOnMouseExited((x) -> {
-			 Timeline fadeOUT = new Timeline(
-                     new KeyFrame(Duration.millis(0), 
-                             new KeyValue(colorAdjust.brightnessProperty(), colorAdjust.brightnessProperty().getValue(), Interpolator.LINEAR)), 
-                             new KeyFrame(Duration.millis(500), new KeyValue(colorAdjust.brightnessProperty(), 0, Interpolator.LINEAR)
-                             ));
-
-             fadeOUT.play();
-		});
+		Util.hoverFade(hboxPrincipal);
 	}
 
 	public HBox getHboxPrincipal() {

@@ -41,6 +41,8 @@ public class CardNotificacao implements ICard{
 		initLabelClique(clique);
 		
 		initLabelData(data);
+		
+		initEvents();
 	}
 
 	
@@ -87,6 +89,9 @@ public class CardNotificacao implements ICard{
 		
 	}
 
+	private void initEvents() {
+		Util.hoverSize(borderPrincipal);
+	}
 
 	@Override
 	public Node getCard() {

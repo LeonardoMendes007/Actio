@@ -188,6 +188,8 @@ public class Menu {
 			btDisciplina.setBackground(azulEscuro);
 		});
 		
+		
+		
 	}
 
 	private void initBorderPaneLeft() {

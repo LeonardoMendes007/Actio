@@ -73,6 +73,7 @@ public class Disciplina {
 		scrollDisciplina.setPrefSize(2000, 2000);
 		scrollDisciplina.setHbarPolicy(ScrollBarPolicy.NEVER);
 	
+		scrollDisciplina.setStyle("-fx-background-color:transparent;");
 	    gridDisciplina.add(scrollDisciplina, 0, 1);
 	}
 

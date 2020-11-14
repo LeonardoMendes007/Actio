@@ -46,11 +46,8 @@ public class CardTarefa implements ICard {
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(280, 150);
 		this.borderPrincipal.setStyle("-fx-background-color: "+corHexa+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
-		//this.borderPrincipal.setBackground(new Background(new BackgroundFill(corDisciplina, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.borderPrincipal.setPadding(new Insets(5));
 
-	
-        
 		paneGroupEPrazo = new Pane();
 		borderPrincipal.setTop(paneGroupEPrazo);
 		
@@ -61,7 +58,10 @@ public class CardTarefa implements ICard {
 		verificarGroup(group);
 		
 		initPrazoDeEntrega(prazo);
+		
+		initEvent();
 	}
+	
 
 	private void initPrazoDeEntrega(Date prazo) {
 		
@@ -158,6 +158,7 @@ public class CardTarefa implements ICard {
 	private void initEvent() {
 		borderPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblTitulo.getText()));
 
+		Util.hoverFade(this.borderPrincipal);
 	}
 
 	@Override
