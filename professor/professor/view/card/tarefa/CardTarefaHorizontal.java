@@ -36,7 +36,7 @@ public class CardTarefaHorizontal implements ICard {
 
 	private Label lblTitulo;
 
-	private Label lblLegenda;
+	private Label lblTurma;
 
 	private Label lblDataDeEntrega;
 
@@ -78,7 +78,7 @@ public class CardTarefaHorizontal implements ICard {
 			double largura = hboxPrincipal.getWidth();
 			
 		    lblTitulo.setMinWidth(largura * 0.22);
-		    lblLegenda.setMinWidth(largura * 0.24);
+		    lblTurma.setMinWidth(largura * 0.24);
 		    lblDisciplina.setMinWidth(largura * 0.26);
 		    lblDataDeEntrega.setMinWidth((largura - 70) * 0.15);
 		    lblNumDeDias.setMinWidth((largura - 70) * 0.15);
@@ -167,16 +167,17 @@ public class CardTarefaHorizontal implements ICard {
 	private void initCentroCard(String titulo, String legenda) {
 
 		lblTitulo = new Label(titulo);
-		lblTitulo.setPadding(new Insets(0, 0, 0, 10));
+		lblTitulo.setPadding(new Insets(10, 0, 0, 10));
 		lblTitulo.setTextFill(Color.web("#000000", 0.5));
 		
-		lblLegenda = new Label(legenda);
-		lblLegenda.setTextFill(Color.web("#000000", 0.5));
+		lblTurma = new Label(legenda);
+		lblTurma.setPadding(new Insets(10, 0, 0, 0));
+		lblTurma.setTextFill(Color.web("#000000", 0.5));
 
 		Util.setFontePadrao(new Label[] { lblTitulo }, 16, FontWeight.BOLD);
-		Util.setFontePadrao(new Label[] { lblLegenda }, 10, FontWeight.LIGHT);
+		Util.setFontePadrao(new Label[] { lblTurma }, 16, FontWeight.BOLD);
 		
-        hboxPrincipal.getChildren().addAll(lblTitulo, lblLegenda);
+        hboxPrincipal.getChildren().addAll(lblTitulo, lblTurma);
 	}
 
 	private void initEvent() {

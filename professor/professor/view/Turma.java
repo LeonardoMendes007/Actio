@@ -147,7 +147,7 @@ public class Turma {
 	
 	private void initScrollTurma() {
 		scrollTurma = new ScrollPane();
-		scrollTurma.setStyle("-fx-background-color: #D7D7D7; -fx-vbar-policy : never;");
+		scrollTurma.setStyle("-fx-background-color: #D7D7D7;");
 
 		hBoxScroll.getChildren().add(scrollTurma);
 		hBoxScroll.setPadding(new Insets(10, 10, 10, 10));
@@ -170,7 +170,7 @@ public class Turma {
 		hBoxTurma = new HBox(10);
 		hBoxTurma.setStyle("-fx-background-color: #D7D7D7;");
 		hBoxTurma.setAlignment(Pos.CENTER);
-		hBoxTurma.setPadding(new Insets(0, 0, 0, 0));
+		hBoxTurma.setPadding(new Insets(0, 0, 20, 0));
 
 		scrollTurma.setContent(hBoxTurma);
 
