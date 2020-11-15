@@ -1,7 +1,7 @@
 package professor.view;
 
 import professor.controller.HomeController;
-import professor.view.card.disciplina.CardDisciplina;
+import professor.view.card.turma.CardTurma;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;

@@ -12,7 +12,7 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import professor.view.card.disciplina.CardDisciplina;
+import view.card.disciplina.CardDisciplina;
 
 public class Disciplina {
 

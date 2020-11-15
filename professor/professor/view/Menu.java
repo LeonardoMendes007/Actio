@@ -36,8 +36,8 @@ public class Menu {
 	private GridPane gridAtrrbUsuario;
 	private Label lblActio;
 	private Button btAtividade;
-	private Button btDisciplina;
-	private Button btTurma;
+	private Button btTurmas;
+
 	private ImageView ivUser;
 	private Label lblNome;
 	private Label lblTipoUsuario;
@@ -91,9 +91,9 @@ public class Menu {
 			lblNome.setStyle("-fx-cursor: hand;");
 			Util.setFontePadrao(new Label [] { lblNome }, 15, FontWeight.NORMAL);
 
-			lblTipoUsuario = new Label("Aluno");
+			lblTipoUsuario = new Label("Professor");
 			lblTipoUsuario.setStyle("-fx-cursor: hand;");
-			lblTipoUsuario.setTextFill(Color.web("#1D5959"));
+			lblTipoUsuario.setTextFill(Color.web("#F1862B"));
 			Util.setFontePadrao(new Label [] { lblTipoUsuario }, 15, FontWeight.BOLD);
 
 			
@@ -175,18 +175,18 @@ public class Menu {
 			btAtividade.setBackground(azulEscuro);
 		});
 
-		btDisciplina.setOnMouseClicked(x -> {
+		btTurmas.setOnMouseClicked(x -> {
 			menuController.btDisciplinaAction();
-			currentScreen(btDisciplina);
+			currentScreen(btTurmas);
 		});
 		
-		btDisciplina.setOnMouseEntered(x -> {
-			btDisciplina.setBackground(azulClaro);
+		btTurmas.setOnMouseEntered(x -> {
+			btTurmas.setBackground(azulClaro);
 			
 		});
 		
-		btDisciplina.setOnMouseExited(x -> {
-			btDisciplina.setBackground(azulEscuro);
+		btTurmas.setOnMouseExited(x -> {
+			btTurmas.setBackground(azulEscuro);
 		});
 		
 		
@@ -230,7 +230,7 @@ public class Menu {
 		grid.setStyle("-fx-background-color: #1D5959;");
 
 		grid.add(btAtividade, 0, 3);
-		grid.add(btDisciplina, 0, 4);
+		grid.add(btTurmas, 0, 4);
 
 	}
 
@@ -239,14 +239,14 @@ public class Menu {
 		//Seta as cores do fundo
 		
 		btAtividade = new Button("Atividade");
-		btDisciplina = new Button("Disciplina");
+		btTurmas = new Button("Turmas");
 
 		azulEscuro = new Background(new BackgroundFill(Color.web("#1D5959"), CornerRadii.EMPTY, Insets.EMPTY));
 		azulClaro  = new Background(new BackgroundFill(Color.web("#53BDBE"), CornerRadii.EMPTY, Insets.EMPTY));
 
-		setConfigButtons(new Button[] { btAtividade, btDisciplina });
+		setConfigButtons(new Button[] { btAtividade, btTurmas });
 
-		Util.initButtons(new Button[] { btAtividade, btDisciplina });
+		Util.initButtons(new Button[] { btAtividade, btTurmas });
 
 		clearCurrentScreen();
 
@@ -334,7 +334,7 @@ public class Menu {
 	private void clearCurrentScreen() {
 
 		
-		Button[] buttons = {btAtividade, btDisciplina};
+		Button[] buttons = {btAtividade, btTurmas};
 
 		for (Button button : buttons) {
 
