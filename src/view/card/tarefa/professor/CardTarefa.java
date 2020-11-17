@@ -1,4 +1,4 @@
-package view.card.tarefa;
+package view.card.tarefa.professor;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

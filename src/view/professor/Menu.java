@@ -1,9 +1,9 @@
-package professor.view;
+package view.professor;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import professor.controller.MenuController;
+import controller.professor.MenuController;
 import view.Util;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

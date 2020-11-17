@@ -1,7 +1,6 @@
-package professor.view;
+package view.professor;
 
-import professor.controller.HomeController;
-import professor.view.card.turma.CardTurma;
+import controller.professor.HomeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -14,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import view.card.ICard;
+import view.card.turma.CardTurma;
 
 public class Home {
 

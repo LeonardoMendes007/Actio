@@ -1,4 +1,4 @@
-package professor.view.card.turma;
+package view.card.turma;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

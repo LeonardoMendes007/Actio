@@ -1,12 +1,10 @@
-package professor.view;
+package view.professor;
 
 
-
-import professor.controller.TurmaController;
-import professor.view.card.turma.CardTurma;
 
 import java.util.ArrayList;
 
+import controller.professor.TurmaController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,6 +19,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.FontWeight;
 import view.Util;
+import view.card.turma.CardTurma;
 
 public class Turma {
 

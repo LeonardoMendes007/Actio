@@ -1,8 +1,8 @@
-package view;
+package view.aluno;
 
 
 
-import controller.DisciplinaController;
+import controller.aluno.DisciplinaController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;

@@ -1,9 +1,9 @@
-package professor.controller;
+package controller.aluno;
 
-import professor.view.Atividade;
-import professor.view.Turma;
-import professor.view.Home;
-import professor.view.Menu;
+import view.aluno.Atividade;
+import view.aluno.Disciplina;
+import view.aluno.Home;
+import view.aluno.Menu;
 
 public class MenuController {
 
@@ -29,7 +29,7 @@ public class MenuController {
 	public void btDisciplinaAction() {
 
 		clearChildren();
-		new Turma(menu.getBorderConteudo());
+		new Disciplina(menu.getBorderConteudo());
 
 	}
 

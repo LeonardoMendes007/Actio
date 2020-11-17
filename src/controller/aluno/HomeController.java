@@ -1,10 +1,10 @@
-package controller;
+package controller.aluno;
 
 import java.util.Date;
 
-import professor.view.card.tarefa.CardTarefa;
-import view.Home;
+import view.aluno.Home;
 import view.card.notificacao.CardNotificacao;
+import view.card.tarefa.professor.CardTarefa;
 
 public class HomeController {
 

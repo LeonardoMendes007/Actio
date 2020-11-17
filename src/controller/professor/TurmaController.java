@@ -1,7 +1,7 @@
-package professor.controller;
+package controller.professor;
 
-import professor.view.Turma;
-import professor.view.card.turma.CardTurma;
+import view.card.turma.CardTurma;
+import view.professor.Turma;
 
 public class TurmaController {
 

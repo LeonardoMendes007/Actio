@@ -1,6 +1,6 @@
-package professor.view;
+package view.aluno;
 
-import professor.controller.AtividadeController;
+import controller.aluno.AtividadeController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,9 +12,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
-import professor.view.card.tarefa.CardTarefaHorizontal;
 import view.Util;
 import view.card.ICard;
+import view.card.tarefa.professor.CardTarefaHorizontal;
 
 public class Atividade {
 
@@ -32,7 +32,7 @@ public class Atividade {
 	
 	private ComboBox<String> cbStatus;
 	
-	private Label lblTurma;
+	private Label lblPessoas;
 	
 	private ComboBox<String> cbPessoas;
 	
@@ -122,7 +122,7 @@ public class Atividade {
 		cbDisciplina = new ComboBox<>();
 
 		cbStatus.getItems().addAll("Aberto","Fechado");
-		cbPessoas.getItems().addAll("1° ADS - TARDE", "1° ADS - NOITE");
+		cbPessoas.getItems().addAll("Individual", "Grupo");
 		cbDisciplina.getItems().addAll("Banco de Dados","Programação orientada a disgraça");
 		
 		gridFiltro.add(cbStatus, 1, 1);
@@ -135,12 +135,12 @@ public class Atividade {
 		lblFiltro = new Label("Filtrar por:");
 		lblStatus = new Label("Status");
 		lblDisciplina = new Label("Disciplina");
-		lblTurma = new Label("Turma");
+		lblPessoas = new Label("Pessoas");
 		
 		lblFiltro.setTextFill(Color.WHITE);
 		lblStatus.setTextFill(Color.WHITE);
 		lblDisciplina.setTextFill(Color.WHITE);
-		lblTurma.setTextFill(Color.WHITE);
+		lblPessoas.setTextFill(Color.WHITE);
 		
 		lblFiltro.setAlignment(Pos.CENTER_LEFT);
 
@@ -149,16 +149,16 @@ public class Atividade {
 		lblFiltro.setPadding(new Insets(-25, 0, 0, 0));
 		
 		Util.setFontePadrao(new Label[] {lblFiltro}, 20, FontWeight.BOLD);
-		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblTurma}, 15, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblPessoas}, 15, FontWeight.NORMAL);
 		
 		gridFiltro.add(lblFiltro, 0, 1);
 		gridFiltro.add(lblStatus, 1, 0);
-		gridFiltro.add(lblTurma, 2, 0);
+		gridFiltro.add(lblPessoas, 2, 0);
 		gridFiltro.add(lblDisciplina, 3, 0);
 		
 		gridFiltro.setHalignment(lblDisciplina, HPos.CENTER);
 		gridFiltro.setHalignment(lblStatus, HPos.CENTER);
-		gridFiltro.setHalignment(lblTurma, HPos.CENTER);
+		gridFiltro.setHalignment(lblPessoas, HPos.CENTER);
 		
 	}
 

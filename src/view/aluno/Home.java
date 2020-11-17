@@ -1,6 +1,6 @@
-package view;
+package view.aluno;
 
-import controller.HomeController;
+import controller.aluno.HomeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,8 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import professor.view.card.turma.CardTurma;
 import view.card.ICard;
+import view.card.turma.CardTurma;
 
 public class Home {
 
