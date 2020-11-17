@@ -1,9 +1,13 @@
 package view.professor;
 
+
+
 import controller.professor.AtividadeController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+
 import view.Util;
 import view.card.ICard;
 import view.card.tarefa.professor.CardTarefaHorizontal;
@@ -44,6 +49,8 @@ public class Atividade {
 	
 	private VBox vboxAtividade;
 	
+	private Button btCriarAtividade;
+	
 	private AtividadeController control = new AtividadeController(this);
 	
 	public Atividade(BorderPane border) {
@@ -68,6 +75,8 @@ public class Atividade {
 
 		initVboxAtividade();
 		
+		initButtonCriarAtividade();
+		
 		initEventResposivel();
 		
 		control.addCards();
@@ -77,6 +86,25 @@ public class Atividade {
 	}
 
 	
+
+	private void initButtonCriarAtividade() {
+		
+		btCriarAtividade = new Button("Nova Atividade");
+		
+		Util.setFontePadrao(new Button[] {btCriarAtividade}, 15, FontWeight.BOLD);
+		
+		btCriarAtividade.setStyle(btCriarAtividade.getStyle() + "-fx-background-color: #57BEBE; -fx-background-radius: 20px; -fx-border-radius: 20px;");
+		
+		Util.initButtons(new Button[] {btCriarAtividade});
+		
+		Util.hoverFade(btCriarAtividade);
+		
+		gridAtividade.add(btCriarAtividade, 0, 1);
+		gridAtividade.setMargin(btCriarAtividade, new Insets(-30, 0, 15, 0));
+		gridAtividade.setHalignment(btCriarAtividade, HPos.RIGHT);
+		gridAtividade.setValignment(btCriarAtividade, VPos.CENTER);
+		
+	}
 
 	private void initVboxAtividade() {
 	
@@ -94,7 +122,7 @@ public class Atividade {
 		
 		scrollAtividade.setStyle("-fx-background-color: #D9D6D6;");
 		
-		gridAtividade.add(scrollAtividade, 0, 2);
+		gridAtividade.add(scrollAtividade, 0, 3);
 		
 	}
 
@@ -172,7 +200,7 @@ public class Atividade {
 
 		gridFiltro.setStyle("-fx-background-color: #707070 ; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 		
-		gridAtividade.add(gridFiltro, 0, 1);
+		gridAtividade.add(gridFiltro, 0, 2);
 		
 	}
 

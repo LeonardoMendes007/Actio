@@ -20,6 +20,7 @@ import javafx.scene.control.Labeled;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -156,6 +157,8 @@ public class Login extends Application {
 		
 		//setAnimation(stackPane);
 		
+		setLogoCantoEsqueda();
+		
 		borderPrincipal.setCenter(stackPane);
 		
 
@@ -234,6 +237,29 @@ public class Login extends Application {
 		}
 		
 	}
+
+	private void setLogoCantoEsqueda() {
+
+
+        try {
+            Image imagem = new Image(new FileInputStream("src\\view\\img\\Logo_4.png"));
+
+            ImageView ivLogo = new ImageView(imagem);
+            ivLogo.setFitWidth(100.0);
+            ivLogo.setFitHeight(35.0);
+
+            borderPrincipal.setTop(ivLogo);
+            borderPrincipal.setAlignment(ivLogo, Pos.TOP_LEFT);
+            borderPrincipal.setMargin(ivLogo, new Insets(10, 0, 0, 10));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 
 	private void initBtLogar() {
 		btLogar = new Button("Entrar");
