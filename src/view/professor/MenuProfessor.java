@@ -3,7 +3,7 @@ package view.professor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import controller.professor.MenuController;
+import controller.professor.MenuProfessorController;
 import view.Util;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 
-public class Menu {
+public class MenuProfessor {
 
 	private Scene scn;
 	private BorderPane borderPrincipal;
@@ -44,9 +44,9 @@ public class Menu {
 	private Background azulEscuro;
 	private Background azulClaro;
 	
-	private MenuController menuController = new MenuController(this);
+	private MenuProfessorController menuController = new MenuProfessorController(this);
 
-	public Menu(Scene scn) {
+	public MenuProfessor(Scene scn) {
 		this.scn = scn;
 		initNewScene();
 		initMenu();

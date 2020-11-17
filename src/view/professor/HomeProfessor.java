@@ -1,6 +1,6 @@
 package view.professor;
 
-import controller.professor.HomeController;
+import controller.professor.HomeProfessorController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import view.card.ICard;
 import view.card.turma.CardTurma;
 
-public class Home {
+public class HomeProfessor {
 
 	private BorderPane borderPrincipal;
 
@@ -45,9 +45,9 @@ public class Home {
 
 	private Label lblCalendario;
 
-	private HomeController controller = new HomeController(this);
+	private HomeProfessorController controller = new HomeProfessorController(this);
 
-	public Home(BorderPane border) {
+	public HomeProfessor(BorderPane border) {
 		this.borderPrincipal = border;
 
 		initTela();

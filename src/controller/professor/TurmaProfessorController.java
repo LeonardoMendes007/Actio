@@ -1,14 +1,14 @@
 package controller.professor;
 
 import view.card.turma.CardTurma;
-import view.professor.Turma;
+import view.professor.TurmaProfessor;
 
-public class TurmaController {
+public class TurmaProfessorController {
 
-	private Turma disciplina;
+	private TurmaProfessor disciplina;
 	
 	
-	public TurmaController(Turma disciplina) {
+	public TurmaProfessorController(TurmaProfessor disciplina) {
 		this.disciplina = disciplina;
 	}
 	

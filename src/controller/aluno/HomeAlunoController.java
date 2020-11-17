@@ -2,15 +2,15 @@ package controller.aluno;
 
 import java.util.Date;
 
-import view.aluno.Home;
+import view.aluno.HomeAluno;
 import view.card.notificacao.CardNotificacao;
 import view.card.tarefa.professor.CardTarefa;
 
-public class HomeController {
+public class HomeAlunoController {
 
-	private Home home;
+	private HomeAluno home;
 
-	public HomeController(Home home2) {
+	public HomeAlunoController(HomeAluno home2) {
 		this.home = home2;
 	}
 

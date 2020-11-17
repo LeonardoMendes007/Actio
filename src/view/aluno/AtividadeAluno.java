@@ -1,6 +1,6 @@
 package view.aluno;
 
-import controller.aluno.AtividadeController;
+import controller.aluno.AtividadeAlunoController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,7 +16,7 @@ import view.Util;
 import view.card.ICard;
 import view.card.tarefa.professor.CardTarefaHorizontal;
 
-public class Atividade {
+public class AtividadeAluno {
 
 	private BorderPane borderPrincipal;
 
@@ -44,9 +44,9 @@ public class Atividade {
 	
 	private VBox vboxAtividade;
 	
-	private AtividadeController control = new AtividadeController(this);
+	private AtividadeAlunoController control = new AtividadeAlunoController(this);
 	
-	public Atividade(BorderPane border) {
+	public AtividadeAluno(BorderPane border) {
 		this.borderPrincipal = border;
 
 		initTela();

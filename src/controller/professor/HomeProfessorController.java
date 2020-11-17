@@ -4,13 +4,13 @@ import java.util.Date;
 
 import view.card.notificacao.CardNotificacao;
 import view.card.tarefa.professor.CardTarefa;
-import view.professor.Home;
+import view.professor.HomeProfessor;
 
-public class HomeController {
+public class HomeProfessorController {
 
-	private Home home;
+	private HomeProfessor home;
 
-	public HomeController(Home home) {
+	public HomeProfessorController(HomeProfessor home) {
 		this.home = home;
 	}
 

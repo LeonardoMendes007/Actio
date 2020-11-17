@@ -3,13 +3,13 @@ package controller.professor;
 import java.util.Date;
 
 import view.card.tarefa.professor.CardTarefaHorizontal;
-import view.professor.Atividade;
+import view.professor.AtividadeProfessor;
 
-public class AtividadeController {
+public class AtividadeProfessorController {
 
-	private Atividade atividade;
+	private AtividadeProfessor atividade;
 	
-	public AtividadeController(Atividade atividade) {
+	public AtividadeProfessorController(AtividadeProfessor atividade) {
 		this.atividade = atividade;
 	}
 	

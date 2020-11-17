@@ -4,7 +4,7 @@ package view.professor;
 
 import java.util.ArrayList;
 
-import controller.professor.TurmaController;
+import controller.professor.TurmaProfessorController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,7 +21,7 @@ import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.turma.CardTurma;
 
-public class Turma {
+public class TurmaProfessor {
 
 	private BorderPane borderPrincipal;
 	
@@ -46,9 +46,9 @@ public class Turma {
 	//Isso é temporário 
 	ArrayList<String> disciplinasExistentes = new ArrayList<String>();
 	
-	private TurmaController controller = new TurmaController(this);
+	private TurmaProfessorController controller = new TurmaProfessorController(this);
 
-	public Turma(BorderPane border) {
+	public TurmaProfessor(BorderPane border) {
 		this.borderPrincipal = border;
 		
 		initTela();

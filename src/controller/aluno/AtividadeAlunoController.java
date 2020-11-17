@@ -2,14 +2,14 @@ package controller.aluno;
 
 import java.util.Date;
 
-import view.aluno.Atividade;
+import view.aluno.AtividadeAluno;
 import view.card.tarefa.professor.CardTarefaHorizontal;
 
-public class AtividadeController {
+public class AtividadeAlunoController {
 
-	private Atividade atividade;
+	private AtividadeAluno atividade;
 	
-	public AtividadeController(Atividade atividade) {
+	public AtividadeAlunoController(AtividadeAluno atividade) {
 		this.atividade = atividade;
 	}
 	

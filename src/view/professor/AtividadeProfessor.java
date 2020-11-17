@@ -2,7 +2,7 @@ package view.professor;
 
 
 
-import controller.professor.AtividadeController;
+import controller.professor.AtividadeProfessorController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,7 +21,7 @@ import view.Util;
 import view.card.ICard;
 import view.card.tarefa.professor.CardTarefaHorizontal;
 
-public class Atividade {
+public class AtividadeProfessor {
 
 	private BorderPane borderPrincipal;
 
@@ -51,9 +51,9 @@ public class Atividade {
 	
 	private Button btCriarAtividade;
 	
-	private AtividadeController control = new AtividadeController(this);
+	private AtividadeProfessorController control = new AtividadeProfessorController(this);
 	
-	public Atividade(BorderPane border) {
+	public AtividadeProfessor(BorderPane border) {
 		this.borderPrincipal = border;
 
 		initTela();
