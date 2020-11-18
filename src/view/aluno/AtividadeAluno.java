@@ -13,8 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import view.Util;
-import view.card.ICard;
-import view.card.tarefa.professor.CardTarefaHorizontal;
+import view.card.tarefa.aluno.CardTarefaHorizontal;
 
 public class AtividadeAluno {
 
