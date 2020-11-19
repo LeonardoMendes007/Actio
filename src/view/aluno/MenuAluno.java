@@ -3,7 +3,7 @@ package view.aluno;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import controller.aluno.MenuController;
+import controller.aluno.MenuAlunoController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import view.Util;
 
-public class Menu {
+public class MenuAluno {
 
 	private Scene scn;
 	private BorderPane borderPrincipal;
@@ -44,9 +44,9 @@ public class Menu {
 	private Background azulEscuro;
 	private Background azulClaro;
 	
-	private MenuController menuController = new MenuController(this);
+	private MenuAlunoController menuController = new MenuAlunoController(this);
 
-	public Menu(Scene scn) {
+	public MenuAluno(Scene scn) {
 		this.scn = scn;
 		initNewScene();
 		initMenu();

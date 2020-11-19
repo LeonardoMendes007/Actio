@@ -2,7 +2,7 @@ package view.aluno;
 
 
 
-import controller.aluno.DisciplinaController;
+import controller.aluno.DisciplinaAlunoController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import view.card.disciplina.CardDisciplina;
 
-public class Disciplina {
+public class DisciplinaAluno {
 
 	private BorderPane borderPrincipal;
 	
@@ -26,9 +26,9 @@ public class Disciplina {
 	
 	private ScrollPane scrollDisciplina;
 	
-	private DisciplinaController controller = new DisciplinaController(this);
+	private DisciplinaAlunoController controller = new DisciplinaAlunoController(this);
 
-	public Disciplina(BorderPane border) {
+	public DisciplinaAluno(BorderPane border) {
 		this.borderPrincipal = border;
 		
 		initTela();

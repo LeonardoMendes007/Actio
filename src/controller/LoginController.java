@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import view.Login;
-import view.aluno.Menu;
+import view.aluno.MenuAluno;
 
 public class LoginController {
 
@@ -49,9 +49,9 @@ public class LoginController {
 	private void verificarAutenticidade(String email, String senha) {
 
 		if (email.equals("a") && senha.equals("b")) {
-			Menu menu = new Menu(login.getScene());
+			MenuAluno menu = new MenuAluno(login.getScene());
 		}else if(email.equals("p") && senha.equals("p")){
-			view.professor.Menu menuProfessor = new view.professor.Menu(login.getScene());
+			view.professor.MenuProfessor menuProfessor = new view.professor.MenuProfessor(login.getScene());
 		}
 		
 		else {

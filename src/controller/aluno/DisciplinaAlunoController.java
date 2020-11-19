@@ -1,13 +1,13 @@
 package controller.aluno;
 
-import view.aluno.Disciplina;
+import view.aluno.DisciplinaAluno;
 import view.card.disciplina.CardDisciplina;
 
-public class DisciplinaController {
+public class DisciplinaAlunoController {
 
-	private Disciplina disciplina;
+	private DisciplinaAluno disciplina;
 	
-	public DisciplinaController(Disciplina disciplina) {
+	public DisciplinaAlunoController(DisciplinaAluno disciplina) {
 		this.disciplina = disciplina;
 	}
 	

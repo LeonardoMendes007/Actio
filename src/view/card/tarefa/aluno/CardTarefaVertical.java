@@ -1,4 +1,4 @@
-package view.card.tarefa.professor;
+package view.card.tarefa.aluno;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.ICard;
 
-public class CardTarefa implements ICard {
+public class CardTarefaVertical implements ICard {
 
 	private BorderPane borderPrincipal;
 
@@ -39,7 +39,7 @@ public class CardTarefa implements ICard {
 
 	private Color corDisciplina;
 	
-	public CardTarefa(String titulo, String legenda, String disciplina,String corHexa, Date prazo,  boolean group) {
+	public CardTarefaVertical(String titulo, String legenda, String disciplina,String corHexa, Date prazo,  boolean group) {
 
 		corDisciplina = Color.web(corHexa);
 		

@@ -1,9 +1,13 @@
-package view.aluno;
+package view.professor;
 
-import controller.aluno.AtividadeController;
+
+
+import controller.professor.AtividadeProfessorController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,11 +16,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+
 import view.Util;
 import view.card.ICard;
 import view.card.tarefa.professor.CardTarefaHorizontal;
 
-public class Atividade {
+public class AtividadeProfessor {
 
 	private BorderPane borderPrincipal;
 
@@ -32,7 +37,7 @@ public class Atividade {
 	
 	private ComboBox<String> cbStatus;
 	
-	private Label lblPessoas;
+	private Label lblTurma;
 	
 	private ComboBox<String> cbPessoas;
 	
@@ -44,9 +49,11 @@ public class Atividade {
 	
 	private VBox vboxAtividade;
 	
-	private AtividadeController control = new AtividadeController(this);
+	private Button btCriarAtividade;
 	
-	public Atividade(BorderPane border) {
+	private AtividadeProfessorController control = new AtividadeProfessorController(this);
+	
+	public AtividadeProfessor(BorderPane border) {
 		this.borderPrincipal = border;
 
 		initTela();
@@ -68,13 +75,36 @@ public class Atividade {
 
 		initVboxAtividade();
 		
+		initButtonCriarAtividade();
+		
 		initEventResposivel();
 		
 		control.addCards();
+		
+		
 
 	}
 
 	
+
+	private void initButtonCriarAtividade() {
+		
+		btCriarAtividade = new Button("Nova Atividade");
+		
+		Util.setFontePadrao(new Button[] {btCriarAtividade}, 15, FontWeight.BOLD);
+		
+		btCriarAtividade.setStyle(btCriarAtividade.getStyle() + "-fx-background-color: #57BEBE; -fx-background-radius: 20px; -fx-border-radius: 20px;");
+		
+		Util.initButtons(new Button[] {btCriarAtividade});
+		
+		Util.hoverFade(btCriarAtividade);
+		
+		gridAtividade.add(btCriarAtividade, 0, 1);
+		gridAtividade.setMargin(btCriarAtividade, new Insets(-30, 0, 15, 0));
+		gridAtividade.setHalignment(btCriarAtividade, HPos.RIGHT);
+		gridAtividade.setValignment(btCriarAtividade, VPos.CENTER);
+		
+	}
 
 	private void initVboxAtividade() {
 	
@@ -92,7 +122,7 @@ public class Atividade {
 		
 		scrollAtividade.setStyle("-fx-background-color: #D9D6D6;");
 		
-		gridAtividade.add(scrollAtividade, 0, 2);
+		gridAtividade.add(scrollAtividade, 0, 3);
 		
 	}
 
@@ -105,7 +135,11 @@ public class Atividade {
 			cbStatus.setPrefWidth(total * 0.33);
 			cbPessoas.setPrefWidth(total * 0.33);
 			cbDisciplina.setPrefWidth(total * 0.33);
+			
+			
+			
 		});
+		
 		
 		
 	}
@@ -116,7 +150,7 @@ public class Atividade {
 		cbDisciplina = new ComboBox<>();
 
 		cbStatus.getItems().addAll("Aberto","Fechado");
-		cbPessoas.getItems().addAll("Individual", "Grupo");
+		cbPessoas.getItems().addAll("1° ADS - TARDE", "1° ADS - NOITE");
 		cbDisciplina.getItems().addAll("Banco de Dados","Programação orientada a disgraça");
 		
 		gridFiltro.add(cbStatus, 1, 1);
@@ -129,12 +163,12 @@ public class Atividade {
 		lblFiltro = new Label("Filtrar por:");
 		lblStatus = new Label("Status");
 		lblDisciplina = new Label("Disciplina");
-		lblPessoas = new Label("Pessoas");
+		lblTurma = new Label("Turma");
 		
 		lblFiltro.setTextFill(Color.WHITE);
 		lblStatus.setTextFill(Color.WHITE);
 		lblDisciplina.setTextFill(Color.WHITE);
-		lblPessoas.setTextFill(Color.WHITE);
+		lblTurma.setTextFill(Color.WHITE);
 		
 		lblFiltro.setAlignment(Pos.CENTER_LEFT);
 
@@ -143,16 +177,16 @@ public class Atividade {
 		lblFiltro.setPadding(new Insets(-25, 0, 0, 0));
 		
 		Util.setFontePadrao(new Label[] {lblFiltro}, 20, FontWeight.BOLD);
-		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblPessoas}, 15, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] {lblStatus, lblDisciplina,lblTurma}, 15, FontWeight.NORMAL);
 		
 		gridFiltro.add(lblFiltro, 0, 1);
 		gridFiltro.add(lblStatus, 1, 0);
-		gridFiltro.add(lblPessoas, 2, 0);
+		gridFiltro.add(lblTurma, 2, 0);
 		gridFiltro.add(lblDisciplina, 3, 0);
 		
 		gridFiltro.setHalignment(lblDisciplina, HPos.CENTER);
 		gridFiltro.setHalignment(lblStatus, HPos.CENTER);
-		gridFiltro.setHalignment(lblPessoas, HPos.CENTER);
+		gridFiltro.setHalignment(lblTurma, HPos.CENTER);
 		
 	}
 
@@ -166,7 +200,7 @@ public class Atividade {
 
 		gridFiltro.setStyle("-fx-background-color: #707070 ; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 		
-		gridAtividade.add(gridFiltro, 0, 1);
+		gridAtividade.add(gridFiltro, 0, 2);
 		
 	}
 

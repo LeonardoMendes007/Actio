@@ -1,6 +1,6 @@
 package view.aluno;
 
-import controller.aluno.HomeController;
+import controller.aluno.HomeAlunoController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import view.card.ICard;
 import view.card.turma.CardTurma;
 
-public class Home {
+public class HomeAluno {
 
 	private BorderPane borderPrincipal;
 
@@ -45,9 +45,9 @@ public class Home {
 
 	private Label lblCalendario;
 
-	private HomeController controller = new HomeController(this);
+	private HomeAlunoController controller = new HomeAlunoController(this);
 
-	public Home(BorderPane border) {
+	public HomeAluno(BorderPane border) {
 		this.borderPrincipal = border;
 
 		initTela();
