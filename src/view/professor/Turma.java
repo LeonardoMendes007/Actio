@@ -39,7 +39,6 @@ public class Turma {
 	
 	private Label lblNomeDisciplina;
 	
-	private HBox hBoxScroll;
 	
 	private HBox hBoxTurma;
 
@@ -59,12 +58,12 @@ public class Turma {
 		initGridDisciplina();
 		
 		initLabelDisciplina();
-		
+
 		initScrollDisciplina();
+
+		initTileDisciplina();
 		
 		initEventResponsivel();
-		
-		initTileDisciplina();
 		
 		controller.addCards();
 		
@@ -72,9 +71,22 @@ public class Turma {
 
 	private void initEventResponsivel() {
 		
+		borderPrincipal.widthProperty().addListener((x) -> {
+			scrollDisciplina.setPrefWidth(borderPrincipal.getWidth() * 0.9);
+			tileDisciplina.setPrefWidth(borderPrincipal.getWidth() * 0.5);
+			
+		});
+
+		
+		//tileDisciplina.widthProperty().addListener((x) -> gridDisciplina.setPrefWidth(tileDisciplina.getWidth() * 0.5));
+		
+		
 		//gridTelaDisciplina.heightProperty().addListener((x) -> gridDisciplina.setPrefHeight());
-		gridTelaTurma.widthProperty().addListener((x) -> gridDisciplina.setPrefWidth(gridTelaTurma.getWidth() * 0.9));
+		//gridTelaTurma.widthProperty().addListener((x) -> gridDisciplina.setPrefWidth(gridTelaTurma.getWidth() * 0.9));
 	
+		//scroll pane 
+		//gridTelaTurma.widthProperty().addListener((x) -> scrollTurma.setPrefWidth(gridDisciplina.getWidth() * 0.9));
+		
 	
 	}
 
@@ -82,20 +94,20 @@ public class Turma {
 	    tileDisciplina = new TilePane(10, 10);
 	    tileDisciplina.setOrientation(Orientation.VERTICAL);
 	    tileDisciplina.setPrefColumns(1);
-
-	    
+   
+	   // tileDisciplina.setPadding(new Insets(50));
+	   // tileDisciplina.setPrefWidth(scrollDisciplina.getWidth()* 0.5);
 	    scrollDisciplina.setContent(tileDisciplina);
-		
 	}
 
 	private void initScrollDisciplina() {
 		
 		scrollDisciplina = new ScrollPane();
-		scrollDisciplina.setPrefSize(2000, 2000);
-		scrollDisciplina.setHbarPolicy(ScrollBarPolicy.NEVER);
+		//scrollDisciplina.setPrefSize(2000, 2000);
+		//scrollDisciplina.setHbarPolicy(ScrollBarPolicy.NEVER);
 		scrollDisciplina.setPadding(new Insets(20, 0, 0, 0));
 		
-		scrollDisciplina.setStyle("-fx-background-color:transparent;");
+	//	scrollDisciplina.setStyle("-fx-background-color:transparent;");
 	    gridTelaTurma.add(scrollDisciplina, 0, 1);
 	}
 
@@ -126,8 +138,11 @@ public class Turma {
 		gridDisciplina.setVgap(5);
 		gridDisciplina.setHgap(10);
 		gridDisciplina.setStyle("-fx-background-radius: 20px; -fx-border-radius: 20px; -fx-background-color: #D7D7D7;");
-		gridDisciplina.setPadding(new Insets(10, 0, 5, 20));
-		
+		gridDisciplina.setPadding(new Insets(10, 20, 5, 20));
+		//gridDisciplina.setPrefWidth(scrollTurma.getWidth() * 0.8);
+	
+		gridDisciplina.setPrefWidth(600);
+		gridDisciplina.setGridLinesVisible(true);
 		
 		tileDisciplina.getChildren().add(gridDisciplina);
 		
@@ -147,22 +162,14 @@ public class Turma {
 	private void initScrollTurma() {
 		scrollTurma = new ScrollPane();
 		scrollTurma.setStyle("-fx-background-color: #D7D7D7;");
+		scrollTurma.setPrefSize(800, 200);
+		scrollTurma.setVbarPolicy(ScrollBarPolicy.NEVER);
+		scrollTurma.setPadding(new Insets(20, 0, 0, 0));
 
-		hBoxScroll.getChildren().add(scrollTurma);
-		hBoxScroll.setPadding(new Insets(10, 10, 10, 10));
-		hBoxScroll.setHgrow(scrollTurma, Priority.ALWAYS);	
+		gridDisciplina.add(scrollTurma, 0, 1);
 	}
 	
-	private void initHboxScroll() {
 
-		hBoxScroll = new HBox(10);
-		hBoxScroll.setStyle("-fx-background-color: #D7D7D7;");
-		hBoxScroll.setAlignment(Pos.CENTER);
-		hBoxScroll.setPadding(new Insets(0, 0, 20, 0));
-
-		gridDisciplina.add(hBoxScroll, 0, 1);
-		
-	}
 	
 	private void initHBoxTurma() {
 
@@ -178,8 +185,8 @@ public class Turma {
 	public void initNovaDisciplina(CardTurma card) {
 		initGridNomeDisciplina();
 		initLabelNomeDisciplina(card.getDisciplina());
-		initHboxScroll();
 		initScrollTurma();
+		
 		initHBoxTurma();
 		addCard(card);
 		disciplinasExistentes.add(card.getDisciplina());

@@ -71,8 +71,6 @@ public class Atividade {
 		initEventResposivel();
 		
 		control.addCards();
-		
-		
 
 	}
 
@@ -107,11 +105,7 @@ public class Atividade {
 			cbStatus.setPrefWidth(total * 0.33);
 			cbPessoas.setPrefWidth(total * 0.33);
 			cbDisciplina.setPrefWidth(total * 0.33);
-			
-			
-			
 		});
-		
 		
 		
 	}
