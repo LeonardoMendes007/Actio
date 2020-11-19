@@ -79,7 +79,7 @@ public class HomeAluno {
 
 		initEventsResponsivel();
 
-		controller.addCards();
+		controller.verificarCards();
 
 	}
 

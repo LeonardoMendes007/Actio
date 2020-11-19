@@ -25,6 +25,12 @@ public class Usuario {
 		
 	}
 	
+	public Usuario(String email, String senha) {
+		super();
+		this.email = email;
+		this.senha = senha;
+	}
+
 	public int getId() {
 		return id;
 	}

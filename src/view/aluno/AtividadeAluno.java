@@ -43,7 +43,7 @@ public class AtividadeAluno {
 	
 	private VBox vboxAtividade;
 	
-	private AtividadeAlunoController control = new AtividadeAlunoController(this);
+	private AtividadeAlunoController controller = new AtividadeAlunoController(this);
 	
 	public AtividadeAluno(BorderPane border) {
 		this.borderPrincipal = border;
@@ -69,7 +69,7 @@ public class AtividadeAluno {
 		
 		initEventResposivel();
 		
-		control.addCards();
+		controller.verificarCards();
 		
 		
 

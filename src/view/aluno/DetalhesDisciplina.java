@@ -21,8 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import view.Util;
 
-public class EntregaAtividadeAluno {
-
+public class DetalhesDisciplina {
 	private BorderPane borderPrincipal;
 
 	private GridPane gridAtividade;
@@ -50,7 +49,7 @@ public class EntregaAtividadeAluno {
 	private Button btRemover;
 
 	private Button btAdicionar;
-	
+
 	private Button btEntregar;
 
 	private HBox hboxButtons;
@@ -62,8 +61,10 @@ public class EntregaAtividadeAluno {
 	private GridPane gridSuperior;
 
 	private GridPane gridTituloLegenda;
+	
+	
 
-	public EntregaAtividadeAluno(BorderPane pane) {
+	public DetalhesDisciplina(BorderPane pane) {
 
 		this.borderPrincipal = pane;
 
@@ -92,118 +93,22 @@ public class EntregaAtividadeAluno {
 
 		initGridCentral();
 
-		initLabelArquivos();
-
-		initTable();
-
-		initButtons();
-		
-		initButtonEntregar();
-
-		initEventReponsivel();
-
 	}
-
-	private void initButtonEntregar() {
-		
-		btEntregar = new Button("Entregar");
-		
-		Util.setFontePadrao(new Button[] {btEntregar}, 25, FontWeight.BOLD);
-		
-		btEntregar.setTextFill(Color.WHITE);	
-		btEntregar.setStyle(btEntregar.getStyle() + "-fx-background-color: #1D5959;");
-		
-		borderInterno.setRight(btEntregar);
-		borderInterno.setAlignment(btEntregar, Pos.BOTTOM_CENTER);
-		borderInterno.setMargin(btEntregar, new Insets(0, 0, 15, 0));
-		
-	}
-
-	private void initButtons() {
-		btAdicionar = new Button("Adicionar");
-		btRemover = new Button("Remover");
-		
-		Util.setFontePadrao(new Button[] {btAdicionar,btRemover}, 15, FontWeight.BOLD);
-		
-		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D;");
-		btRemover.setStyle(btRemover.getStyle() + "-fx-background-color: #F55B51;");
-
-		initHbox();
-
-		hboxButtons.getChildren().addAll(btRemover, btAdicionar);
-		hboxButtons.setMargin(btAdicionar, new Insets(0, 0, 0, 10));
-		
-	}
-
-	private void initHbox() {
-
-		hboxButtons = new HBox();
-
-		
-		hboxButtons.setPadding(new Insets(10, 10, 10, 0));
-		
-		gridCentral.add(hboxButtons, 0, 2);
-	}
-
-	private void initTable() {
-
-		table = new TableView<String>();
-		table.setPrefWidth(borderPrincipal.getWidth()*0.60);
-		table.setPrefHeight(2000);
-
-		gridCentral.add(table, 0, 1);
-
-	}
-
-	private void initLabelArquivos() {
-
-		lblArquivos = new Label("Arquivos");
-		
-		Util.setFontePadrao(new Label[] {lblArquivos}, 23, FontWeight.BOLD);
-		
-		lblArquivos.setPadding(new Insets(10,10,10,0));
-
-		gridCentral.add(lblArquivos, 0, 0);
-
-	}
-
+	
 	private void initGridCentral() {
 		gridCentral = new GridPane();
 
 		gridCentral.setAlignment(Pos.CENTER_LEFT);
 		gridCentral.setPadding(new Insets(20, 20, 20, 20));
-		
-		
+
 		borderInterno.setCenter(gridCentral);
-
-	}
-
-	private void initEventReponsivel() {
-
-		borderPrincipal.widthProperty()
-				.addListener((x) -> borderInterno.setPrefWidth(borderPrincipal.getWidth() * 0.90));
-		
-		borderPrincipal.widthProperty().addListener((x) -> {
-			
-			double tamanho = borderPrincipal.getWidth() - (285 + 80);
-
-			gridTituloLegenda.setPrefWidth(tamanho);
-			table.setPrefWidth(borderPrincipal.getWidth()*0.50);
-
-		});
-		
-		borderPrincipal.heightProperty().addListener((x) -> {
-			
-			table.setPrefHeight(borderInterno.getHeight()*0.60);
-			
-		});
 
 	}
 
 	private void initGridSuperior() {
 
 		gridSuperior = new GridPane();
-		
+
 		gridSuperior.setPrefWidth(2000);
 
 		borderInterno.setTop(gridSuperior);
@@ -239,7 +144,7 @@ public class EntregaAtividadeAluno {
 
 	private void initLabelAtividade() {
 
-		lblAtividade = new Label("Entrega Atividade");
+		lblAtividade = new Label("Detalhes Disciplina");
 
 		lblAtividade.setStyle("-fx-font-weight: bolder; -fx-font-family: Poppins; " + "-fx-font-size: " + 30 + " ;");
 
@@ -266,15 +171,15 @@ public class EntregaAtividadeAluno {
 		Util.setFontePadrao(new Label[] { lblNumDeDias }, 20, FontWeight.NORMAL);
 
 		gridData = new GridPane();
-		
+
 		gridData.add(lblDataDeEntrega, 0, 0);
 		gridData.add(lblNumDeDias, 0, 1);
-		
+
 		gridData.setValignment(lblDataDeEntrega, VPos.CENTER);
 		gridData.setHalignment(lblDataDeEntrega, HPos.RIGHT);
 		gridData.setValignment(lblNumDeDias, VPos.CENTER);
 		gridData.setHalignment(lblNumDeDias, HPos.RIGHT);
-		
+
 		gridSuperior.add(gridData, 2, 0);
 
 	}
@@ -349,5 +254,4 @@ public class EntregaAtividadeAluno {
 		gridSuperior.add(gridTituloLegenda, 1, 0);
 
 	}
-
 }

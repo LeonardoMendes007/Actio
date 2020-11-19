@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import view.Util;
+import view.aluno.DetalhesDisciplina;
 import view.card.ICard;
 
 public class CardDisciplina implements ICard{
@@ -31,7 +32,7 @@ public class CardDisciplina implements ICard{
 	}
 	
 	private void initEvent() {
-		borderPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblDisciplina.getText()));
+		borderPrincipal.setOnMouseClicked((x) -> new DetalhesDisciplina(borderPrincipal));
 		
 		Util.hoverFade(this.borderPrincipal);
 	}

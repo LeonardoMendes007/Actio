@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Atividade;
 import view.Util;
 import view.aluno.EntregaAtividadeAluno;
 import view.card.ICard;
@@ -42,26 +43,25 @@ public class CardTarefaHorizontal implements ICard {
 
 	private Color corDisciplina;
 
-	public CardTarefaHorizontal(BorderPane pane, String titulo, String legenda, String disciplina, String corHexa, Date prazo,
-			boolean group) {
+	public CardTarefaHorizontal(BorderPane pane, Atividade atividade) {
 
 		this.borderPrincipal = pane; 
 		
-		corDisciplina = Color.web(corHexa);
+		corDisciplina = Color.web(atividade.getTurma().getDisciplina().getCor());
 
 		this.hboxPrincipal = new HBox(15);
 		this.hboxPrincipal.setPrefSize(500, 50);
-		this.hboxPrincipal.setStyle("-fx-background-color: " + corHexa
+		this.hboxPrincipal.setStyle("-fx-background-color: " + atividade.getTurma().getDisciplina().getCor()
 				+ "; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.hboxPrincipal.setPadding(new Insets(5));
 
-		verificarGroup(group);
+		verificarGroup(atividade.isGrupo());
 
-		initCentroCard(titulo, legenda);
+		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
-		initDisciplina(disciplina);
+		initDisciplina(atividade.getTurma().getDisciplina().getNome());
 
-		initPrazoDeEntrega(prazo);
+		initPrazoDeEntrega(atividade.getDtEntrega());
 
 		initEvent();
 

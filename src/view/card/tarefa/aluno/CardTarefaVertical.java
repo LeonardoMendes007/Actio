@@ -18,12 +18,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Atividade;
 import view.Util;
+import view.aluno.EntregaAtividadeAluno;
 import view.card.ICard;
 
 public class CardTarefaVertical implements ICard {
 
 	private BorderPane borderPrincipal;
+	
+	private BorderPane borderCard;
 
 	private Label lblDisciplina;
 
@@ -39,25 +43,27 @@ public class CardTarefaVertical implements ICard {
 
 	private Color corDisciplina;
 	
-	public CardTarefaVertical(String titulo, String legenda, String disciplina,String corHexa, Date prazo,  boolean group) {
-
-		corDisciplina = Color.web(corHexa);
+	public CardTarefaVertical(BorderPane pane, Atividade atividade) {
 		
-		this.borderPrincipal = new BorderPane();
-		this.borderPrincipal.setPrefSize(280, 150);
-		this.borderPrincipal.setStyle("-fx-background-color: "+corHexa+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
-		this.borderPrincipal.setPadding(new Insets(5));
+		this.borderPrincipal = pane; 
+
+		corDisciplina = Color.web(atividade.getTurma().getDisciplina().getCor());
+		
+		this.borderCard = new BorderPane();
+		this.borderCard.setPrefSize(280, 150);
+		this.borderCard.setStyle("-fx-background-color: "+atividade.getTurma().getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		this.borderCard.setPadding(new Insets(5));
 
 		paneGroupEPrazo = new Pane();
 		borderPrincipal.setTop(paneGroupEPrazo);
 		
-		initCentroCard(titulo, legenda);
+		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
-		initDisciplina(disciplina);
+		initDisciplina(atividade.getTurma().getDisciplina().getNome());
 
-		verificarGroup(group);
+		verificarGroup(atividade.isGrupo());
 		
-		initPrazoDeEntrega(prazo);
+		initPrazoDeEntrega(atividade.getDtEntrega());
 		
 		initEvent();
 	}
@@ -129,8 +135,8 @@ public class CardTarefaVertical implements ICard {
 
 		lblDisciplina.setTextFill(corDisciplina);
 
-		borderPrincipal.setBottom(lblDisciplina);
-		borderPrincipal.setAlignment(lblDisciplina, Pos.CENTER);
+		borderCard.setBottom(lblDisciplina);
+		borderCard.setAlignment(lblDisciplina, Pos.CENTER);
 
 	}  
 
@@ -151,14 +157,18 @@ public class CardTarefaVertical implements ICard {
 		gridInterno.add(lblLegenda, 0, 1);
         gridInterno.setPadding(new Insets(6, 0, 0, 10));
 		
-		borderPrincipal.setCenter(gridInterno);
-		borderPrincipal.setAlignment(gridInterno, Pos.BOTTOM_LEFT);
+        borderCard.setCenter(gridInterno);
+        borderCard.setAlignment(gridInterno, Pos.BOTTOM_LEFT);
 	}
 
 	private void initEvent() {
-		borderPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblTitulo.getText()));
+		borderCard.setOnMouseClicked((x) -> {
 
-		Util.hoverFade(this.borderPrincipal);
+	        new EntregaAtividadeAluno(borderPrincipal);
+			
+		});
+
+		Util.hoverFade(borderCard);
 	}
 
 	@Override

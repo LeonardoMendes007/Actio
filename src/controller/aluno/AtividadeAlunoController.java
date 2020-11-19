@@ -1,44 +1,50 @@
 package controller.aluno;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
+import javafx.scene.layout.BorderPane;
+import model.Atividade;
+import persistence.AtividadeDao;
 import view.aluno.AtividadeAluno;
 import view.card.tarefa.aluno.CardTarefaHorizontal;
 
 public class AtividadeAlunoController {
 
-	private AtividadeAluno atividade;
-	
-	public AtividadeAlunoController(AtividadeAluno atividade) {
-		this.atividade = atividade;
-	}
-	
-	public void addCards() {
+	private AtividadeAluno atividadeAluno;
 
-		CardTarefaHorizontal cardTarefaHorizontal1 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio","#FF9DBA", new Date(), false);
-		CardTarefaHorizontal cardTarefaHorizontal2 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal3 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio","#FF9DBA", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal4 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio","#9DC4FF", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal5 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio","#FF9DBA", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal6 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal7 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#FF9DBA",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal8 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal9 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#FF9DBA", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal10 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);		
-	    
-		atividade.addCardAtvidade(cardTarefaHorizontal1);
-	    atividade.addCardAtvidade(cardTarefaHorizontal2);
-	    atividade.addCardAtvidade(cardTarefaHorizontal3);
-	    atividade.addCardAtvidade(cardTarefaHorizontal4);
-	    atividade.addCardAtvidade(cardTarefaHorizontal5);
-	    atividade.addCardAtvidade(cardTarefaHorizontal6);
-	    atividade.addCardAtvidade(cardTarefaHorizontal7);
-	    atividade.addCardAtvidade(cardTarefaHorizontal8);
-	    atividade.addCardAtvidade(cardTarefaHorizontal9);
-	    atividade.addCardAtvidade(cardTarefaHorizontal10);
-	    
-	    
-		
+	public AtividadeAlunoController(AtividadeAluno atividade) {
+		this.atividadeAluno = atividade;
 	}
-	
+
+	public void verificarCards() {
+
+		try {
+			AtividadeDao atividade = new AtividadeDao();
+
+			List<Atividade> atividades = atividades.findAll();
+
+			addCards(atividades);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void addCards(List<Atividade> atividades) {
+
+		for (Atividade atividade : atividades) {
+			CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(),atividade);
+
+			atividadeAluno.addCardAtvidade(card);
+		}
+
+	}
+
 }
