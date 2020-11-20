@@ -38,7 +38,6 @@ public class AtividadeDao implements IAtividadeDao{
 
 	@Override
 	public void update(Atividade atividade) throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 

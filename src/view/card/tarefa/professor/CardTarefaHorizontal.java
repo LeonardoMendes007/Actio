@@ -4,29 +4,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
-import javafx.util.Duration;
 import view.Util;
 import view.card.ICard;
+import view.professor.VisualizarAtividade;
 
 public class CardTarefaHorizontal implements ICard {
 
@@ -48,8 +40,12 @@ public class CardTarefaHorizontal implements ICard {
 
 	private Color corDisciplina;
 	
-	public CardTarefaHorizontal(String titulo, String legenda, String disciplina, String corHexa, Date prazo, boolean group) {
+	private BorderPane borderPrincipal;
+	
+	public CardTarefaHorizontal(BorderPane borderPrincipal, String titulo, String legenda, String disciplina, String corHexa, Date prazo, boolean group) {
 
+		this.borderPrincipal = borderPrincipal;
+		
 		corDisciplina = Color.web(corHexa);
 		
 		this.hboxPrincipal = new HBox(15);
@@ -181,7 +177,7 @@ public class CardTarefaHorizontal implements ICard {
 	}
 
 	private void initEvent() {
-		hboxPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblTitulo.getText()));
+		hboxPrincipal.setOnMouseClicked((x) -> new VisualizarAtividade(borderPrincipal));
 
 		Util.hoverFade(hboxPrincipal);
 	}

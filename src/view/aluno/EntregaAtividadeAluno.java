@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import model.Atividade;
 import view.Util;
 
 public class EntregaAtividadeAluno {
@@ -62,9 +63,13 @@ public class EntregaAtividadeAluno {
 	private GridPane gridSuperior;
 
 	private GridPane gridTituloLegenda;
+	
+	private Atividade atividade;
 
-	public EntregaAtividadeAluno(BorderPane pane) {
+	public EntregaAtividadeAluno(Atividade atividade, BorderPane pane) {
 
+		this.atividade = atividade;
+		
 		this.borderPrincipal = pane;
 
 		clearBorderPrincipal();

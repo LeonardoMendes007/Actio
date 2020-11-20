@@ -22,6 +22,7 @@ import javafx.scene.text.TextAlignment;
 import view.Util;
 
 public class DetalhesDisciplina {
+	
 	private BorderPane borderPrincipal;
 
 	private GridPane gridAtividade;
@@ -67,6 +68,8 @@ public class DetalhesDisciplina {
 	public DetalhesDisciplina(BorderPane pane) {
 
 		this.borderPrincipal = pane;
+		
+		borderPrincipal.setPrefSize(700, 700);
 
 		clearBorderPrincipal();
 

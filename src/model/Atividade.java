@@ -31,6 +31,18 @@ public class Atividade {
 		this.grupo = grupo;
 		this.turma = turma;
 	}
+	
+	
+	
+
+	public Atividade(String nome, String descricao, Date dtEmissao, boolean grupo, Turma turma) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.dtEmissao = dtEmissao;
+		this.grupo = grupo;
+		this.turma = turma;
+	}
 
 	public int getId() {
 		return id;

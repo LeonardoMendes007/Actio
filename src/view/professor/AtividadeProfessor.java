@@ -79,6 +79,8 @@ public class AtividadeProfessor {
 		
 		initEventResposivel();
 		
+		initEventBtAtividade();
+		
 		control.addCards();
 		
 		
@@ -86,6 +88,12 @@ public class AtividadeProfessor {
 	}
 
 	
+
+	private void initEventBtAtividade() {
+		
+		btCriarAtividade.setOnMouseClicked((x) -> new CriarAtividade(borderPrincipal));
+		
+	}
 
 	private void initButtonCriarAtividade() {
 		

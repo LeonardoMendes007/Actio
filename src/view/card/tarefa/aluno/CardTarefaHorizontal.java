@@ -63,7 +63,7 @@ public class CardTarefaHorizontal implements ICard {
 
 		initPrazoDeEntrega(atividade.getDtEntrega());
 
-		initEvent();
+		initEvent(atividade);
 
 		initReponsivelCar();
 	}
@@ -170,10 +170,10 @@ public class CardTarefaHorizontal implements ICard {
 		hboxPrincipal.getChildren().addAll(lblTitulo, lblLegenda);
 	}
 
-	private void initEvent() {
+	private void initEvent(Atividade atividade) {
 		hboxPrincipal.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(borderPrincipal);
+	        new EntregaAtividadeAluno(atividade, borderPrincipal);
 			
 		});
 

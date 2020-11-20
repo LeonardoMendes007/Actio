@@ -16,8 +16,8 @@ public class HomeProfessorController {
 
 	public void addCards() {
 
-		CardTarefaVertical cardTarefa1 = new CardTarefaVertical("Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#FF9DBA", new Date(), false);
-		CardTarefaVertical cardTarefa2 = new CardTarefaVertical("Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF", new Date(), true);
+		CardTarefaVertical cardTarefa1 = new CardTarefaVertical(home.getBorderPrincipal(),"Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#FF9DBA", new Date(), false);
+		CardTarefaVertical cardTarefa2 = new CardTarefaVertical(home.getBorderPrincipal(),"Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF", new Date(), true);
 		
 		CardNotificacao cardNotificacao1 = new CardNotificacao("A tarefa: Trabalho BD foi corrigida.", "Clique para ver sua nota", new Date());
 		CardNotificacao cardNotificacao2 = new CardNotificacao("A tarefa: Trabalho SO || está atrasada 2 dias", "Clique para ver a atividade", new Date());

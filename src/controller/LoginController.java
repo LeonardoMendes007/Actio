@@ -54,13 +54,13 @@ public class LoginController {
 
 		if (email.equals("a") && senha.equals("b")) {
 			
-			criarLog(email,senha);			
+//			criarLog(email,senha);			
 			MenuAluno menu = new MenuAluno(login.getScene());
 			
 			
 		}else if(email.equals("p") && senha.equals("p")){
 			
-			criarLog(email,senha);	
+//			criarLog(email,senha);	
 			view.professor.MenuProfessor menuProfessor = new view.professor.MenuProfessor(login.getScene());
 			
 		}

@@ -65,7 +65,7 @@ public class CardTarefaVertical implements ICard {
 		
 		initPrazoDeEntrega(atividade.getDtEntrega());
 		
-		initEvent();
+		initEvent(atividade);
 	}
 	
 
@@ -161,10 +161,10 @@ public class CardTarefaVertical implements ICard {
         borderCard.setAlignment(gridInterno, Pos.BOTTOM_LEFT);
 	}
 
-	private void initEvent() {
+	private void initEvent(Atividade atividade) {
 		borderCard.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(borderPrincipal);
+	        new EntregaAtividadeAluno(atividade, borderPrincipal);
 			
 		});
 

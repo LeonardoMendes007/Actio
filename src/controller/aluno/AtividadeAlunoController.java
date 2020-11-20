@@ -14,6 +14,8 @@ public class AtividadeAlunoController {
 
 	private AtividadeAluno atividadeAluno;
 
+	private List<Atividade> atividades;
+
 	public AtividadeAlunoController(AtividadeAluno atividade) {
 		this.atividadeAluno = atividade;
 	}
@@ -23,9 +25,9 @@ public class AtividadeAlunoController {
 		try {
 			AtividadeDao atividade = new AtividadeDao();
 
-			List<Atividade> atividades = atividades.findAll();
+			atividades = atividades.findAll();
 
-			addCards(atividades);
+			addCards();
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -37,14 +39,55 @@ public class AtividadeAlunoController {
 
 	}
 
-	private void addCards(List<Atividade> atividades) {
+	private void addCards() {
 
 		for (Atividade atividade : atividades) {
-			CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(),atividade);
+			CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
 
 			atividadeAluno.addCardAtvidade(card);
 		}
 
+	}
+
+	public void filtrarDisciplina(String s) {
+
+		for (Atividade atividade : atividades) {
+
+			if (s.equals(atividade.getTurma().getDisciplina().getNome())) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+
+				atividadeAluno.addCardAtvidade(card);
+			}
+		}
+
+	}
+
+	public void filtrarPessoas(String s) {
+		for (Atividade atividade : atividades) {
+
+			if (s.equals("Grupo") && atividade.isGrupo()) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+
+				atividadeAluno.addCardAtvidade(card);
+			}
+			
+			if (s.equals("Grupo") && atividade.isGrupo()) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+
+				atividadeAluno.addCardAtvidade(card);
+			}
+		}
+	}
+
+	public void filtrarStatus(String s) {
+		for (Atividade atividade : atividades) {
+
+			if () {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+
+				atividadeAluno.addCardAtvidade(card);
+			}
+		}
 	}
 
 }
