@@ -12,15 +12,14 @@ public class Atividade {
 	private Date dtEntrega;
 	private String pathArquivo;
 	private boolean grupo;
-	private Turma turma;
-	private Disciplina disciplina;
+	private DisciplinaTurmaProfessor discTurmaProf;
 	
 	public Atividade() {
 
 	}
 
 	public Atividade(int id, String nome, String descricao, Date dtEmissao, Date dtPublicacao, Date dtEntrega,
-			String pathArquivo, boolean grupo, Turma turma, Disciplina d) {
+			String pathArquivo, boolean grupo, DisciplinaTurmaProfessor dtp) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -30,8 +29,7 @@ public class Atividade {
 		this.dtEntrega = dtEntrega;
 		this.pathArquivo = pathArquivo;
 		this.grupo = grupo;
-		this.turma = turma;
-		this.disciplina = d;
+		this.discTurmaProf = dtp;
 	}
 	
 	
@@ -43,7 +41,7 @@ public class Atividade {
 		this.descricao = descricao;
 		this.dtEmissao = dtEmissao;
 		this.grupo = grupo;
-		this.turma = turma;
+		
 	}
 
 	public int getId() {
@@ -102,13 +100,7 @@ public class Atividade {
 		this.pathArquivo = pathArquivo;
 	}
 
-	public Turma getTurma() {
-		return turma;
-	}
-
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-	}
+	
 
 	public boolean isGrupo() {
 		return grupo;
@@ -118,12 +110,14 @@ public class Atividade {
 		this.grupo = grupo;
 	}
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	
+
+	public DisciplinaTurmaProfessor getDiscTurmaProf() {
+		return discTurmaProf;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setDiscTurmaProf(DisciplinaTurmaProfessor discTurmaProf) {
+		this.discTurmaProf = discTurmaProf;
 	}
 	
 	

@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import model.Professor;
 import view.card.ICard;
 import view.card.turma.CardTurma;
 
@@ -45,11 +46,14 @@ public class HomeProfessor {
 
 	private Label lblCalendario;
 
+	
+	private Professor professor;
+	
 	private HomeProfessorController controller = new HomeProfessorController(this);
 
-	public HomeProfessor(BorderPane border) {
+	public HomeProfessor(BorderPane border, Professor p) {
 		this.borderPrincipal = border;
-
+		this.setProfessor(p);
 		initTela();
 	}
 
@@ -79,7 +83,7 @@ public class HomeProfessor {
 
 		initEventsResponsivel();
 
-		controller.addCards();
+		controller.verificarCards();
 
 	}
 
@@ -238,6 +242,14 @@ public class HomeProfessor {
 	public void addCardNotificacao(ICard card) {
 
 		vboxInternoNotificacoes.getChildren().add(card.getCard());
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 
 }

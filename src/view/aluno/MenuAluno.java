@@ -215,7 +215,7 @@ public class MenuAluno {
 		lblActio.setAlignment(Pos.TOP_CENTER);
 		FileInputStream input;
 		try {
-			input = new FileInputStream("src\\view\\img\\Logo_4.png");
+			input = new FileInputStream("src\\view\\img\\icon.png");
 			lblActio.setBackground(new Background(
 					new BackgroundImage(new Image(input), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 							BackgroundPosition.CENTER, new BackgroundSize(35, 35, true, true, true, false))));

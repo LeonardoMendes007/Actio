@@ -25,7 +25,8 @@ import view.card.ICard;
 
 public class CardTarefaVertical implements ICard {
 
-
+	private BorderPane borderPrincipal;
+	
 	private BorderPane borderCard;
 
 	private Label lblDisciplina;
@@ -44,18 +45,18 @@ public class CardTarefaVertical implements ICard {
 	
 	private Atividade atividade;
 	
-	public CardTarefaVertical(Atividade atividade) {
+	public CardTarefaVertical(BorderPane pane, Atividade atividade) {
 		
 
-		//this.borderPrincipal = pane; 
+		this.borderPrincipal = pane; 
 		this.atividade = atividade;
 
-		corDisciplina = Color.web(atividade.getDisciplina().getCor());
+		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
 		
 		
 		this.borderCard = new BorderPane();
 		this.borderCard.setPrefSize(280, 150);
-		this.borderCard.setStyle("-fx-background-color: "+atividade.getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		this.borderCard.setStyle("-fx-background-color: "+atividade.getDiscTurmaProf().getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.borderCard.setPadding(new Insets(5));
 
 		paneGroupEPrazo = new Pane();
@@ -64,7 +65,7 @@ public class CardTarefaVertical implements ICard {
 		
 		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
-		initDisciplina(atividade.getDisciplina().getNome());
+		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
 
 		verificarGroup(atividade.isGrupo());
 		
@@ -169,7 +170,7 @@ public class CardTarefaVertical implements ICard {
 	private void initEvent(Atividade atividade) {
 		borderCard.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(atividade, borderCard);
+	        new EntregaAtividadeAluno(atividade, borderPrincipal);
 			
 		});
 

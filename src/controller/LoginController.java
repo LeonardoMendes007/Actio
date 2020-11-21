@@ -73,23 +73,27 @@ public class LoginController {
 		
 			if(usuario != null) {
 				AlunoController aControlller = new AlunoController();
-				
+				System.out.println(usuario.getId());
 				Aluno aluno = new Aluno();
 				aluno.setId(usuario.getId());
 				
 				aControlller.buscarAluno(aluno);
 					
 
-				if(aluno != null) {
+				System.out.println(aluno.getNome());
+				if(aluno.getNome() != null) {
 					MenuAluno ma = new MenuAluno(login.getScene(), aluno);
 					
 					
+					
 				}else{
+					System.out.println(usuario.getId());
 					ProfessorController pController = new ProfessorController();
 					
 					Professor professor = new Professor();
 					professor.setId(usuario.getId());
 					
+					pController.buscarProfessor(professor);
 					MenuProfessor mp = new MenuProfessor(login.getScene(), professor);
 				}
 			}else {

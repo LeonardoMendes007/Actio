@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Atividade;
 import view.Util;
 import view.card.ICard;
 import view.professor.VisualizarAtividade;
@@ -39,27 +40,29 @@ public class CardTarefaVertical implements ICard {
 	
 	private BorderPane borderPrincipal;
 	
-	public CardTarefaVertical(BorderPane borderPrincipal, String titulo, String legenda, String disciplina,String corHexa, Date prazo,  boolean group) {
+	private Atividade atividade;
+	
+	public CardTarefaVertical(BorderPane borderPrincipal, Atividade atividade) {
 
 		this.borderPrincipal = borderPrincipal;
 		
-		corDisciplina = Color.web(corHexa);
+		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
 		
 		this.border = new BorderPane();
 		this.border.setPrefSize(280, 150);
-		this.border.setStyle("-fx-background-color: "+corHexa+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		this.border.setStyle("-fx-background-color: "+atividade.getDiscTurmaProf().getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.border.setPadding(new Insets(5));
 
 		paneGroupEPrazo = new Pane();
 		border.setTop(paneGroupEPrazo);
 		
-		initCentroCard(titulo, legenda);
+		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
-		initDisciplina(disciplina);
+		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
 
-		verificarGroup(group);
+		verificarGroup(atividade.isGrupo());
 		
-		initPrazoDeEntrega(prazo);
+		initPrazoDeEntrega(atividade.getDtEntrega());
 		
 		initEvent();
 	}
@@ -166,5 +169,15 @@ public class CardTarefaVertical implements ICard {
 	@Override
 	public Node getCard() {
 		return border;
+	}
+
+
+	public Atividade getAtividade() {
+		return atividade;
+	}
+
+
+	public void setAtividade(Atividade atividade) {
+		this.atividade = atividade;
 	}
 }

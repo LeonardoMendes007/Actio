@@ -30,7 +30,7 @@ public class MenuAlunoController {
 	public void btDisciplinaAction() {
 
 		clearChildren();
-		new DisciplinaAluno(menu.getBorderConteudo());
+		new DisciplinaAluno(menu.getBorderConteudo(), menu.getAluno());
 
 	}
 

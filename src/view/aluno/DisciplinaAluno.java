@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import model.Aluno;
 import view.card.disciplina.CardDisciplina;
 
 public class DisciplinaAluno {
@@ -26,11 +27,13 @@ public class DisciplinaAluno {
 	
 	private ScrollPane scrollDisciplina;
 	
+	private Aluno aluno;
+	
 	private DisciplinaAlunoController controller = new DisciplinaAlunoController(this);
 
-	public DisciplinaAluno(BorderPane border) {
+	public DisciplinaAluno(BorderPane border, Aluno a) {
 		this.borderPrincipal = border;
-		
+		setAluno(a);
 		initTela();
 	}
 
@@ -106,6 +109,14 @@ public class DisciplinaAluno {
 
 	public BorderPane getBorderPrincipal() {
 		return borderPrincipal;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 	
 }

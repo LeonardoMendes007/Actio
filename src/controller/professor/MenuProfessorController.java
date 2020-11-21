@@ -16,7 +16,7 @@ public class MenuProfessorController {
 	public void btHomeAction() {
 		
 		clearChildren();
-		new HomeProfessor(menu.getBorderConteudo());
+		new HomeProfessor(menu.getBorderConteudo(), menu.getProfessor());
 
 	}
 

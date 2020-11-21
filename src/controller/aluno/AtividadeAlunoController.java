@@ -39,7 +39,7 @@ public class AtividadeAlunoController {
 	private void addCards() {
 
 		for (Atividade atividade : atividades) {
-			CardTarefaHorizontal card = new CardTarefaHorizontal(atividade);
+			CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividade);
 
 			viewAtividadeAluno.addCardAtvidade(card);
 		}
@@ -50,8 +50,8 @@ public class AtividadeAlunoController {
 
 		for (int i = 0; i <atividades.size(); i++) {
 
-			if (s.equals(atividades.get(i).getDisciplina().getNome())) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividades.get(i));
+			if (s.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome())) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividades.get(i));
 
 				viewAtividadeAluno.addCardAtvidade(card);
 			}
@@ -63,14 +63,14 @@ public class AtividadeAlunoController {
 		for (Atividade atividade : atividades) {
 
 			if (s.equals("Grupo") && atividade.isGrupo()) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividade);
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividade);
 
 				viewAtividadeAluno.addCardAtvidade(card);
 			}
 			
 			if (s.equals("Grupo") && atividade.isGrupo()) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividade);
-
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividade);
+ 
 				viewAtividadeAluno.addCardAtvidade(card);
 			}
 		}

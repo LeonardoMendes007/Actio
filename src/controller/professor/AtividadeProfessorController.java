@@ -1,44 +1,51 @@
 package controller.professor;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
+import model.Atividade;
+import persistence.AtividadeDao;
+import view.aluno.HomeAluno;
+import view.card.tarefa.aluno.CardTarefaVertical;
 import view.card.tarefa.professor.CardTarefaHorizontal;
 import view.professor.AtividadeProfessor;
 
 public class AtividadeProfessorController {
 
-	private AtividadeProfessor atividade;
+	private AtividadeProfessor viewAtividadeProfessor;
 	
 	public AtividadeProfessorController(AtividadeProfessor atividade) {
-		this.atividade = atividade;
+		this.viewAtividadeProfessor = atividade;
 	}
 	
-	public void addCards() {
 
-		CardTarefaHorizontal cardTarefaHorizontal1 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P1", "4° ADS - TARDE", "Programação Orientada a Ódio", "#FF9DBA", new Date(), false);
-		CardTarefaHorizontal cardTarefaHorizontal2 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal3 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio","#FF9DBA", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal4 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio","#9DC4FF", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal5 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio","#FF9DBA", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal6 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal7 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio", "#FF9DBA",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal8 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal9 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício  P2", "4° ADS - TARDE", "Programação Orientada a Ódio", "#FF9DBA", new Date(), true);
-		CardTarefaHorizontal cardTarefaHorizontal10 = new CardTarefaHorizontal(atividade.getBorderPrincipal(),"Exercício P2","4° ADS - TARDE", "Programação Orientada a Ódio", "#9DC4FF",new Date(), true);		
-	    
-		atividade.addCardAtvidade(cardTarefaHorizontal1);
-	    atividade.addCardAtvidade(cardTarefaHorizontal2);
-	    atividade.addCardAtvidade(cardTarefaHorizontal3);
-	    atividade.addCardAtvidade(cardTarefaHorizontal4);
-	    atividade.addCardAtvidade(cardTarefaHorizontal5);
-	    atividade.addCardAtvidade(cardTarefaHorizontal6);
-	    atividade.addCardAtvidade(cardTarefaHorizontal7);
-	    atividade.addCardAtvidade(cardTarefaHorizontal8);
-	    atividade.addCardAtvidade(cardTarefaHorizontal9);
-	    atividade.addCardAtvidade(cardTarefaHorizontal10);
-	    
-	    
+
+	public void verificarCards() {
+	
+		try {
+			AtividadeDao atividadeDao = new AtividadeDao();
+			
+		//	List<Atividade> atividades = atividadeDao.findAtividadeTurma(viewAtividadeProfessor.g().getTurma());
+
+			
+			//addCards(atividades);
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+	private void addCards(List<Atividade> atividades) {
 		
+		for (Atividade atividade : atividades) {
+			//CardTarefaVertical card = new CardTarefaVertical(viewHomeAluno.getBorderPrincipal(), atividade);
+			
+			//viewHomeAluno.addCardAtividade(card);
+			
+			
+		}
 	}
 	
 }

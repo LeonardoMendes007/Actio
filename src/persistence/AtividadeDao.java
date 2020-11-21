@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.Atividade;
 import model.Disciplina;
-import model.DisciplinaProfessor;
+import model.DisciplinaTurmaProfessor;
 import model.Professor;
 import model.Turma;
 import persistence.interfaces.IAtividadeDao;
@@ -40,7 +40,7 @@ public class AtividadeDao implements IAtividadeDao{
 		ps.setDate(4, (Date) atividade.getDtPublicacao());
 		ps.setDate(5, (Date) atividade.getDtEntrega());
 		ps.setString(6, atividade.getPathArquivo());
-		ps.setInt(7, atividade.getTurma().getId());
+		//ps.setInt(7, atividade.getTurma().getId());
 		ps.execute();
 		ps.close();
 	}
@@ -73,12 +73,15 @@ public class AtividadeDao implements IAtividadeDao{
 		
 		System.out.println("Id da turma" + turma.getId());
 		String sql = "select tbAtividade.*, " + 
-				"tbDisciplina.nomeDisciplina, tbDisciplina.corDisciplina, " + 
-				"tbTurma.cursoTurma, tbTurma.periodoTurma, tbTurma.semestreTurma " + 
-				"from tbAtividade " + 
-				"inner join tbDisciplina on tbDisciplina.idDisciplina = tbAtividade.idDisciplina " + 
-				"inner join tbTurma on tbTurma.idTurma = tbAtividade.idTurma " + 
-				"where tbAtividade.idTurma = ?";
+				"tbDisciplina.idDisciplina, tbDisciplina.nomeDisciplina, tbDisciplina.corDisciplina, " + 
+				"tbTurma.cursoTurma, tbTurma.periodoTurma, tbTurma.semestreTurma, " + 
+				"tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario " + 
+				"from tbAtividade\n" + 
+				"inner join tbDisciplinaTurmaProfessor on tbAtividade.idDisciplinaTurmaProfessor = tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor " + 
+				"inner join tbDisciplina on tbDisciplinaTurmaProfessor.idDisciplina = tbDisciplina.idDisciplina " + 
+				"inner join tbTurma on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma " + 
+				"inner join tbUsuario on tbDisciplinaTurmaProfessor.idProfessor = tbUsuario.idUsuario " +
+				"where tbDisciplinaTurmaProfessor.idTurma = ?";
 	
 		
 		PreparedStatement ps = c.prepareStatement(sql);
@@ -115,12 +118,18 @@ public class AtividadeDao implements IAtividadeDao{
 			t.setPeriodo(rs.getString("periodoTurma"));
 			
 	
-			a.setTurma(t);
-			a.setDisciplina(disc);
+			Professor p =  new Professor();
+			p.setId(rs.getInt("idUsuario"));
+			p.setNome(rs.getString("nomeUsuario"));
+			p.setSobrenome(rs.getString("sobrenomeUsuario"));
+			
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(disc, t, p);
+			
+			a.setDiscTurmaProf(dtp);
 			
 			
 			atividades.add(a);
-			System.out.println(a.getNome() + " " + a.getDescricao() + " " + a.getDisciplina());
+			System.out.println(a.getNome() + " " + a.getDescricao() + " " + a.getDiscTurmaProf().getDisciplina().getNome());
 			
 		}
 		
@@ -134,6 +143,70 @@ public class AtividadeDao implements IAtividadeDao{
 	
 	private boolean isGrupo(int tipo) {
 		return tipo == 1;
+	}
+
+	@Override
+	public List<Atividade> findAtividadeTurmaProfessor(Professor professor) throws SQLException {
+
+		
+		String sql = "select tbAtividade.*, " + 
+				"tbDisciplina.idDisciplina, tbDisciplina.nomeDisciplina, tbDisciplina.corDisciplina, " + 
+				"tbTurma.idTurma, tbTurma.cursoTurma, tbTurma.periodoTurma, tbTurma.semestreTurma " + 
+				"from tbAtividade " + 
+				"inner join tbDisciplinaTurmaProfessor on tbAtividade.idDisciplinaTurmaProfessor = tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor " + 
+				"inner join tbDisciplina on tbDisciplinaTurmaProfessor.idDisciplina = tbDisciplina.idDisciplina " + 
+				"inner join tbTurma on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma " + 
+				"inner join tbUsuario on tbDisciplinaTurmaProfessor.idProfessor = tbUsuario.idUsuario " +
+				"where tbDisciplinaTurmaProfessor.idProfessor = ?";
+	
+		
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, professor.getId());
+		
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<Atividade> atividades = new ArrayList<Atividade>();
+		
+		while(rs.next()) {
+			
+		
+			Atividade a = new Atividade();
+			a.setId(rs.getInt("idAtividade"));
+			a.setNome(rs.getString("nomeAtividade"));
+			a.setDescricao(rs.getString("descAtividade"));
+			a.setDtEmissao(rs.getDate("dtEmissaoAtividade"));
+			a.setDtPublicacao(rs.getDate("dtPublicacaoAtividade"));
+			a.setDtEntrega(rs.getDate("dtFechamentoAtividade"));
+			a.setPathArquivo(rs.getString("arquivosAtividade"));
+			a.setGrupo(isGrupo(rs.getInt("idTipoAtividade")));
+			
+			
+			Disciplina disc = new Disciplina();
+			disc.setId(rs.getInt("idDisciplina"));
+			disc.setNome(rs.getString("nomeDisciplina"));
+			disc.setCor(rs.getString("corDisciplina"));	
+			
+			Turma t = new Turma();
+			t.setId(rs.getInt("idTurma"));
+			t.setCurso(rs.getString("cursoTurma"));
+			t.setSemestre(rs.getInt("semestreTurma"));
+			t.setPeriodo(rs.getString("periodoTurma"));
+			
+	
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(disc, t, professor);
+			
+			a.setDiscTurmaProf(dtp);
+			
+			
+			atividades.add(a);
+			System.out.println(a.getNome() + " " + a.getDescricao() + " " + a.getDiscTurmaProf().getDisciplina().getNome());
+			
+		}
+		
+		ps.close();
+		return atividades;
+		
 	}
 
 

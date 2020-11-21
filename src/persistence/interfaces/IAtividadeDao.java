@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import model.Atividade;
+import model.Professor;
 import model.Turma;
 
 public interface IAtividadeDao {
@@ -14,6 +15,9 @@ public interface IAtividadeDao {
 	public void delete(Atividade atividade) throws SQLException;
 	public Atividade findAtividade(Atividade atividade) throws SQLException;
 	public List<Atividade> findAtividadeTurma(Turma turma) throws SQLException;
+	public List<Atividade> findAtividadeTurmaProfessor(Professor professor) throws SQLException;
+
+//	public List<Atividade> findAtividadeDisciplina
 	public List<Atividade> findAll() throws SQLException;
 	
 }

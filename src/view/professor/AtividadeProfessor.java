@@ -81,7 +81,7 @@ public class AtividadeProfessor {
 		
 		initEventBtAtividade();
 		
-		control.addCards();
+		//control.addCards();
 		
 		
 

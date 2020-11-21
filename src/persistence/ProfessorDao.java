@@ -25,11 +25,8 @@ public class ProfessorDao implements IProfessorDao{
 
 
 	@Override
-	public Professor findProfessor(Usuario professor) throws SQLException {
-		String sql = "select * from tbUsuario"
-				+ "inner join tbProfessor"
-				+ "on tbProfessor.idProfessor = tbUsuario.inUsuario"
-				+ "where idProfessor = ?";
+	public Professor findProfessor(Professor professor) throws SQLException {
+		String sql = "select * from tbUsuario inner join tbProfessor on tbProfessor.idProfessor = tbUsuario.idUsuario  where idProfessor = ?";
 	
 	
 	
@@ -44,7 +41,7 @@ public class ProfessorDao implements IProfessorDao{
 		int cont = 0;
 	
 		while(rs.next()) {
-			professor = new Professor();
+
 			
 			professor.setNome(rs.getString("nomeUsuario"));
 			professor.setSobrenome(rs.getString("sobrenomeUsuario"));
@@ -59,7 +56,7 @@ public class ProfessorDao implements IProfessorDao{
 			professor = new Professor();
 		}
 	
-		return (Professor) professor;
+		return  professor;
 	}
 
 	@Override

@@ -1,32 +1,48 @@
 package controller.professor;
 
-import java.util.Date;
+import java.sql.SQLException;
+import java.sql.Date;
+import java.util.List;
 
+import model.Atividade;
+import persistence.AtividadeDao;
 import view.card.notificacao.CardNotificacao;
 import view.card.tarefa.professor.CardTarefaVertical;
 import view.professor.HomeProfessor;
 
 public class HomeProfessorController {
 
-	private HomeProfessor home;
+	private HomeProfessor viewHomeProfessor;
 
 	public HomeProfessorController(HomeProfessor home) {
-		this.home = home;
+		this.viewHomeProfessor = home;
 	}
 
-	public void addCards() {
+	public void verificarCards() {
+		
+		try {
+			AtividadeDao atividadeDao = new AtividadeDao();
+			
+			List<Atividade> atividades = atividadeDao.findAtividadeTurmaProfessor(viewHomeProfessor.getProfessor());
 
-		CardTarefaVertical cardTarefa1 = new CardTarefaVertical(home.getBorderPrincipal(),"Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#FF9DBA", new Date(), false);
-		CardTarefaVertical cardTarefa2 = new CardTarefaVertical(home.getBorderPrincipal(),"Exercício  P1", "Não sei até qual e vou mudar a data\n de entrega para semana que vem...", "Programação Orientada a Ódio", "#9DC4FF", new Date(), true);
+			
+			addCards(atividades);
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+	private void addCards(List<Atividade> atividades) {
 		
-		CardNotificacao cardNotificacao1 = new CardNotificacao("A tarefa: Trabalho BD foi corrigida.", "Clique para ver sua nota", new Date());
-		CardNotificacao cardNotificacao2 = new CardNotificacao("A tarefa: Trabalho SO || está atrasada 2 dias", "Clique para ver a atividade", new Date());
-		
-		home.addCardNotificacao(cardNotificacao1);
-		home.addCardNotificacao(cardNotificacao2);
-		
-	    home.addCardAtividade(cardTarefa1);
-	    home.addCardAtividade(cardTarefa2);
+		for (Atividade atividade : atividades) {
+			CardTarefaVertical card = new CardTarefaVertical(viewHomeProfessor.getBorderPrincipal(), atividade);
+			
+			viewHomeProfessor.addCardAtividade(card);
+			
+			
+		}
 		
 	}
 }

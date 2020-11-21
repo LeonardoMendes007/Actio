@@ -43,18 +43,16 @@ public class CardTarefaHorizontal implements ICard {
 
 	private Color corDisciplina;
 
-	public CardTarefaHorizontal(Atividade atividade) {
+	public CardTarefaHorizontal(BorderPane borderPrincipal, Atividade atividade) {
+
+		this.borderPrincipal = borderPrincipal;
+		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
 
 		
-		
-	
-		borderPrincipal = new BorderPane();
-		
-		corDisciplina = Color.web(atividade.getDisciplina().getCor());
 
 		this.hboxPrincipal = new HBox(15);
 		this.hboxPrincipal.setPrefSize(500, 50);
-		this.hboxPrincipal.setStyle("-fx-background-color: " + atividade.getDisciplina().getCor()
+		this.hboxPrincipal.setStyle("-fx-background-color: " + atividade.getDiscTurmaProf().getDisciplina().getCor()
 				+ "; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.hboxPrincipal.setPadding(new Insets(5));
 
@@ -62,7 +60,7 @@ public class CardTarefaHorizontal implements ICard {
 
 		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
-		initDisciplina(atividade.getDisciplina().getNome());
+		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
 
 		initPrazoDeEntrega(atividade.getDtEntrega());
 

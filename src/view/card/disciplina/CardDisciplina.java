@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import model.Disciplina;
+import model.Professor;
 import view.Util;
 import view.aluno.DetalhesDisciplina;
 import view.card.ICard;
@@ -20,13 +22,17 @@ public class CardDisciplina implements ICard{
 	
 	private Label lblProfessor;
 	
-	public CardDisciplina(Double width, Double height, String disciplina, String professor, String corHexa) {
+	private Disciplina disciplina;
+	
+	public CardDisciplina(Double width, Double height, Disciplina disciplina, Professor p) {
+		this.disciplina  = disciplina;
+		
 		
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(width, height);
-		this.borderPrincipal.setStyle("-fx-background-color: "+ corHexa+"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
+		this.borderPrincipal.setStyle("-fx-background-color: "+ disciplina.getCor() +"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
 		
-		initLabel(disciplina,professor);
+		initLabel(disciplina.getNome(),p.getNome() + " " + p.getSobrenome());
 		
 		initEvent();
 	}

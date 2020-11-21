@@ -1,16 +1,20 @@
 package model;
 
-public class DisciplinaProfessor {
+public class DisciplinaTurmaProfessor {
 
 	private Disciplina disciplina;
+	private Turma turma;
 	private Professor professor;
 	
-	public DisciplinaProfessor() {
+	
+	
+	public DisciplinaTurmaProfessor() {
 		
 	}
 	
-	public DisciplinaProfessor(Disciplina d, Professor p) {
+	public DisciplinaTurmaProfessor(Disciplina d,Turma t, Professor p) {
 		setDisciplina(d);
+		setTurma(t);
 		setProfessor(p);
 	}
 	
@@ -25,6 +29,14 @@ public class DisciplinaProfessor {
 	}
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
+	}
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 	
 	
