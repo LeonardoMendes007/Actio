@@ -21,7 +21,7 @@ import javafx.scene.text.FontWeight;
 import view.Util;
 import view.card.turma.CardTurma;
 
-public class TurmaProfessor {
+public class ViewTurmaProfessor {
 
 	private BorderPane borderPrincipal;
 	
@@ -48,7 +48,7 @@ public class TurmaProfessor {
 	
 	private TurmaProfessorController controller = new TurmaProfessorController(this);
 
-	public TurmaProfessor(BorderPane border) {
+	public ViewTurmaProfessor(BorderPane border) {
 		this.borderPrincipal = border;
 		
 		initTela();

@@ -23,6 +23,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Professor;
 
 public class MenuProfessor {
 
@@ -43,11 +44,14 @@ public class MenuProfessor {
 	private Label lblTipoUsuario;
 	private Background azulEscuro;
 	private Background azulClaro;
+	private Professor professor;
+	
 	
 	private MenuProfessorController menuController = new MenuProfessorController(this);
 
-	public MenuProfessor(Scene scn) {
+	public MenuProfessor(Scene scn, Professor p) {
 		this.scn = scn;
+		this.professor = p;
 		initNewScene();
 		initMenu();
 
@@ -87,7 +91,7 @@ public class MenuProfessor {
 			ivUser.setFitHeight(50.0);
 			ivUser.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px;");
 			
-			lblNome = new Label("Fulano");
+			lblNome = new Label(professor.getNome());
 			lblNome.setStyle("-fx-cursor: hand;");
 			Util.setFontePadrao(new Label [] { lblNome }, 15, FontWeight.NORMAL);
 

@@ -1,6 +1,7 @@
 package controller.aluno;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Atividade;
@@ -10,37 +11,36 @@ import view.card.tarefa.aluno.CardTarefaVertical;
 
 public class HomeAlunoController {
 
-	private HomeAluno home;
+	private HomeAluno viewHomeAluno;
 
 	public HomeAlunoController(HomeAluno home2) {
-		this.home = home2;
+		this.viewHomeAluno = home2;
 	}
 
 	public void verificarCards() {
-		
+	
 		try {
-			AtividadeDao atividade = new AtividadeDao();
+			AtividadeDao atividadeDao = new AtividadeDao();
 			
-			List<Atividade> atividades = atividades.findAll();
+			List<Atividade> atividades = atividadeDao.findAtividadeTurma(viewHomeAluno.getAluno().getTurma());
+
 			
 			addCards(atividades);
 			
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		} 
 	}
 
 	private void addCards(List<Atividade> atividades) {
 		
 		for (Atividade atividade : atividades) {
-			CardTarefaVertical card = new CardTarefaVertical(home.getBorderPrincipal(),atividade);
+			CardTarefaVertical card = new CardTarefaVertical(atividade);
 			
-			home.addCardAtividade(card);
+			viewHomeAluno.addCardAtividade(card);
+			
+			
 		}
 		
 	}

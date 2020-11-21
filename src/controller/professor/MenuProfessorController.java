@@ -3,7 +3,7 @@ package controller.professor;
 import view.professor.AtividadeProfessor;
 import view.professor.HomeProfessor;
 import view.professor.MenuProfessor;
-import view.professor.TurmaProfessor;
+import view.professor.ViewTurmaProfessor;
 
 public class MenuProfessorController {
 
@@ -29,7 +29,7 @@ public class MenuProfessorController {
 	public void btDisciplinaAction() {
 
 		clearChildren();
-		new TurmaProfessor(menu.getBorderConteudo());
+		new ViewTurmaProfessor(menu.getBorderConteudo());
 
 	}
 

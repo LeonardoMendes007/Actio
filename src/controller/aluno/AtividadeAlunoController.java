@@ -1,10 +1,10 @@
 package controller.aluno;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
-import javafx.scene.layout.BorderPane;
+
 import model.Atividade;
 import persistence.AtividadeDao;
 import view.aluno.AtividadeAluno;
@@ -12,51 +12,48 @@ import view.card.tarefa.aluno.CardTarefaHorizontal;
 
 public class AtividadeAlunoController {
 
-	private AtividadeAluno atividadeAluno;
+	private AtividadeAluno viewAtividadeAluno;
 
 	private List<Atividade> atividades;
 
 	public AtividadeAlunoController(AtividadeAluno atividade) {
-		this.atividadeAluno = atividade;
+		this.viewAtividadeAluno = atividade;
 	}
 
 	public void verificarCards() {
 
 		try {
-			AtividadeDao atividade = new AtividadeDao();
+			AtividadeDao atividadeDao = new AtividadeDao();
 
-			atividades = atividades.findAll();
-
+			atividades = atividadeDao.findAtividadeTurma(viewAtividadeAluno.getAluno().getTurma());
+			
 			addCards();
 
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
 	}
 
 	private void addCards() {
 
 		for (Atividade atividade : atividades) {
-			CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+			CardTarefaHorizontal card = new CardTarefaHorizontal(atividade);
 
-			atividadeAluno.addCardAtvidade(card);
+			viewAtividadeAluno.addCardAtvidade(card);
 		}
 
 	}
 
 	public void filtrarDisciplina(String s) {
 
-		for (Atividade atividade : atividades) {
+		for (int i = 0; i <atividades.size(); i++) {
 
-			if (s.equals(atividade.getTurma().getDisciplina().getNome())) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+			if (s.equals(atividades.get(i).getDisciplina().getNome())) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividades.get(i));
 
-				atividadeAluno.addCardAtvidade(card);
+				viewAtividadeAluno.addCardAtvidade(card);
 			}
 		}
 
@@ -66,15 +63,15 @@ public class AtividadeAlunoController {
 		for (Atividade atividade : atividades) {
 
 			if (s.equals("Grupo") && atividade.isGrupo()) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividade);
 
-				atividadeAluno.addCardAtvidade(card);
+				viewAtividadeAluno.addCardAtvidade(card);
 			}
 			
 			if (s.equals("Grupo") && atividade.isGrupo()) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
+				CardTarefaHorizontal card = new CardTarefaHorizontal(atividade);
 
-				atividadeAluno.addCardAtvidade(card);
+				viewAtividadeAluno.addCardAtvidade(card);
 			}
 		}
 	}
@@ -82,11 +79,11 @@ public class AtividadeAlunoController {
 	public void filtrarStatus(String s) {
 		for (Atividade atividade : atividades) {
 
-			if () {
+			/*if () {
 				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
 
 				atividadeAluno.addCardAtvidade(card);
-			}
+			}*/
 		}
 	}
 

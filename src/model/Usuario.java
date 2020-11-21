@@ -26,9 +26,8 @@ public class Usuario {
 	}
 	
 	public Usuario(String email, String senha) {
-		super();
-		this.email = email;
-		this.senha = senha;
+		setEmail(email);
+		setSenha(senha);
 	}
 
 	public int getId() {

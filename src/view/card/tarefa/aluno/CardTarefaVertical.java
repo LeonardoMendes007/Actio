@@ -25,8 +25,7 @@ import view.card.ICard;
 
 public class CardTarefaVertical implements ICard {
 
-	private BorderPane borderPrincipal;
-	
+
 	private BorderPane borderCard;
 
 	private Label lblDisciplina;
@@ -43,23 +42,29 @@ public class CardTarefaVertical implements ICard {
 
 	private Color corDisciplina;
 	
-	public CardTarefaVertical(BorderPane pane, Atividade atividade) {
+	private Atividade atividade;
+	
+	public CardTarefaVertical(Atividade atividade) {
 		
-		this.borderPrincipal = pane; 
 
-		corDisciplina = Color.web(atividade.getTurma().getDisciplina().getCor());
+		//this.borderPrincipal = pane; 
+		this.atividade = atividade;
+
+		corDisciplina = Color.web(atividade.getDisciplina().getCor());
+		
 		
 		this.borderCard = new BorderPane();
 		this.borderCard.setPrefSize(280, 150);
-		this.borderCard.setStyle("-fx-background-color: "+atividade.getTurma().getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		this.borderCard.setStyle("-fx-background-color: "+atividade.getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.borderCard.setPadding(new Insets(5));
 
 		paneGroupEPrazo = new Pane();
-		borderPrincipal.setTop(paneGroupEPrazo);
+		borderCard.setTop(paneGroupEPrazo);
+		
 		
 		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
-		initDisciplina(atividade.getTurma().getDisciplina().getNome());
+		initDisciplina(atividade.getDisciplina().getNome());
 
 		verificarGroup(atividade.isGrupo());
 		
@@ -71,7 +76,7 @@ public class CardTarefaVertical implements ICard {
 
 	private void initPrazoDeEntrega(Date prazo) {
 		
-	    lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
+	    lblDataDeEntrega = new Label("Até " + atividade.getDtEntrega().getDay() + "/" + atividade.getDtEntrega().getMonth());
 	    lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
 	    
 	    lblNumDeDias = new Label("Faltam " + 2 + " dias");
@@ -164,7 +169,7 @@ public class CardTarefaVertical implements ICard {
 	private void initEvent(Atividade atividade) {
 		borderCard.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(atividade, borderPrincipal);
+	        new EntregaAtividadeAluno(atividade, borderCard);
 			
 		});
 
@@ -173,6 +178,6 @@ public class CardTarefaVertical implements ICard {
 
 	@Override
 	public Node getCard() {
-		return borderPrincipal;
+		return borderCard;
 	}
 }

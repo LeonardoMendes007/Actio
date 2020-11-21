@@ -1,5 +1,6 @@
 package controller.aluno;
 
+import model.Aluno;
 import view.aluno.AtividadeAluno;
 import view.aluno.DisciplinaAluno;
 import view.aluno.HomeAluno;
@@ -13,17 +14,17 @@ public class MenuAlunoController {
 		this.menu = menu;
 	}
 
-	public void btHomeAction() {
+	public void btHomeAction(Aluno aluno) {
 		
 		clearChildren();
-		new HomeAluno(menu.getBorderConteudo());
+		new HomeAluno(menu.getBorderConteudo(), aluno);
 
 	}
 
 	public void btAtividadeAction() {
 
 		clearChildren();
-		new AtividadeAluno(menu.getBorderConteudo());
+		new AtividadeAluno(menu.getBorderConteudo(), menu.getAluno());
 	}
 	
 	public void btDisciplinaAction() {

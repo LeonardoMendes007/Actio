@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Atividade {
 
@@ -13,13 +13,14 @@ public class Atividade {
 	private String pathArquivo;
 	private boolean grupo;
 	private Turma turma;
-
+	private Disciplina disciplina;
+	
 	public Atividade() {
 
 	}
 
 	public Atividade(int id, String nome, String descricao, Date dtEmissao, Date dtPublicacao, Date dtEntrega,
-			String pathArquivo, boolean grupo, Turma turma) {
+			String pathArquivo, boolean grupo, Turma turma, Disciplina d) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -30,6 +31,7 @@ public class Atividade {
 		this.pathArquivo = pathArquivo;
 		this.grupo = grupo;
 		this.turma = turma;
+		this.disciplina = d;
 	}
 	
 	
@@ -114,6 +116,14 @@ public class Atividade {
 
 	public void setGrupo(boolean grupo) {
 		this.grupo = grupo;
+	}
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 	
 	

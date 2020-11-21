@@ -5,17 +5,26 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.Aluno;
+import model.Professor;
 import model.Usuario;
+import persistence.ProfessorDao;
+import persistence.UsuarioDao;
 import view.Login;
 import view.aluno.MenuAluno;
+import view.professor.MenuProfessor;
 
 public class LoginController {
 
 	private Login login;
-
+	private Usuario usuario;
+	
 	public LoginController(Login login) {
 		this.login = login;
 	}
@@ -50,33 +59,54 @@ public class LoginController {
 
 	}
 
+
+	@SuppressWarnings("unused")
 	private void verificarAutenticidade(String email, String senha) {
-
-		if (email.equals("a") && senha.equals("b")) {
-			
-//			criarLog(email,senha);			
-			MenuAluno menu = new MenuAluno(login.getScene());
-			
-			
-		}else if(email.equals("p") && senha.equals("p")){
-			
-//			criarLog(email,senha);	
-			view.professor.MenuProfessor menuProfessor = new view.professor.MenuProfessor(login.getScene());
-			
-		}
+		usuario = new Usuario(email, senha);
 		
-		else {
-			login.setErro("Email ou Senha incorretos.");
-		}
+		UsuarioController uController = new UsuarioController();
+		
+		try {
+			uController.buscarUsuario(usuario);
+			
+			
+		
+			if(usuario != null) {
+				AlunoController aControlller = new AlunoController();
+				
+				Aluno aluno = new Aluno();
+				aluno.setId(usuario.getId());
+				
+				aControlller.buscarAluno(aluno);
+					
 
+				if(aluno != null) {
+					MenuAluno ma = new MenuAluno(login.getScene(), aluno);
+					
+					
+				}else{
+					ProfessorController pController = new ProfessorController();
+					
+					Professor professor = new Professor();
+					professor.setId(usuario.getId());
+					
+					MenuProfessor mp = new MenuProfessor(login.getScene(), professor);
+				}
+			}else {
+				login.setErro("Email ou senha inválido");
+			}
+			
+			criarLog(email, senha);
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			login.setErro(e.getMessage());
+		} 
+		
 	}
 
 	private void criarLog(String email, String senha) {
-		
-		UsuarioDao userDao = new UsuarioDao();
-		
-		Usuario usuario = userDao.findUsuario(new Usuario(email, senha));
-		
+	
+
 		try (BufferedWriter wt = new BufferedWriter(new FileWriter(new File("log.txt")))){
 			 wt.write(usuario.getId());
 			

@@ -21,28 +21,31 @@ public class UsuarioDao implements IUsuarioDao{
 	}
 	
 
-	@Override
-	public void insert(Usuario usuario) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(Usuario usuario) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Usuario usuario) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public Usuario findUsuario(Usuario usuario) throws SQLException {
 		
-		return null;
+		String sql = "select * from tbUsuario where emailUsuario = ? and senhaUsuario = ?";
+		PreparedStatement ps = c.prepareStatement(sql);
+		
+		ps.setString(1, usuario.getEmail());
+		ps.setString(2, usuario.getSenha());
+		
+		
+		ResultSet rs = ps.executeQuery();
+		
+		int cont = 0;
+		while(rs.next()) {
+			usuario.setId(Integer.parseInt(rs.getString("idUsuario")));
+
+			cont++;
+		}
+		
+		if(cont == 0) {
+			usuario = new Usuario();
+		}
+		
+		return usuario;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package view.aluno;
 
+import java.util.List;
+
 import controller.aluno.HomeAlunoController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import model.Aluno;
+import model.Atividade;
 import view.card.ICard;
+import view.card.tarefa.aluno.CardTarefaVertical;
 import view.card.turma.CardTurma;
 
 public class HomeAluno {
@@ -44,12 +49,14 @@ public class HomeAluno {
 	private Label lblNotificacoes;
 
 	private Label lblCalendario;
+	
+	private Aluno aluno;
 
 	private HomeAlunoController controller = new HomeAlunoController(this);
 
-	public HomeAluno(BorderPane border) {
+	public HomeAluno(BorderPane border, Aluno a) {
 		this.borderPrincipal = border;
-
+		setAluno(a);
 		initTela();
 	}
 
@@ -232,12 +239,21 @@ public class HomeAluno {
 
 	public void addCardAtividade(ICard card) {
 
+		
 		hboxInternoAtividades.getChildren().add(card.getCard());
 	}
 
 	public void addCardNotificacao(ICard card) {
 
 		vboxInternoNotificacoes.getChildren().add(card.getCard());
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
 }

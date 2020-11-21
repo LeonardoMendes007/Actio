@@ -22,6 +22,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Aluno;
 import view.Util;
 
 public class MenuAluno {
@@ -43,15 +44,20 @@ public class MenuAluno {
 	private Label lblTipoUsuario;
 	private Background azulEscuro;
 	private Background azulClaro;
+	private Aluno aluno;
+	
 	
 	private MenuAlunoController menuController = new MenuAlunoController(this);
 
-	public MenuAluno(Scene scn) {
+	public MenuAluno(Scene scn, Aluno a) {
 		this.scn = scn;
+		setAluno(a);
+		
 		initNewScene();
 		initMenu();
 
-		menuController.btHomeAction();
+		
+		menuController.btHomeAction(a);
 
 	}
 
@@ -87,7 +93,7 @@ public class MenuAluno {
 			ivUser.setFitHeight(50.0);
 			ivUser.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px;");
 			
-			lblNome = new Label("Fulano");
+			lblNome = new Label(aluno.getNome());
 			lblNome.setStyle("-fx-cursor: hand;");
 			Util.setFontePadrao(new Label [] { lblNome }, 15, FontWeight.NORMAL);
 
@@ -156,7 +162,7 @@ public class MenuAluno {
 	private void initEvents() {
 
 		lblActio.setOnMouseClicked(x -> {
-			menuController.btHomeAction();
+			menuController.btHomeAction(aluno);
 			clearCurrentScreen();
 		});
 
@@ -209,7 +215,7 @@ public class MenuAluno {
 		lblActio.setAlignment(Pos.TOP_CENTER);
 		FileInputStream input;
 		try {
-			input = new FileInputStream("src\\view\\img\\icon.png");
+			input = new FileInputStream("src\\view\\img\\Logo_4.png");
 			lblActio.setBackground(new Background(
 					new BackgroundImage(new Image(input), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
 							BackgroundPosition.CENTER, new BackgroundSize(35, 35, true, true, true, false))));
@@ -346,6 +352,14 @@ public class MenuAluno {
 
 			
 		}
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
 }

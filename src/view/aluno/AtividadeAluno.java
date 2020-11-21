@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Aluno;
 import view.Util;
 import view.card.tarefa.aluno.CardTarefaHorizontal;
 
@@ -47,9 +48,13 @@ public class AtividadeAluno {
 
 	private AtividadeAlunoController controller = new AtividadeAlunoController(this);
 
-	public AtividadeAluno(BorderPane border) {
+	
+	private Aluno aluno;
+	
+	public AtividadeAluno(BorderPane border, Aluno a) {
 		this.borderPrincipal = border;
-
+		setAluno(a);
+		
 		initTela();
 	}
 
@@ -231,6 +236,14 @@ public class AtividadeAluno {
 
 		});
 
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
 }

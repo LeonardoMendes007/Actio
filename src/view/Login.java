@@ -1,3 +1,4 @@
+
 package view;
 
 import java.io.File;
@@ -81,7 +82,7 @@ public class Login extends Application {
 
 	private Stage configStage(Stage stage) {
 		
-		stage.setTitle("actio");
+		stage.setTitle("Actio | Seu sistema de atividades");
 		
 		stage.setMinWidth(800);
 		stage.setMinHeight(600);
