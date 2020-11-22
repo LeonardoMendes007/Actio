@@ -174,7 +174,7 @@ public class ViewTurmaProfessor {
 		hBoxTurma.setStyle("-fx-background-color: #D7D7D7;");
 		hBoxTurma.setAlignment(Pos.CENTER);
 		hBoxTurma.setPadding(new Insets(0, 0, 20, 0));
-
+		hBoxTurma.setPrefSize(500, 200);
 		scrollTurma.setContent(hBoxTurma);
 
 	}
