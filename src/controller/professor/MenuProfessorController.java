@@ -29,7 +29,7 @@ public class MenuProfessorController {
 	public void btDisciplinaAction() {
 
 		clearChildren();
-		new ViewTurmaProfessor(menu.getBorderConteudo());
+		new ViewTurmaProfessor(menu.getBorderConteudo(), menu.getProfessor());
 
 	}
 

@@ -101,6 +101,52 @@ public class DisciplinaDao implements IDisciplinaDao{
 		
 		return disciplinas;
 	}
+	
+	
+	public List<DisciplinaTurmaProfessor> findTurmaDisciplinaProfessor(Professor p) throws SQLException{
+		
+		
+		String sql = "select tbDisciplina.*, tbTurma.* from tbDisciplinaTurmaProfessor " + 
+					"inner join tbDisciplina on tbDisciplinaTurmaProfessor.idDisciplina = tbDisciplina.idDisciplina " + 
+					"inner join tbTurma on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma " + 
+					"where idProfessor = ?";
+		
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		
+		ps.setInt(1, p.getId());
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<DisciplinaTurmaProfessor> disciplinas = new ArrayList<DisciplinaTurmaProfessor>();
+		
+		
+		while(rs.next()) {
+			
+			Disciplina d = new Disciplina();
+			
+			d.setId(rs.getInt("idDisciplina"));
+			d.setNome(rs.getString("nomeDisciplina"));
+			d.setCor(rs.getString("corDisciplina"));
+			
+			
+			Turma t = new Turma();
+			t.setId(rs.getInt("idTurma"));
+			t.setCurso(rs.getString("cursoTurma"));
+			t.setPeriodo(rs.getString("periodoTurma"));
+			t.setSemestre(rs.getInt("semestreTurma"));
+			
+			
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(d, t, p);
+			
+			
+			
+			disciplinas.add(dtp);
+		}
+		
+		
+		return disciplinas;
+	}
 	@Override
 	public List<Disciplina> findAll() throws SQLException {
 		// TODO Auto-generated method stub

@@ -37,7 +37,9 @@ public class UsuarioDao implements IUsuarioDao{
 		int cont = 0;
 		while(rs.next()) {
 			usuario.setId(Integer.parseInt(rs.getString("idUsuario")));
-
+			usuario.setNome(rs.getString("nomeUsuario"));
+			usuario.setSobrenome(rs.getString("sobrenomeUsuario"));
+			usuario.setFotoPerfil(rs.getString("fotoPerfil"));
 			cont++;
 		}
 		

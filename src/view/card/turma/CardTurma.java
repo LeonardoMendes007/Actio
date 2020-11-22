@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import model.Disciplina;
+import model.Turma;
 import view.Util;
 import view.card.ICard;
 
@@ -17,22 +19,24 @@ public class CardTurma implements ICard{
 
 	private Label lblTurma;
 	
-	private String disciplina;
 	
-	private String turma;
+	private Turma turma;
 	
-	public CardTurma(Double width, Double height, String disciplina, String turma, String corHexa) {
+	private Disciplina disciplina;
+	
+	public CardTurma(Double width, Double height, Disciplina disciplina, Turma turma) {
 		
+		setDisciplina(disciplina);
+		setTurma(turma);
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(width, height);
-		this.borderPrincipal.setStyle("-fx-background-color: "+ corHexa+"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
+		this.borderPrincipal.setStyle("-fx-background-color: "+ disciplina.getCor()+"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
 		
-		initLabel(turma);
+		initLabel(turma.getSemestre()+ "° " +turma.getCurso()+" - " + turma.getPeriodo());
 		
 		initEvent();
 		
-		this.disciplina = disciplina;
-		this.turma = turma;
+		
 	}
 	
 	private void initEvent() {
@@ -60,8 +64,20 @@ public class CardTurma implements ICard{
 		return borderPrincipal;
 	}
 	
-	public String getDisciplina() {
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
+	
+	public Disciplina getDisciplina() {
 		return disciplina;
+	}
+
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
 
 	

@@ -68,10 +68,11 @@ public class LoginController {
 		
 		try {
 			uController.buscarUsuario(usuario);
-			
+			System.out.println(usuario.getNome());
 			
 		
-			if(usuario != null) {
+			if(usuario.getNome() != null) {
+				
 				AlunoController aControlller = new AlunoController();
 				System.out.println(usuario.getId());
 				Aluno aluno = new Aluno();
@@ -81,6 +82,7 @@ public class LoginController {
 					
 
 				System.out.println(aluno.getNome());
+				
 				if(aluno.getNome() != null) {
 					MenuAluno ma = new MenuAluno(login.getScene(), aluno);
 					
@@ -100,7 +102,7 @@ public class LoginController {
 				login.setErro("Email ou senha inválido");
 			}
 			
-			criarLog(email, senha);
+			//criarLog(email, senha);
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			login.setErro(e.getMessage());

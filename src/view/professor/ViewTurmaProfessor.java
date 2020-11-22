@@ -18,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.FontWeight;
+import model.Disciplina;
+import model.Professor;
 import view.Util;
 import view.card.turma.CardTurma;
 
@@ -42,13 +44,14 @@ public class ViewTurmaProfessor {
 	private HBox hBoxScroll;
 	
 	private HBox hBoxTurma;
-
-	//Isso é temporário 
-	ArrayList<String> disciplinasExistentes = new ArrayList<String>();
 	
+	private Professor professor;
+
+ 	
 	private TurmaProfessorController controller = new TurmaProfessorController(this);
 
-	public ViewTurmaProfessor(BorderPane border) {
+	public ViewTurmaProfessor(BorderPane border, Professor p) {
+		setProfessor(p);
 		this.borderPrincipal = border;
 		
 		initTela();
@@ -73,7 +76,7 @@ public class ViewTurmaProfessor {
 	private void initEventResponsivel() {
 		
 		//gridTelaDisciplina.heightProperty().addListener((x) -> gridDisciplina.setPrefHeight());
-		gridTelaTurma.widthProperty().addListener((x) -> gridDisciplina.setPrefWidth(gridTelaTurma.getWidth() * 0.9));
+		//gridTelaTurma.widthProperty().addListener((x) -> gridDisciplina.setPrefWidth(gridTelaTurma.getWidth() * 0.9));
 	
 	
 	}
@@ -82,7 +85,7 @@ public class ViewTurmaProfessor {
 	    tileDisciplina = new TilePane(10, 10);
 	    tileDisciplina.setOrientation(Orientation.VERTICAL);
 	    tileDisciplina.setPrefColumns(1);
-
+	    
 	    
 	    scrollDisciplina.setContent(tileDisciplina);
 		
@@ -127,7 +130,7 @@ public class ViewTurmaProfessor {
 		gridDisciplina.setHgap(10);
 		gridDisciplina.setStyle("-fx-background-radius: 20px; -fx-border-radius: 20px; -fx-background-color: #D7D7D7;");
 		gridDisciplina.setPadding(new Insets(10, 0, 5, 20));
-		
+		gridDisciplina.setPrefSize(500, 300);
 		
 		tileDisciplina.getChildren().add(gridDisciplina);
 		
@@ -147,7 +150,8 @@ public class ViewTurmaProfessor {
 	private void initScrollTurma() {
 		scrollTurma = new ScrollPane();
 		scrollTurma.setStyle("-fx-background-color: #D7D7D7;");
-
+		scrollTurma.setPrefSize(2000, 300);
+		
 		hBoxScroll.getChildren().add(scrollTurma);
 		hBoxScroll.setPadding(new Insets(10, 10, 10, 10));
 		hBoxScroll.setHgrow(scrollTurma, Priority.ALWAYS);	
@@ -159,7 +163,7 @@ public class ViewTurmaProfessor {
 		hBoxScroll.setStyle("-fx-background-color: #D7D7D7;");
 		hBoxScroll.setAlignment(Pos.CENTER);
 		hBoxScroll.setPadding(new Insets(0, 0, 20, 0));
-
+		hBoxScroll.setPrefSize(500, 300);
 		gridDisciplina.add(hBoxScroll, 0, 1);
 		
 	}
@@ -175,47 +179,33 @@ public class ViewTurmaProfessor {
 
 	}
 	
-	public void initNovaDisciplina(CardTurma card) {
+	public HBox initNovaDisciplina(CardTurma card) {
 		initGridNomeDisciplina();
-		initLabelNomeDisciplina(card.getDisciplina());
+		initLabelNomeDisciplina(card.getDisciplina().getNome());
 		initHboxScroll();
 		initScrollTurma();
 		initHBoxTurma();
-		addCard(card);
-		disciplinasExistentes.add(card.getDisciplina());
+		
+		return hBoxTurma;
 	}
 	
-	public void addCard(CardTurma card) {
+	public void addCard(HBox teste, CardTurma card) {
 		
-		hBoxTurma.getChildren().add(card.getCard());	
+		teste.getChildren().add(card.getCard());	
 	}
 	
-	public void addDisciplina(CardTurma card) {
-		boolean existe = false;
-		
-		//Se o vetor está vazio ele já add
-		if(disciplinasExistentes.isEmpty()) {
-			initNovaDisciplina(card);
-		
-		}else{
-			//Caso já exista uma disciplina no vetor ele vai verificar se
-			//precisa criar uma nova, ou é só add mais um card de turma
 
-			for(String disciplina : disciplinasExistentes) {
-				if(card.getDisciplina().equals(disciplina)) {
-					addCard(card);
-					existe = true;
-				}
-			}
-			
-			if(existe == false) {
-				initNovaDisciplina(card);	
-			}
-		}
-	}
 
 	public BorderPane getBorderPrincipal() {
 		return borderPrincipal;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 	
 }
