@@ -12,15 +12,15 @@ import model.Turma;
 import persistence.DisciplinaDao;
 import persistence.TurmaDao;
 import view.card.turma.CardTurma;
-import view.professor.ViewTurmaProfessor;
+import view.professor.TurmaProfessor;
 
 public class TurmaProfessorController implements ITurmaController{
 
-	private ViewTurmaProfessor viewTurmaProf;
+	private TurmaProfessor viewTurmaProf;
 	private List<DisciplinaTurmaProfessor> lista;
 	private List<Disciplina> discJaAdicionadas = new ArrayList<Disciplina>();
 	
-	public TurmaProfessorController(ViewTurmaProfessor view) {
+	public TurmaProfessorController(TurmaProfessor view) {
 		this.viewTurmaProf = view;
 	}
 	

@@ -65,8 +65,15 @@ public class VisualizarAtividade {
 		
 		initLista();
 		
+		initTelaDetalhesAtividade();
+		
 		controller.addCards();
 
+	}
+
+	private void initTelaDetalhesAtividade() {
+		
+		
 	}
 
 	private void initLista() {
@@ -194,7 +201,7 @@ public class VisualizarAtividade {
 
 	private void initLabelCriarAtividade() {
 
-		lblCriarAtividade = new Label("Criar Atividade");
+		lblCriarAtividade = new Label("Visualizar Atividade");
 
 		lblCriarAtividade
 				.setStyle("-fx-font-weight: bolder; -fx-font-family: Poppins; " + "-fx-font-size: " + 30 + " ;");
@@ -220,6 +227,13 @@ public class VisualizarAtividade {
 	public void setCard(CardVizualizarAtividade card) {
 		
 		vboxLista.getChildren().add(card.getCard());
+		
+	}
+
+	private void trocarConteudo() {
+		
+		gridInterno.setVisible(false);
+		
 	}
 
 	public BorderPane getBorderPrincipal() {
@@ -229,6 +243,8 @@ public class VisualizarAtividade {
 	public void setBorderPrincipal(BorderPane borderPrincipal) {
 		this.borderPrincipal = borderPrincipal;
 	}
+	
+	
 	
 	
 }

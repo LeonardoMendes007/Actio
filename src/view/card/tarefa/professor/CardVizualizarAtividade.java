@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import view.Util;
+import view.professor.AvaliarAtividade;
 
 public class CardVizualizarAtividade {
 	
@@ -46,6 +47,8 @@ public class CardVizualizarAtividade {
 			
 		});
 		
+		
+		
 	}
 
 	private void initButton() {
@@ -54,11 +57,15 @@ public class CardVizualizarAtividade {
 		
 		Util.setFontePadrao(new Button[] {btCorrigir}, 18, FontWeight.BOLD);
 		
-		btCorrigir.setStyle(btCorrigir.getStyle() + "-fx-background-color: #53BDBE;");
+		btCorrigir.setStyle(btCorrigir.getStyle() + "-fx-background-color: #53BDBE; -fx-cursor: hand;");
+		
+		Util.hoverFade(btCorrigir);
 		
 		btCorrigir.setAlignment(Pos.CENTER);
 		
 		btCorrigir.setTextFill(Color.WHITE);
+		
+		btCorrigir.setOnMouseClicked((x) -> new AvaliarAtividade(borderPrincipal));
 		
 		gridCard.add(btCorrigir, 2, 0);
 	}
