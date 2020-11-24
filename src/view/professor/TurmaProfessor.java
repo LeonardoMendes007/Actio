@@ -178,8 +178,6 @@ public class TurmaProfessor {
 		
 		teste.getChildren().add(card.getCard());	
 	}
-	
-	
 
 	public BorderPane getBorderPrincipal() {
 		return borderPrincipal;

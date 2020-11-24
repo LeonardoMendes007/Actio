@@ -129,15 +129,15 @@ public class AtividadeAluno {
 		cbPessoas = new ComboBox<>();
 		cbDisciplina = new ComboBox<>();
 
-		cbStatus.getItems().addAll("Aberto", "Fechado");
-		cbPessoas.getItems().addAll("Individual", "Grupo");
-		cbDisciplina.getItems().addAll("Banco de Dados", "Programação orientada a disgraça");
-
+		cbStatus.getItems().addAll("Aberto", "Fechado", "Todas");
+		cbPessoas.getItems().addAll("Individual", "Grupo" , "Todas");
+		
 		gridFiltro.add(cbStatus, 1, 1);
 		gridFiltro.add(cbPessoas, 2, 1);
 		gridFiltro.add(cbDisciplina, 3, 1);
 
 	}
+
 
 	private void initLabelFiltro() {
 		lblFiltro = new Label("Filtrar por:");
@@ -222,6 +222,8 @@ public class AtividadeAluno {
 		initEventCard(card);
 
 		vboxAtividade.getChildren().add(card.getCard());
+		
+
 	}
 
 	private void initEventCard(CardTarefaHorizontal card) {
@@ -235,6 +237,8 @@ public class AtividadeAluno {
 			}
 
 		});
+		
+		card.getHboxPrincipal().setMinWidth(gridFiltro.getWidth() - 10);
 
 	}
 
@@ -246,4 +250,9 @@ public class AtividadeAluno {
 		this.aluno = aluno;
 	}
 
+	public ComboBox<String> getCbDisciplina() {
+		return cbDisciplina;
+	}
+
+	
 }

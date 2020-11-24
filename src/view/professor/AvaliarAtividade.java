@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Aluno;
+import model.Atividade;
 import view.Util;
 
 public class AvaliarAtividade {
@@ -42,10 +44,16 @@ public class AvaliarAtividade {
 	private GridPane gridNotas;
 
 	private TableView<String> tableArquivos;
+	
+	private Aluno aluno;
+	
+	private Atividade atividade;
 
-	public AvaliarAtividade(BorderPane borderPrincipal) {
+	public AvaliarAtividade(BorderPane borderPrincipal, Aluno aluno, Atividade atividade) {
 
 		this.borderPrincipal = borderPrincipal;
+		this.aluno = aluno;
+		this.atividade = atividade;
 
 		initTela();
 	}
@@ -199,7 +207,7 @@ public class AvaliarAtividade {
 
 	private void initLabelNomeAluno() {
 
-		lblNomeAluno = new Label("Nome Aluno");
+		lblNomeAluno = new Label(aluno.getNome());
 
 		Util.setFontePadrao(new Label[] { lblNomeAluno }, 25, FontWeight.BOLD);
 
@@ -209,7 +217,7 @@ public class AvaliarAtividade {
 
 	private void initLabelAtividade() {
 
-		lblNomeAtividade = new Label("Nome atividade");
+		lblNomeAtividade = new Label(atividade.getNome());
 
 		Util.setFontePadrao(new Label[] { lblNomeAtividade }, 20, FontWeight.NORMAL);
 

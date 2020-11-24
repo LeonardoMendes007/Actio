@@ -16,9 +16,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
-
+import model.Professor;
 import view.Util;
-import view.card.ICard;
 import view.card.tarefa.professor.CardTarefaHorizontal;
 
 public class AtividadeProfessor {
@@ -51,10 +50,13 @@ public class AtividadeProfessor {
 	
 	private Button btCriarAtividade;
 	
+	private Professor professor;
+	
 	private AtividadeProfessorController control = new AtividadeProfessorController(this);
 	
-	public AtividadeProfessor(BorderPane border) {
+	public AtividadeProfessor(BorderPane border, Professor professor) {
 		this.borderPrincipal = border;
+		this.professor = professor;
 
 		initTela();
 	}
@@ -240,7 +242,7 @@ public class AtividadeProfessor {
 		return borderPrincipal;
 	}
 	
-	public void addCardAtvidade(CardTarefaHorizontal card) {
+	public void addCardAtividade(CardTarefaHorizontal card) {
 		
 		initEventCard(card);
 
@@ -259,7 +261,18 @@ public class AtividadeProfessor {
 			
 		});
 		
+		card.getHboxPrincipal().setMinWidth(gridFiltro.getWidth()-10);
 	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+	
+	
 
 	
 	

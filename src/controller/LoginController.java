@@ -4,18 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.sql.SQLException;
-
-import javax.swing.JOptionPane;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.Aluno;
 import model.Professor;
 import model.Usuario;
-import persistence.ProfessorDao;
-import persistence.UsuarioDao;
 import view.Login;
 import view.aluno.MenuAluno;
 import view.professor.MenuProfessor;
@@ -102,7 +97,7 @@ public class LoginController {
 				login.setErro("Email ou senha inválido");
 			}
 			
-			//criarLog(email, senha);
+			criarLog(email, senha);
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			login.setErro(e.getMessage());
@@ -114,7 +109,7 @@ public class LoginController {
 	
 
 		try (BufferedWriter wt = new BufferedWriter(new FileWriter(new File("log.txt")))){
-			 wt.write(usuario.getId());
+			 wt.write(email);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

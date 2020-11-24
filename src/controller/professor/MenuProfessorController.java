@@ -24,7 +24,7 @@ public class MenuProfessorController {
 	public void btAtividadeAction() {
 
 		clearChildren();
-		new AtividadeProfessor(menu.getBorderConteudo());
+		new AtividadeProfessor(menu.getBorderConteudo(), menu.getProfessor());
 	}
 	
 	public void btDisciplinaAction() {

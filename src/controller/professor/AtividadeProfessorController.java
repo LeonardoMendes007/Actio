@@ -26,10 +26,9 @@ public class AtividadeProfessorController {
 		try {
 			AtividadeDao atividadeDao = new AtividadeDao();
 			
-		//	List<Atividade> atividades = atividadeDao.findAtividadeTurma(viewAtividadeProfessor.g().getTurma());
-
+			List<Atividade> atividades = atividadeDao.findAtividadeId(viewAtividadeProfessor.getProfessor().getId());
 			
-			//addCards(atividades);
+			addCards(atividades);
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -40,9 +39,9 @@ public class AtividadeProfessorController {
 	private void addCards(List<Atividade> atividades) {
 		
 		for (Atividade atividade : atividades) {
-			//CardTarefaVertical card = new CardTarefaVertical(viewHomeAluno.getBorderPrincipal(), atividade);
+			CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(), atividade);
 			
-			//viewHomeAluno.addCardAtividade(card);
+			viewAtividadeProfessor.addCardAtividade(card);
 			
 			
 		}

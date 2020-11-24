@@ -30,7 +30,7 @@ public class CardDisciplina implements ICard{
 		
 		this.borderPrincipal = new BorderPane();
 		this.borderPrincipal.setPrefSize(width, height);
-		this.borderPrincipal.setStyle("-fx-background-color: "+ disciplina.getCor() +"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
+		this.borderPrincipal.setStyle("-fx-background-color: "+ disciplina.getCor() +"; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 		
 		initLabel(disciplina.getNome(),p.getNome() + " " + p.getSobrenome());
 		
@@ -38,8 +38,6 @@ public class CardDisciplina implements ICard{
 	}
 	
 	private void initEvent() {
-		borderPrincipal.setOnMouseClicked((x) -> new DetalhesDisciplina(borderPrincipal));
-		
 		Util.hoverFade(this.borderPrincipal);
 	}
 

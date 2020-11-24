@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
+import model.Atividade;
 import view.Util;
 import view.card.tarefa.professor.CardVizualizarAtividade;
 
@@ -38,12 +39,14 @@ public class VisualizarAtividade {
 	
 	private VBox vboxLista;
 	
-	private VisualizarAtividadeController controller = new VisualizarAtividadeController(this);
+	private Atividade atividade;
 	
-
-	public VisualizarAtividade(BorderPane borderPrincipal) {
+	private VisualizarAtividadeController controller;
+	
+	public VisualizarAtividade(Atividade atividade, BorderPane borderPrincipal) {
 		this.borderPrincipal = borderPrincipal;
-
+		this.atividade = atividade;
+		this.controller = new VisualizarAtividadeController(atividade, this);
 		initTela();
 	}
 

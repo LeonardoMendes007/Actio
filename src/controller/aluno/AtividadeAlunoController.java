@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.List;
 
-
 import model.Atividade;
 import persistence.AtividadeDao;
 import view.aluno.AtividadeAluno;
@@ -26,14 +25,29 @@ public class AtividadeAlunoController {
 			AtividadeDao atividadeDao = new AtividadeDao();
 
 			atividades = atividadeDao.findAtividadeTurma(viewAtividadeAluno.getAluno().getTurma());
-			
+
 			addCards();
+
+			addFiltro();
 
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 
+	}
+
+	private void addFiltro() {
+
+		for (Atividade atividade : atividades) {
+			if (!viewAtividadeAluno.getCbDisciplina().getItems()
+					.contains(atividade.getDiscTurmaProf().getDisciplina().getNome())) {
+				viewAtividadeAluno.getCbDisciplina().getItems()
+						.add(atividade.getDiscTurmaProf().getDisciplina().getNome());
+			}
+		}
+
+		viewAtividadeAluno.getCbDisciplina().getItems().add("Todas");
 	}
 
 	private void addCards() {
@@ -48,10 +62,13 @@ public class AtividadeAlunoController {
 
 	public void filtrarDisciplina(String s) {
 
-		for (int i = 0; i <atividades.size(); i++) {
+		viewAtividadeAluno.clearCardAtvidade();
 
-			if (s.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome())) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividades.get(i));
+		for (int i = 0; i < atividades.size(); i++) {
+
+			if (s.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome()) || s.equals("Todas")) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(),
+						atividades.get(i));
 
 				viewAtividadeAluno.addCardAtvidade(card);
 			}
@@ -60,30 +77,42 @@ public class AtividadeAlunoController {
 	}
 
 	public void filtrarPessoas(String s) {
+
+		viewAtividadeAluno.clearCardAtvidade();
+
 		for (Atividade atividade : atividades) {
 
-			if (s.equals("Grupo") && atividade.isGrupo()) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividade);
+			if (s.equals("Grupo") && atividade.isGrupo() || s.equals("Todas")) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(),
+						atividade);
+
+				viewAtividadeAluno.addCardAtvidade(card);
+			}
+
+			if (s.equals("Individual") && !atividade.isGrupo()) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(),
+						atividade);
+
+				viewAtividadeAluno.addCardAtvidade(card);
+			}
+		}
+
+	}
+
+	public void filtrarStatus(String s) {
+		
+		viewAtividadeAluno.clearCardAtvidade();
+		
+		for (Atividade atividade : atividades) {
+			
+			
+			if (atividade.getDtEntrega().after(atividade.getDtEmissao())) {
+				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(),
+						atividade);
 
 				viewAtividadeAluno.addCardAtvidade(card);
 			}
 			
-			if (s.equals("Grupo") && atividade.isGrupo()) {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeAluno.getBorderPrincipal(), atividade);
- 
-				viewAtividadeAluno.addCardAtvidade(card);
-			}
-		}
-	}
-
-	public void filtrarStatus(String s) {
-		for (Atividade atividade : atividades) {
-
-			/*if () {
-				CardTarefaHorizontal card = new CardTarefaHorizontal(atividadeAluno.getBorderPrincipal(), atividade);
-
-				atividadeAluno.addCardAtvidade(card);
-			}*/
 		}
 	}
 

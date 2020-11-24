@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Aluno;
 import model.Atividade;
 import model.Disciplina;
 import model.DisciplinaTurmaProfessor;
 import model.Professor;
 import model.Turma;
+import model.Usuario;
 import persistence.interfaces.IAtividadeDao;
 import persistence.interfaces.IGenericDao;
 
@@ -144,6 +146,41 @@ public class AtividadeDao implements IAtividadeDao{
 	private boolean isGrupo(int tipo) {
 		return tipo == 1;
 	}
+	
+	public List<Aluno> findAlunos(Atividade atividade) throws SQLException {
+		
+		String sql = "SELECT u.* "
+				+ "FROM tbUsuario u, tbAluno a, tbTurma t, tbDisciplinaTurmaProfessor d,tbAtividade ati "
+				+ "WHERE u.idUsuario = a.idAluno "
+				+ "AND a.idTurma = t.idTurma "
+				+ "AND t.idTurma  = d.idTurma "
+				+ "AND d.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND ati.nomeAtividade = ?";
+	
+		
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setString(1, atividade.getNome());
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<Aluno> usuarios = new ArrayList<Aluno>();
+		
+		while(rs.next()) {
+			
+			Aluno a = new Aluno();
+			a.setId(rs.getInt("idUsuario"));
+			a.setNome(rs.getString("nomeUsuario"));
+			a.setSobrenome(rs.getString("sobrenomeUsuario"));
+			a.setEmail(rs.getString("emailUsuario"));
+			a.setSenha(rs.getString("senhaUsuario"));
+			a.setFotoPerfil(rs.getString("fotoPerfil"));
+			
+			usuarios.add(a);
+		}
+		
+		ps.close();
+		return usuarios;
+	}
 
 	@Override
 	public List<Atividade> findAtividadeTurmaProfessor(Professor professor) throws SQLException {
@@ -207,6 +244,38 @@ public class AtividadeDao implements IAtividadeDao{
 		ps.close();
 		return atividades;
 		
+	}
+
+	public List<Atividade> findAtividadeId(int id) throws SQLException  {
+		
+		String sql = "SELECT u.* "
+				+ "FROM tbUsuario u, tbAluno a, tbTurma t, tbDisciplinaTurmaProfessor d,tbAtividade ati "
+				+ "WHERE u.idUsuario = a.idAluno "
+				+ "AND a.idTurma = t.idTurma "
+				+ "AND t.idTurma  = d.idTurma "
+				+ "AND d.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND ati.nomeAtividade = ?";
+	
+		
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<Atividade> usuarios = new ArrayList<Atividade>();
+		
+		while(rs.next()) {
+			
+			Atividade a = new Atividade();
+			a.setId(rs.getInt("idAtividade"));
+			a.setNome(rs.getString("nomeAtividade"));
+
+			
+			usuarios.add(a);
+		}
+		
+		ps.close();
+		return usuarios;
 	}
 
 

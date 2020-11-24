@@ -4,13 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
+import controller.aluno.ControllerEntregaAtividade;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -19,6 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Atividade;
 import view.Util;
 
@@ -44,17 +46,23 @@ public class EntregaAtividadeAluno {
 
 	private Label lblLegenda;
 
-	private TableView<String> table;
+	private Label lblEntrega;
+	
+	private Label lblTarefa;
 
 	private Label lblArquivos;
 
 	private Button btRemover;
 
 	private Button btAdicionar;
-	
+
 	private Button btEntregar;
 
+	private Label lblNomeAtividade;
+
 	private HBox hboxButtons;
+	
+	private FileChooser file = new FileChooser();
 
 	private GridPane gridCentral;
 
@@ -63,13 +71,15 @@ public class EntregaAtividadeAluno {
 	private GridPane gridSuperior;
 
 	private GridPane gridTituloLegenda;
-	
+
 	private Atividade atividade;
+	
+	private ControllerEntregaAtividade controller = new ControllerEntregaAtividade(this);
 
 	public EntregaAtividadeAluno(Atividade atividade, BorderPane pane) {
 
 		this.atividade = atividade;
-		
+
 		this.borderPrincipal = pane;
 
 		clearBorderPrincipal();
@@ -90,19 +100,19 @@ public class EntregaAtividadeAluno {
 		initLabelAtividade();
 		initBorderInterno();
 		initGridSuperior();
-		initCentroCard("Trabalho Eng 3", "Querem nos matar");
-		initPrazoDeEntrega(new Date());
-		initDisciplina("Programação Orientada a Disgraça");
-		verificarGroup(true);
+		initCentroCard(atividade.getNome(), atividade.getDescricao());
+		initPrazoDeEntrega(atividade.getDtEntrega());
+		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
+		verificarGroup(atividade.isGrupo());
 
 		initGridCentral();
 
 		initLabelArquivos();
 
-		initTable();
+		initLabelEntrega();
 
 		initButtons();
-		
+
 		initButtonEntregar();
 
 		initEventReponsivel();
@@ -110,65 +120,90 @@ public class EntregaAtividadeAluno {
 	}
 
 	private void initButtonEntregar() {
-		
+
 		btEntregar = new Button("Entregar");
-		
-		Util.setFontePadrao(new Button[] {btEntregar}, 25, FontWeight.BOLD);
-		
-		btEntregar.setTextFill(Color.WHITE);	
+
+		Util.setFontePadrao(new Button[] { btEntregar }, 25, FontWeight.BOLD);
+
+		btEntregar.setTextFill(Color.WHITE);
 		btEntregar.setStyle(btEntregar.getStyle() + "-fx-background-color: #1D5959;");
 		
+		btEntregar.setOnMouseClicked((x) -> {
+			
+		     if(!lblEntrega.getText().equals("Clique para adicionar Arquivo") && !lblAtividade.getText().isEmpty()) {
+		    	 
+		    	 controller.entregarTarefa();
+		    	 
+		     }			
+		    	 
+		});
+
 		borderInterno.setRight(btEntregar);
 		borderInterno.setAlignment(btEntregar, Pos.BOTTOM_CENTER);
 		borderInterno.setMargin(btEntregar, new Insets(0, 0, 15, 0));
-		
+
 	}
 
 	private void initButtons() {
 		btAdicionar = new Button("Adicionar");
 		btRemover = new Button("Remover");
-		
-		Util.setFontePadrao(new Button[] {btAdicionar,btRemover}, 15, FontWeight.BOLD);
-		
+
+		Util.setFontePadrao(new Button[] { btAdicionar, btRemover }, 15, FontWeight.BOLD);
+
 		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D;");
 		btRemover.setStyle(btRemover.getStyle() + "-fx-background-color: #F55B51;");
 
+		btAdicionar.setOnMouseClicked((x) -> {
+		
+			lblEntrega.setText(file.showOpenDialog(new Stage()).getPath());
+		});
+		
 		initHbox();
 
 		hboxButtons.getChildren().addAll(btRemover, btAdicionar);
 		hboxButtons.setMargin(btAdicionar, new Insets(0, 0, 0, 10));
-		
+
 	}
 
 	private void initHbox() {
 
 		hboxButtons = new HBox();
 
-		
 		hboxButtons.setPadding(new Insets(10, 10, 10, 0));
-		
-		gridCentral.add(hboxButtons, 0, 2);
+
+		gridCentral.add(hboxButtons, 0, 4);
 	}
 
-	private void initTable() {
+	private void initLabelEntrega() {
 
-		table = new TableView<String>();
-		table.setPrefWidth(borderPrincipal.getWidth()*0.60);
-		table.setPrefHeight(2000);
 
-		gridCentral.add(table, 0, 1);
+		lblEntrega = new Label("Clique para adicionar Arquivo");
+		lblArquivos = new Label("Clique para baixar tarefa");
+		
+		Util.setFontePadrao(new Label[] { lblEntrega, lblArquivos }, 18, FontWeight.NORMAL);
+
+		lblArquivos.setStyle(lblArquivos.getStyle() + "-fx-color: blue;");
+		lblEntrega.setStyle(lblEntrega.getStyle() + "-fx-color: blue;");
+
+		gridCentral.add(lblEntrega, 0, 3);
+		gridCentral.add(lblArquivos, 0, 1);
 
 	}
 
 	private void initLabelArquivos() {
 
 		lblArquivos = new Label("Arquivos");
-		
-		Util.setFontePadrao(new Label[] {lblArquivos}, 23, FontWeight.BOLD);
-		
-		lblArquivos.setPadding(new Insets(10,10,10,0));
 
-		gridCentral.add(lblArquivos, 0, 0);
+		lblNomeAtividade = new Label("Atividade");
+
+		Util.setFontePadrao(new Label[] { lblArquivos, lblNomeAtividade }, 23, FontWeight.BOLD);
+
+		lblArquivos.setPadding(new Insets(10, 10, 10, 0));
+
+		lblNomeAtividade.setPadding(new Insets(10, 10, 10, 0));
+
+		gridCentral.add(lblNomeAtividade, 0, 0);
+		gridCentral.add(lblArquivos, 0, 2);
 
 	}
 
@@ -177,8 +212,7 @@ public class EntregaAtividadeAluno {
 
 		gridCentral.setAlignment(Pos.CENTER_LEFT);
 		gridCentral.setPadding(new Insets(20, 20, 20, 20));
-		
-		
+
 		borderInterno.setCenter(gridCentral);
 
 	}
@@ -187,28 +221,27 @@ public class EntregaAtividadeAluno {
 
 		borderPrincipal.widthProperty()
 				.addListener((x) -> borderInterno.setPrefWidth(borderPrincipal.getWidth() * 0.90));
-		
+
 		borderPrincipal.widthProperty().addListener((x) -> {
-			
+
 			double tamanho = borderPrincipal.getWidth() - (285 + 80);
 
 			gridTituloLegenda.setPrefWidth(tamanho);
-			table.setPrefWidth(borderPrincipal.getWidth()*0.50);
+//			tableEntrega.setPrefWidth(borderPrincipal.getWidth() * 0.50);
+		});
 
-		});
-		
-		borderPrincipal.heightProperty().addListener((x) -> {
-			
-			table.setPrefHeight(borderInterno.getHeight()*0.60);
-			
-		});
+//		borderPrincipal.heightProperty().addListener((x) -> {
+//
+//			tableEntrega.setPrefHeight(borderInterno.getHeight() * 0.60);
+//
+//		});
 
 	}
 
 	private void initGridSuperior() {
 
 		gridSuperior = new GridPane();
-		
+
 		gridSuperior.setPrefWidth(2000);
 
 		borderInterno.setTop(gridSuperior);
@@ -222,7 +255,8 @@ public class EntregaAtividadeAluno {
 
 		borderInterno.setPadding(new Insets(15));
 
-		borderInterno.setStyle("-fx-background-color: #FF9DBA; -fx-background-radius: 20px; -fx-border-radius: 20px;");
+		borderInterno.setStyle("-fx-background-color:" + atividade.getDiscTurmaProf().getDisciplina().getCor()
+				+ "; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 
 		gridAtividade.add(borderInterno, 0, 1);
 		gridAtividade.setAlignment(Pos.CENTER);
@@ -264,22 +298,19 @@ public class EntregaAtividadeAluno {
 		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
 		lblNumDeDias.setTextAlignment(TextAlignment.RIGHT);
 
-//		lblDataDeEntrega.setAlignment(Pos.CENTER);
-//		lblNumDeDias.setAlignment(Pos.CENTER);
-
 		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 20, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblNumDeDias }, 20, FontWeight.NORMAL);
 
 		gridData = new GridPane();
-		
+
 		gridData.add(lblDataDeEntrega, 0, 0);
 		gridData.add(lblNumDeDias, 0, 1);
-		
+
 		gridData.setValignment(lblDataDeEntrega, VPos.CENTER);
 		gridData.setHalignment(lblDataDeEntrega, HPos.RIGHT);
 		gridData.setValignment(lblNumDeDias, VPos.CENTER);
 		gridData.setHalignment(lblNumDeDias, HPos.RIGHT);
-		
+
 		gridSuperior.add(gridData, 2, 0);
 
 	}
@@ -339,6 +370,7 @@ public class EntregaAtividadeAluno {
 		lblTitulo.setAlignment(Pos.CENTER);
 
 		lblLegenda = new Label(legenda);
+		lblLegenda.setPadding(new Insets(0, 0, 0, 10));
 		lblLegenda.setTextFill(Color.web("#000000", 0.5));
 		lblLegenda.setAlignment(Pos.CENTER);
 
@@ -354,5 +386,21 @@ public class EntregaAtividadeAluno {
 		gridSuperior.add(gridTituloLegenda, 1, 0);
 
 	}
+
+	public Label getLblEntrega() {
+		return lblEntrega;
+	}
+
+	public void setLblEntrega(Label lblEntrega) {
+		this.lblEntrega = lblEntrega;
+	}
+
+	public Atividade getAtividade() {
+		return atividade;
+	}
+
+	
+	
+	
 
 }

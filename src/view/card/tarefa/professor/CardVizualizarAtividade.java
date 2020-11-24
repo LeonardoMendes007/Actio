@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Aluno;
+import model.Atividade;
 import view.Util;
 import view.professor.AvaliarAtividade;
 
@@ -23,13 +25,19 @@ public class CardVizualizarAtividade {
 	
 	private BorderPane borderPrincipal;
 	
-	public CardVizualizarAtividade(BorderPane borderPrincipal, String nome, boolean status, String nota) {
+	private Aluno aluno;
+	
+	private Atividade atividade;
+	
+	public CardVizualizarAtividade(BorderPane borderPrincipal, Aluno aluno, Atividade atividade) {
 
 		this.borderPrincipal = borderPrincipal;
+		this.aluno = aluno;
+		this.atividade = atividade;
 
         initGridCard();
         
-        initLabels(nome,status);
+        initLabels(aluno.getNome(),true);
         
         initButton();
         
@@ -65,7 +73,7 @@ public class CardVizualizarAtividade {
 		
 		btCorrigir.setTextFill(Color.WHITE);
 		
-		btCorrigir.setOnMouseClicked((x) -> new AvaliarAtividade(borderPrincipal));
+		btCorrigir.setOnMouseClicked((x) -> new AvaliarAtividade(borderPrincipal, aluno, atividade));
 		
 		gridCard.add(btCorrigir, 2, 0);
 	}

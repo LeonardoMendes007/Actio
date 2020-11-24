@@ -46,6 +46,8 @@ public class CardTarefaVertical implements ICard {
 
 		this.borderPrincipal = borderPrincipal;
 		
+		this.atividade = atividade;
+		
 		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
 		
 		this.border = new BorderPane();
@@ -161,7 +163,7 @@ public class CardTarefaVertical implements ICard {
 	}
 
 	private void initEvent() {
-		border.setOnMouseClicked((x) -> new VisualizarAtividade(borderPrincipal));
+		border.setOnMouseClicked((x) -> new VisualizarAtividade(atividade, borderPrincipal));
 
 		Util.hoverFade(this.border);
 	}
