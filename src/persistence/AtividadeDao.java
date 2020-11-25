@@ -248,7 +248,7 @@ public class AtividadeDao implements IAtividadeDao{
 
 	public List<Atividade> findAtividadeId(int id) throws SQLException  {
 		
-		String sql = "SELECT u.* "
+		String sql = "SELECT ati.* "
 				+ "FROM tbUsuario u, tbAluno a, tbTurma t, tbDisciplinaTurmaProfessor d,tbAtividade ati "
 				+ "WHERE u.idUsuario = a.idAluno "
 				+ "AND a.idTurma = t.idTurma "

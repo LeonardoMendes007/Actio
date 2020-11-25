@@ -38,7 +38,7 @@ public class AtividadeProfessor {
 	
 	private Label lblTurma;
 	
-	private ComboBox<String> cbPessoas;
+	private ComboBox<String> cbTurma;
 	
 	private Label lblDisciplina;
 	
@@ -52,7 +52,7 @@ public class AtividadeProfessor {
 	
 	private Professor professor;
 	
-	private AtividadeProfessorController control = new AtividadeProfessorController(this);
+	private AtividadeProfessorController controller = new AtividadeProfessorController(this);
 	
 	public AtividadeProfessor(BorderPane border, Professor professor) {
 		this.borderPrincipal = border;
@@ -83,9 +83,19 @@ public class AtividadeProfessor {
 		
 		initEventBtAtividade();
 		
-		//control.addCards();
+	    initEventCombox();
+		
+		controller.verificarCards();
 		
 		
+
+	}
+	
+	private void initEventCombox() {
+
+		cbDisciplina.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarDisciplina(cbDisciplina.getValue()));
+		cbTurma.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarTurma(cbTurma.getValue()));
+		cbStatus.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarStatus(cbStatus.getValue()));
 
 	}
 
@@ -143,7 +153,7 @@ public class AtividadeProfessor {
 			double total = gridAtividade.getWidth() - lblFiltro.getMinWidth();
 			
 			cbStatus.setPrefWidth(total * 0.33);
-			cbPessoas.setPrefWidth(total * 0.33);
+			cbTurma.setPrefWidth(total * 0.33);
 			cbDisciplina.setPrefWidth(total * 0.33);
 			
 			
@@ -156,15 +166,13 @@ public class AtividadeProfessor {
 
 	private void initComboBoxFiltro() {
 		cbStatus = new ComboBox<>();
-		cbPessoas = new ComboBox<>();
+		cbTurma = new ComboBox<>();
 		cbDisciplina = new ComboBox<>();
 
 		cbStatus.getItems().addAll("Aberto","Fechado");
-		cbPessoas.getItems().addAll("1° ADS - TARDE", "1° ADS - NOITE");
-		cbDisciplina.getItems().addAll("Banco de Dados","Programação orientada a disgraça");
 		
 		gridFiltro.add(cbStatus, 1, 1);
-		gridFiltro.add(cbPessoas, 2, 1);
+		gridFiltro.add(cbTurma, 2, 1);
 		gridFiltro.add(cbDisciplina, 3, 1);
 		
 	}
@@ -242,6 +250,12 @@ public class AtividadeProfessor {
 		return borderPrincipal;
 	}
 	
+	public void clearCardAtvidade() {
+
+		vboxAtividade.getChildren().clear();
+	}
+
+	
 	public void addCardAtividade(CardTarefaHorizontal card) {
 		
 		initEventCard(card);
@@ -272,6 +286,13 @@ public class AtividadeProfessor {
 		this.professor = professor;
 	}
 	
+	public ComboBox<String> getCbDisciplina() {
+		return cbDisciplina;
+	}
+
+	public ComboBox<String> getCbTurma() {
+		return cbTurma;
+	}
 	
 
 	
