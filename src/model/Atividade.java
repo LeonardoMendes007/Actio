@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Atividade {
 
@@ -118,6 +118,13 @@ public class Atividade {
 
 	public void setDiscTurmaProf(DisciplinaTurmaProfessor discTurmaProf) {
 		this.discTurmaProf = discTurmaProf;
+	}
+
+	@Override
+	public String toString() {
+		return "Atividade [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", dtEmissao=" + dtEmissao
+				+ ", dtPublicacao=" + dtPublicacao + ", dtEntrega=" + dtEntrega + ", pathArquivo=" + pathArquivo
+				+ ", grupo=" + grupo + ", discTurmaProf=" + discTurmaProf + "]";
 	}
 	
 	

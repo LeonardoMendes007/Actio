@@ -1,8 +1,13 @@
 package view.professor;
 
+import controller.professor.CriarAtividadeController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -11,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Professor;
 import view.Util;
 
 public class CriarAtividade {
@@ -49,14 +55,27 @@ public class CriarAtividade {
 
 	private Label lblDataPublicacao;
 
-	private TextField tfDataPublicacao;
+	private DatePicker dtDataPublicacao;
 
 	private Button btConcluir;
 
+	private Label lblDataEntrega;
+
+	private DatePicker dtEntrega;
+
 	private GridPane gridData;
 
-	public CriarAtividade(BorderPane borderPrincipal) {
+	private Label lblAtividadeEmGrupo;
+
+	private ComboBox<String> cbGrupo;
+
+	private CriarAtividadeController controller = new CriarAtividadeController(this);
+
+	private Professor professor;
+
+	public CriarAtividade(BorderPane borderPrincipal, Professor professor) {
 		this.borderPrincipal = borderPrincipal;
+		this.professor = professor;
 
 		initTela();
 	}
@@ -85,6 +104,10 @@ public class CriarAtividade {
 
 		initButtonAgendar();
 
+		initLabelDataEntrega();
+
+		initTextFieldDataEntrega();
+
 		initButtonPublicar();
 
 		initGridAgendar();
@@ -93,6 +116,8 @@ public class CriarAtividade {
 
 		initBorderAgendar();
 
+		initAtividadeEmGrupo();
+		
 		initGridData();
 
 		initLabelDataPublicacao();
@@ -103,31 +128,70 @@ public class CriarAtividade {
 
 	}
 
+	private void initAtividadeEmGrupo() {
+
+		lblDataEntrega = new Label("Grupo");
+
+		Util.setFontePadrao(new Label[] { lblDataEntrega }, 15, FontWeight.BOLD);
+
+		gridButtons.add(lblDataEntrega, 0, 4);
+		gridButtons.setMargin(lblDataEntrega, new Insets(20, 0, 0, 0));
+		
+		cbGrupo = new ComboBox<>();
+		
+		cbGrupo.getItems().addAll("Individual" , " Grupo ");
+		
+		gridButtons.add(cbGrupo, 0, 5);
+
+	}
+
+	private void initTextFieldDataEntrega() {
+
+		dtEntrega = new DatePicker();
+		dtEntrega.setPrefWidth(200);
+		dtEntrega.setPrefHeight(30);
+
+		System.out.println(dtEntrega.getValue());
+		gridButtons.add(dtEntrega, 0, 3);
+	}
+
+	private void initLabelDataEntrega() {
+
+		lblDataEntrega = new Label("Data de Entrega");
+
+		Util.setFontePadrao(new Label[] { lblDataEntrega }, 15, FontWeight.BOLD);
+
+		gridButtons.add(lblDataEntrega, 0, 2);
+		gridButtons.setMargin(lblDataEntrega, new Insets(20, 0, 0, 0));
+
+	}
+
 	private void initButtonConcluir() {
-		
+
 		btConcluir = new Button("Concluir");
-		
+
 		btConcluir.setTextFill(Color.WHITE);
-		
-		Util.setFontePadrao(new Button[] {btConcluir}, 20, FontWeight.BOLD);
-		
+
+		Util.setFontePadrao(new Button[] { btConcluir }, 20, FontWeight.BOLD);
+
 		Util.hoverFade(btConcluir);
-		
-		btConcluir.setStyle(btConcluir.getStyle() + "-fx-background-color: #57BEBE; -fx-background-radius: 10px; -fx-border-radius: 10px;");
-		
+
+		btConcluir.setStyle(btConcluir.getStyle()
+				+ "-fx-background-color: #57BEBE; -fx-background-radius: 10px; -fx-border-radius: 10px;");
+
 		borderAgendar.setBottom(btConcluir);
 		borderAgendar.setAlignment(btConcluir, Pos.CENTER);
 		borderAgendar.setMargin(btConcluir, new Insets(10));
-		
+
 		btConcluir.setOnMouseClicked((x) -> mostrarCriarAtividades());
-		
+
 	}
 
 	private void mostrarCriarAtividades() {
-		
+
 		borderInterno.setCenter(stackInterno);
 		borderInterno.setRight(gridButtons);
-		
+
 	}
 
 	private void mostrarAgendar() {
@@ -150,11 +214,12 @@ public class CriarAtividade {
 
 	private void initTextFieldDataPublicacao() {
 
-		tfDataPublicacao = new TextField();
-		tfDataPublicacao.setPrefHeight(40);
-		tfDataPublicacao.setPrefWidth(150);
+		dtDataPublicacao = new DatePicker();
+		dtDataPublicacao.setPrefHeight(40);
+		dtDataPublicacao.setPrefWidth(220);
 
-		gridData.add(tfDataPublicacao, 0, 1);
+		gridData.add(dtDataPublicacao, 0, 1);
+		gridData.setAlignment(Pos.CENTER);
 	}
 
 	private void initLabelDataPublicacao() {
@@ -227,6 +292,8 @@ public class CriarAtividade {
 				+ "-fx-background-color: #1D5959; -fx-background-radius: 10px; -fx-border-radius: 10px;");
 
 		Util.hoverFade(btPublicar);
+
+		btPublicar.setOnMouseClicked((x) -> controller.criarAtividade());
 
 		gridButtons.add(btPublicar, 0, 1);
 		gridButtons.setMargin(btPublicar, new Insets(8, 0, 0, 0));
@@ -349,5 +416,51 @@ public class CriarAtividade {
 		borderPrincipal.setCenter(gridPrincipal);
 		borderPrincipal.setMargin(gridPrincipal, new Insets(-30, 15, 0, 15));
 	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public TextField getTfAtividade() {
+		return tfAtividade;
+	}
+
+	public void setTfAtividade(TextField tfAtividade) {
+		this.tfAtividade = tfAtividade;
+	}
+
+	public TextArea getTaDescricao() {
+		return taDescricao;
+	}
+
+	public void setTaDescricao(TextArea taDescricao) {
+		this.taDescricao = taDescricao;
+	}
+
+	public DatePicker getDtDataPublicacao() {
+		return dtDataPublicacao;
+	}
+
+	public void setDtDataPublicacao(DatePicker dtDataPublicacao) {
+		this.dtDataPublicacao = dtDataPublicacao;
+	}
+
+	public DatePicker getDtEntrega() {
+		return dtEntrega;
+	}
+
+	public void setDtEntrega(DatePicker dtEntrega) {
+		this.dtEntrega = dtEntrega;
+	}
+
+	public ComboBox<String> getCbGrupo() {
+		return cbGrupo;
+	}
+
+	public void setCbGrupo(ComboBox<String> cbGrupo) {
+		this.cbGrupo = cbGrupo;
+	}
+	
+	
 
 }

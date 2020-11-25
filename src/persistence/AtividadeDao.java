@@ -42,7 +42,7 @@ public class AtividadeDao implements IAtividadeDao{
 		ps.setDate(4, (Date) atividade.getDtPublicacao());
 		ps.setDate(5, (Date) atividade.getDtEntrega());
 		ps.setString(6, atividade.getPathArquivo());
-		//ps.setInt(7, atividade.getTurma().getId());
+//		ps.setInt(7, atividade.getDiscTurmaProf().getTurma().);
 		ps.execute();
 		ps.close();
 	}

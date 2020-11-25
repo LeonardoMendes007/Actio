@@ -103,7 +103,7 @@ public class AtividadeProfessor {
 
 	private void initEventBtAtividade() {
 		
-		btCriarAtividade.setOnMouseClicked((x) -> new CriarAtividade(borderPrincipal));
+		btCriarAtividade.setOnMouseClicked((x) -> new CriarAtividade(borderPrincipal, professor));
 		
 	}
 
