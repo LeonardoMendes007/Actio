@@ -54,8 +54,15 @@ public class AtividadeDao implements IAtividadeDao{
 
 	@Override
 	public void delete(Atividade atividade) throws SQLException {
-		// TODO Auto-generated method stub
 		
+		String sql = "DELETE FROM tbEntrega WHERE idAtividade = ? "
+				+ "DELETE FROM tbAtividade WHERE idAtividade = ? ";
+	
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, atividade.getId());
+		ps.setInt(2, atividade.getId());
+		ps.execute();
+		ps.close();
 	}
 
 	@Override

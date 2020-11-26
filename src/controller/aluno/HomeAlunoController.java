@@ -36,7 +36,7 @@ public class HomeAlunoController {
 	private void addCards(List<Atividade> atividades) {
 		
 		for (Atividade atividade : atividades) {
-			CardTarefaVertical card = new CardTarefaVertical(viewHomeAluno.getBorderPrincipal(), atividade);
+			CardTarefaVertical card = new CardTarefaVertical(viewHomeAluno.getBorderPrincipal(), atividade, viewHomeAluno.getAluno());
 			
 			viewHomeAluno.addCardAtividade(card);
 			

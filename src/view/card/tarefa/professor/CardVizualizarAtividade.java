@@ -37,7 +37,7 @@ public class CardVizualizarAtividade {
 
         initGridCard();
         
-        initLabels(aluno.getNome(),true);
+        initLabels(aluno.getNome());
         
         initButton();
         
@@ -78,11 +78,12 @@ public class CardVizualizarAtividade {
 		gridCard.add(btCorrigir, 2, 0);
 	}
 
-	private void initLabels(String nome, boolean status) {
+	private void initLabels(String nome) {
 		
 		lblAluno = new Label(nome);
 		
-		if (status) {
+		
+		if (!atividade.getPathArquivo().isEmpty()) {
 			lblEntregue = new Label("SIM");
 		}else {
 			lblEntregue = new Label("NÃO");

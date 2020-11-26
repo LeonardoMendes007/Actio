@@ -10,14 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Aluno;
 import model.Atividade;
 import view.Util;
 import view.aluno.EntregaAtividadeAluno;
@@ -45,9 +43,12 @@ public class CardTarefaVertical implements ICard {
 	
 	private Atividade atividade;
 	
-	public CardTarefaVertical(BorderPane pane, Atividade atividade) {
+	private Aluno aluno;
+	
+	public CardTarefaVertical(BorderPane pane, Atividade atividade, Aluno aluno) {
 		
 
+		this.aluno = aluno;
 		this.borderPrincipal = pane; 
 		this.atividade = atividade;
 
@@ -170,7 +171,7 @@ public class CardTarefaVertical implements ICard {
 	private void initEvent(Atividade atividade) {
 		borderCard.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(atividade, borderPrincipal);
+	        new EntregaAtividadeAluno(atividade, borderPrincipal, aluno);
 			
 		});
 

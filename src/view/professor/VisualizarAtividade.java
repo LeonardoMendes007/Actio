@@ -1,13 +1,16 @@
 package view.professor;
 
 import controller.professor.VisualizarAtividadeController;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import model.Atividade;
 import view.Util;
@@ -34,19 +37,22 @@ public class VisualizarAtividade {
 	private Label lblEntregue;
 
 	private Label lblNota;
-	
+
+	private Button btDelete;
+
+	private GridPane gridTituloBotao;
+
 	private ScrollPane scrollLista;
-	
+
 	private VBox vboxLista;
-	
+
 	private Atividade atividade;
-	
-	private VisualizarAtividadeController controller;
-	
+
+	private VisualizarAtividadeController controller = new VisualizarAtividadeController(this);
+
 	public VisualizarAtividade(Atividade atividade, BorderPane borderPrincipal) {
 		this.borderPrincipal = borderPrincipal;
 		this.atividade = atividade;
-		this.controller = new VisualizarAtividadeController(atividade, this);
 		initTela();
 	}
 
@@ -60,48 +66,55 @@ public class VisualizarAtividade {
 
 		initGridInterno();
 
+		initGridTituloBotao();
+
 		initLabelTitulo();
 
 		initLabelSubTitulo();
 
 		initBarraSuperior();
-		
+
 		initLista();
-		
-		initTelaDetalhesAtividade();
-		
+
 		controller.addCards();
 
 	}
 
-	private void initTelaDetalhesAtividade() {
+	private void initGridTituloBotao() {
+
+		gridTituloBotao = new GridPane();
 		
+		gridTituloBotao.setPrefWidth(gridInterno.getWidth());
 		
+		gridInterno.widthProperty().addListener((x) -> gridTituloBotao.setPrefWidth(gridInterno.getWidth()));
+
+		gridInterno.add(gridTituloBotao, 0, 0);
+		gridTituloBotao.setGridLinesVisible(true);
 	}
 
 	private void initLista() {
-		
+
 		initScroll();
-		
+
 		initVbox();
 	}
 
 	private void initVbox() {
-		
+
 		vboxLista = new VBox(5);
-		
+
 		vboxLista.setPadding(new Insets(10));
-		
+
 		scrollLista.setContent(vboxLista);
-		
+
 	}
 
 	private void initScroll() {
-		
+
 		scrollLista = new ScrollPane();
-		
+
 		scrollLista.setStyle("-fx-background-color: #EAEAEA; -fx-background-radius: 5px; -fx-border-radius: 5px;");
-		
+
 		gridInterno.add(scrollLista, 0, 3);
 	}
 
@@ -114,6 +127,28 @@ public class VisualizarAtividade {
 		initLabelEntregue();
 
 		initLabelNota();
+
+		initButtonDelete();
+	}
+
+	private void initButtonDelete() {
+
+		btDelete = new Button("Deletar");
+		btDelete.setTextFill(Color.WHITE);
+
+		Util.setFontePadrao(new Button[] { btDelete }, 21, FontWeight.BOLD);
+		btDelete.setStyle(btDelete.getStyle()
+				+ "-fx-background-color: #1D5959; -fx-background-radius: 10px; -fx-border-radius: 10px;");
+
+		Util.hoverFade(btDelete);
+		
+		btDelete.setOnMouseClicked((x) -> controller.deleteAtividade());
+		
+		gridTituloBotao.add(btDelete, 1, 0);
+		
+		gridTituloBotao.setHalignment(btDelete, HPos.RIGHT);
+	
+
 	}
 
 	private void initLabelNota() {
@@ -121,10 +156,11 @@ public class VisualizarAtividade {
 		lblAluno = new Label("Aluno");
 
 		Util.setFontePadrao(new Label[] { lblAluno }, 20, FontWeight.BOLD);
-		
+
 		gridBarraSuperior.add(lblAluno, 0, 0);
 
-		gridBarraSuperior.widthProperty().addListener((x)-> lblAluno.setPrefWidth(gridBarraSuperior.getWidth()*0.33));
+		gridBarraSuperior.widthProperty()
+				.addListener((x) -> lblAluno.setPrefWidth(gridBarraSuperior.getWidth() * 0.33));
 
 		lblAluno.setAlignment(Pos.CENTER);
 	}
@@ -135,8 +171,9 @@ public class VisualizarAtividade {
 		Util.setFontePadrao(new Label[] { lblEntregue }, 20, FontWeight.BOLD);
 
 		gridBarraSuperior.add(lblEntregue, 1, 0);
-		
-		gridBarraSuperior.widthProperty().addListener((x)-> lblEntregue.setPrefWidth(gridBarraSuperior.getWidth()*0.33));
+
+		gridBarraSuperior.widthProperty()
+				.addListener((x) -> lblEntregue.setPrefWidth(gridBarraSuperior.getWidth() * 0.33));
 
 		lblEntregue.setAlignment(Pos.CENTER);
 
@@ -148,10 +185,9 @@ public class VisualizarAtividade {
 		Util.setFontePadrao(new Label[] { lblNota }, 20, FontWeight.BOLD);
 
 		gridBarraSuperior.add(lblNota, 2, 0);
-		
-		gridBarraSuperior.widthProperty().addListener((x)-> lblNota.setPrefWidth(gridBarraSuperior.getWidth()*0.33));
 
-		
+		gridBarraSuperior.widthProperty().addListener((x) -> lblNota.setPrefWidth(gridBarraSuperior.getWidth() * 0.33));
+
 		lblNota.setAlignment(Pos.CENTER);
 	}
 
@@ -159,13 +195,14 @@ public class VisualizarAtividade {
 
 		gridBarraSuperior = new GridPane();
 
-		gridBarraSuperior.setStyle("-fx-background-color: #C4C4C4; -fx-background-radius: 5px; -fx-border-radius: 5px;");
-		
+		gridBarraSuperior
+				.setStyle("-fx-background-color: #C4C4C4; -fx-background-radius: 5px; -fx-border-radius: 5px;");
+
 		gridBarraSuperior.setPrefWidth(2000);
 		gridBarraSuperior.setPrefHeight(60);
-		
+
 		gridBarraSuperior.setMargin(gridBarraSuperior, new Insets(15, 0, 0, 0));
-		
+
 		gridBarraSuperior.setAlignment(Pos.CENTER);
 		gridInterno.add(gridBarraSuperior, 0, 2);
 
@@ -173,20 +210,22 @@ public class VisualizarAtividade {
 
 	private void initLabelSubTitulo() {
 
-		lblSubTitulo = new Label("4° ADS - TARDE");
+		lblSubTitulo = new Label(atividade.getDiscTurmaProf().getTurma().getSemestre() + "° "
+				+ atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
+				+ atividade.getDiscTurmaProf().getTurma().getPeriodo());
 
 		Util.setFontePadrao(new Label[] { lblSubTitulo }, 20, FontWeight.BOLD);
 
-		gridInterno.add(lblSubTitulo, 0, 1);
+		gridTituloBotao.add(lblSubTitulo, 0, 1);
 	}
 
 	private void initLabelTitulo() {
 
-		lblTitulo = new Label("Atividade P1");
+		lblTitulo = new Label(atividade.getNome());
 
 		Util.setFontePadrao(new Label[] { lblTitulo }, 27, FontWeight.BOLD);
 
-		gridInterno.add(lblTitulo, 0, 0);
+		gridTituloBotao.add(lblTitulo, 0, 0);
 	}
 
 	private void initGridInterno() {
@@ -197,7 +236,8 @@ public class VisualizarAtividade {
 
 		gridInterno.setPadding(new Insets(30));
 
-		gridInterno.setStyle("-fx-background-color: #FF9DBA; -fx-background-radius: 20px; -fx-border-radius: 20px;");
+		gridInterno.setStyle("-fx-background-color: " + atividade.getDiscTurmaProf().getDisciplina().getCor()
+				+ "; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 
 		gridPrincipal.add(gridInterno, 0, 1);
 	}
@@ -226,17 +266,17 @@ public class VisualizarAtividade {
 		borderPrincipal.setCenter(gridPrincipal);
 		borderPrincipal.setMargin(gridPrincipal, new Insets(-30, 15, 0, 15));
 	}
-	
+
 	public void setCard(CardVizualizarAtividade card) {
-		
+
 		vboxLista.getChildren().add(card.getCard());
-		
+
 	}
 
 	private void trocarConteudo() {
-		
+
 		gridInterno.setVisible(false);
-		
+
 	}
 
 	public BorderPane getBorderPrincipal() {
@@ -246,8 +286,13 @@ public class VisualizarAtividade {
 	public void setBorderPrincipal(BorderPane borderPrincipal) {
 		this.borderPrincipal = borderPrincipal;
 	}
-	
-	
-	
-	
+
+	public Atividade getAtividade() {
+		return atividade;
+	}
+
+	public void setAtividade(Atividade atividade) {
+		this.atividade = atividade;
+	}
+
 }

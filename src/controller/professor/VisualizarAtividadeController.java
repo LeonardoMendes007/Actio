@@ -8,19 +8,17 @@ import model.Atividade;
 import model.Usuario;
 import persistence.AtividadeDao;
 import view.card.tarefa.professor.CardVizualizarAtividade;
+import view.professor.HomeProfessor;
 import view.professor.VisualizarAtividade;
 
 public class VisualizarAtividadeController {
 	
-	private VisualizarAtividade visualizar;
+	private VisualizarAtividade viewVisualizar;
 	
-	private Atividade atividade;
-	
-	public VisualizarAtividadeController(Atividade atividade, VisualizarAtividade visualizar) {
+	public VisualizarAtividadeController(VisualizarAtividade viewVisualizar) {
 		
-		this.atividade = atividade;
-		
-		this.visualizar = visualizar;
+		this.viewVisualizar = viewVisualizar;
+
 	}
 	
 	public void addCards() {
@@ -28,14 +26,14 @@ public class VisualizarAtividadeController {
 		try {
 			AtividadeDao dao = new AtividadeDao();
 			
-			List<Aluno> alunos = dao.findAlunos(atividade);
+			List<Aluno> alunos = dao.findAlunos(viewVisualizar.getAtividade());
 			
 			for (Aluno aluno : alunos) {
 
 				
-				CardVizualizarAtividade card1 = new CardVizualizarAtividade(visualizar.getBorderPrincipal(), aluno, atividade);
+				CardVizualizarAtividade card1 = new CardVizualizarAtividade(viewVisualizar.getBorderPrincipal(), aluno, viewVisualizar.getAtividade());
 			
-			    visualizar.setCard(card1);
+			    viewVisualizar.setCard(card1);
 
 			    
 			}
@@ -46,6 +44,28 @@ public class VisualizarAtividadeController {
 		}
 
 	
+	}
+
+	public void deleteAtividade() {
+		
+		AtividadeDao dao;
+		try {
+			dao = new AtividadeDao();
+			
+			dao.delete(viewVisualizar.getAtividade());
+			
+		    new HomeProfessor(viewVisualizar.getBorderPrincipal(), viewVisualizar.getAtividade().getDiscTurmaProf().getProfessor());
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			System.err.println("Erro ao excluir atividade");
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+		
 	}
 
 }

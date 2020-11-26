@@ -4,6 +4,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import model.Atividade;
+import model.DisciplinaTurmaProfessor;
 import view.professor.CriarAtividade;
 
 public class CriarAtividadeController {
@@ -28,7 +29,7 @@ public class CriarAtividadeController {
 		
 		atividade.setDtEntrega(Date.from(viewCriarAtividade.getDtEntrega().getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
-//		atividade.g
+//		DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(new , , viewCriarAtividade.getProfessor());
 		
 		System.out.println(atividade.toString());
 		

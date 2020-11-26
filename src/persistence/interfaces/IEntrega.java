@@ -10,6 +10,6 @@ public interface IEntrega {
 	public void insert(Entrega entrega) throws SQLException;
 	public void update(Entrega entrega) throws SQLException;
 	public void delete(Entrega entrega) throws SQLException;
-	public Entrega findAtividade(Entrega entrega) throws SQLException;
+	public Entrega findEntrega(Entrega entrega) throws SQLException;
 	public List<Entrega> findAll() throws SQLException;
 }
