@@ -5,7 +5,6 @@ package view.aluno;
 import controller.aluno.DisciplinaAlunoController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -31,9 +30,9 @@ public class DisciplinaAluno {
 	
 	private DisciplinaAlunoController controller = new DisciplinaAlunoController(this);
 
-	public DisciplinaAluno(BorderPane border, Aluno a) {
+	public DisciplinaAluno(BorderPane border, Aluno aluno) {
 		this.borderPrincipal = border;
-		setAluno(a);
+		this.aluno = aluno;
 		initTela();
 	}
 
@@ -82,7 +81,7 @@ public class DisciplinaAluno {
 
 	private void initLabelDisciplina() {
 		
-		lblDisciplina = new Label("Disciplina");
+		lblDisciplina = new Label("Disciplinas");
 		
 		lblDisciplina.setStyle("-fx-font-weight: bolder; -fx-font-family: Poppins; " + "-fx-font-size: " + 25 + " ;");
 		
@@ -115,8 +114,5 @@ public class DisciplinaAluno {
 		return aluno;
 	}
 
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
 	
 }

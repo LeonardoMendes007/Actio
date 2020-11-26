@@ -103,7 +103,6 @@ public class AtividadeDao implements IAtividadeDao{
 		
 		while(rs.next()) {
 			
-			System.out.println("uma atividade");
 			Atividade a = new Atividade();
 			a.setId(rs.getInt("idAtividade"));
 			a.setNome(rs.getString("nomeAtividade"));

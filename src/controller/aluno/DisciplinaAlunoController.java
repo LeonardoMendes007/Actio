@@ -34,7 +34,7 @@ public class DisciplinaAlunoController {
 		
 	
 		for (DisciplinaTurmaProfessor disciplina : disciplinas) {
-			CardDisciplina card = new CardDisciplina(330.0, 175.0, disciplina.getDisciplina(), disciplina.getProfessor());
+			CardDisciplina card = new CardDisciplina(330.0, 175.0, disciplina.getDisciplina(), disciplina.getProfessor(), viewDisciplina.getAluno(), viewDisciplina.getBorderPrincipal());
 			viewDisciplina.addCard(card);
 		}
 	}

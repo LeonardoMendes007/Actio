@@ -75,8 +75,6 @@ public class ControllerEntregaAtividade {
 		try {
 			EntregaDao dao = new EntregaDao();
 
-			entrega = new Entrega();
-			
 			entrega.setPathArquivos("tmp//" + viewEntregaAtividade.getAtividade().getDiscTurmaProf().getDisciplina().getId() + "//" + viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getId() + "//" + viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//" + viewEntregaAtividade.getAluno().getId() + "//" + viewEntregaAtividade.getFile().getName());
 			
 			dao.update(entrega);
