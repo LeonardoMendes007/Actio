@@ -55,7 +55,13 @@ public class EntregaDao implements IEntrega {
 
 	@Override
 	public void delete(Entrega entrega) throws SQLException {
-		// TODO Auto-generated method stub
+		
+		String sql = "DELETE FROM tbEntrega WHERE idEntrega = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, entrega.getId());
+		ps.execute();
+		ps.close();
 
 	}
 
@@ -144,12 +150,12 @@ public class EntregaDao implements IEntrega {
 
 	public List<Entrega> findEntregaAtividade(Disciplina disciplina, Aluno aluno) throws SQLException {
 	
-		String sql = "SELECT DISTINCT e.*, a.*"
-				+ "FROM tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade a, tbAluno aluno, tbEntrega e"
-				+ "WHERE d.idDisciplina = dtp.idDisciplina"
-				+ "AND dtp.idDisciplinaTurmaProfessor = a.idDisciplinaTurmaProfessor"
-				+ "AND a.idAtividade = e.idAtividade"
-				+ "AND d.idDisciplina = ?"
+		String sql = "SELECT DISTINCT e.*, a.* "
+				+ "FROM tbDisciplina d , tbDisciplinaTurmaProfessor dtp, tbAtividade a, tbAluno aluno, tbEntrega e "
+				+ "WHERE d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = a.idDisciplinaTurmaProfessor "
+				+ "AND a.idAtividade = e.idAtividade "
+				+ "AND d.idDisciplina = ? "
 				+ "AND e.idAluno = ?";
 
 		PreparedStatement ps = c.prepareStatement(sql);

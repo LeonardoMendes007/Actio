@@ -10,8 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import model.Aluno;
+import model.AtividadeEntrega;
 import model.Disciplina;
-import model.Entrega;
 import view.Util;
 
 public class DetalhesDisciplina {
@@ -130,7 +130,7 @@ public class DetalhesDisciplina {
 
 	}
 	
-	public void setTable(TableView<String> table) {
+	public void setTable(TableView<AtividadeEntrega> table) {
 		
 		borderInterno.setCenter(table);		
 	}
