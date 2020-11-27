@@ -147,6 +147,38 @@ public class DisciplinaDao implements IDisciplinaDao{
 		
 		return disciplinas;
 	}
+	
+	
+	public List<Disciplina> findDisciplinaProfessor(Professor p) throws SQLException{
+		
+		
+		String sql = "select distinct tbDisciplina.* from tbDisciplinaTurmaProfessor " + 
+					"inner join tbDisciplina on tbDisciplinaTurmaProfessor.idDisciplina = tbDisciplina.idDisciplina " + 
+					"where idProfessor = ?";
+		
+		PreparedStatement ps = c.prepareStatement(sql);
+		
+		ps.setInt(1, p.getId());
+		
+		ResultSet rs = ps.executeQuery();
+		
+		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+		
+		
+		while(rs.next()) {
+			
+			Disciplina d = new Disciplina();
+			
+			d.setId(rs.getInt("idDisciplina"));
+			d.setNome(rs.getString("nomeDisciplina"));
+			d.setCor(rs.getString("corDisciplina"));
+	
+			disciplinas.add(d);
+		}
+		
+		
+		return disciplinas;
+	}
 	@Override
 	public List<Disciplina> findAll() throws SQLException {
 		// TODO Auto-generated method stub

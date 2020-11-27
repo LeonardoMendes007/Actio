@@ -1,8 +1,12 @@
 package view.professor;
 
+import java.awt.event.ActionListener;
+
 import controller.professor.CriarAtividadeController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,7 +20,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Disciplina;
 import model.Professor;
+import model.Turma;
 import view.Util;
 
 public class CriarAtividade {
@@ -66,8 +72,16 @@ public class CriarAtividade {
 	private GridPane gridData;
 
 	private Label lblAtividadeEmGrupo;
+	
+	private Label lblDisciplina;
+	
+	private Label lblTurma;
 
 	private ComboBox<String> cbGrupo;
+	
+	private ComboBox<String> cbDisciplina;
+	
+	private ComboBox<String> cbTurma;
 
 	private CriarAtividadeController controller = new CriarAtividadeController(this);
 
@@ -118,6 +132,10 @@ public class CriarAtividade {
 
 		initAtividadeEmGrupo();
 		
+		initDisciplinaAtividade();
+		
+		initTurmaAtividade();
+		
 		initGridData();
 
 		initLabelDataPublicacao();
@@ -128,6 +146,57 @@ public class CriarAtividade {
 
 	}
 
+	private void initTurmaAtividade() {
+		lblTurma = new Label("Turma");
+
+		Util.setFontePadrao(new Label[] { lblTurma }, 15, FontWeight.BOLD);
+
+		gridButtons.add(lblTurma, 0, 8);
+		gridButtons.setMargin(lblTurma, new Insets(20, 0, 0, 0));
+		
+		cbTurma = new ComboBox<>();
+		
+		
+				
+		gridButtons.add(cbTurma, 0, 9);
+
+	}
+	
+	private void initDisciplinaAtividade() {
+		lblDisciplina = new Label("Disciplina");
+
+		Util.setFontePadrao(new Label[] { lblDisciplina }, 15, FontWeight.BOLD);
+
+		gridButtons.add(lblDisciplina, 0, 6);
+		gridButtons.setMargin(lblDisciplina, new Insets(20, 0, 0, 0));
+		
+		cbDisciplina = new ComboBox<>();
+		
+		
+		controller.addDiscComboBox(getProfessor());
+		
+
+		cbDisciplina.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println(cbDisciplina.getValue() );
+				Disciplina d = new Disciplina();
+				d.setNome(cbDisciplina.getValue());
+				controller.addTurmasComboBox(d);
+				
+			}
+		});
+		
+		gridButtons.add(cbDisciplina, 0, 7);
+
+	}
+	
+	private void testeEvent(ActionListener a) {
+		System.out.println("Selecionou");
+	}
+	
+	
 	private void initAtividadeEmGrupo() {
 
 		lblDataEntrega = new Label("Grupo");
@@ -183,7 +252,7 @@ public class CriarAtividade {
 		borderAgendar.setAlignment(btConcluir, Pos.CENTER);
 		borderAgendar.setMargin(btConcluir, new Insets(10));
 
-		btConcluir.setOnMouseClicked((x) -> mostrarCriarAtividades());
+		btConcluir.setOnMouseClicked((x) -> controller.criarAtividade());
 
 	}
 
@@ -459,6 +528,22 @@ public class CriarAtividade {
 
 	public void setCbGrupo(ComboBox<String> cbGrupo) {
 		this.cbGrupo = cbGrupo;
+	}
+
+	public ComboBox<String> getCbDisciplina() {
+		return cbDisciplina;
+	}
+
+	public void setCbDisciplina(ComboBox<String> cbDisciplina) {
+		this.cbDisciplina = cbDisciplina;
+	}
+
+	public ComboBox<String> getCbTurma() {
+		return cbTurma;
+	}
+
+	public void setCbTurma(ComboBox<String> cbTurma) {
+		this.cbTurma = cbTurma;
 	}
 	
 	
