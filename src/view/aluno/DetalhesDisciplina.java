@@ -1,24 +1,17 @@
 package view.aluno;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Date;
-
-import javafx.geometry.HPos;
+import controller.aluno.DetalhesDisciplinaController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
+import model.Aluno;
+import model.AtividadeEntrega;
+import model.Disciplina;
 import view.Util;
 
 public class DetalhesDisciplina {
@@ -30,46 +23,22 @@ public class DetalhesDisciplina {
 	private Label lblAtividade;
 
 	private BorderPane borderInterno;
-
-	private ImageView ivGroup;
-
-	private Label lblDisciplina;
-
+	
 	private Label lblTitulo;
 
-	private Label lblDataDeEntrega;
-
-	private Label lblNumDeDias;
-
-	private Label lblLegenda;
-
-	private TableView<String> table;
-
-	private Label lblArquivos;
-
-	private Button btRemover;
-
-	private Button btAdicionar;
-
-	private Button btEntregar;
-
-	private HBox hboxButtons;
-
 	private GridPane gridCentral;
-
-	private GridPane gridData;
-
-	private GridPane gridSuperior;
-
-	private GridPane gridTituloLegenda;
 	
+	private Aluno aluno;
 	
+	private Disciplina disciplina;
+	
+    private DetalhesDisciplinaController controller;
 
-	public DetalhesDisciplina(BorderPane pane) {
+	public DetalhesDisciplina(BorderPane pane, Disciplina disciplina, Aluno aluno) {
 
 		this.borderPrincipal = pane;
-		
-		borderPrincipal.setPrefSize(700, 700);
+		this.disciplina = disciplina;
+		this.aluno = aluno;
 
 		clearBorderPrincipal();
 
@@ -88,16 +57,12 @@ public class DetalhesDisciplina {
 		initGridAtividade();
 		initLabelAtividade();
 		initBorderInterno();
-		initGridSuperior();
-		initCentroCard("Trabalho Eng 3", "Querem nos matar");
-		initPrazoDeEntrega(new Date());
-		initDisciplina("Programação Orientada a Disgraça");
-		verificarGroup(true);
-
+		initCentroCard(disciplina.getNome());
 		initGridCentral();
+		controller = new DetalhesDisciplinaController(this);
 
 	}
-	
+
 	private void initGridCentral() {
 		gridCentral = new GridPane();
 
@@ -108,15 +73,6 @@ public class DetalhesDisciplina {
 
 	}
 
-	private void initGridSuperior() {
-
-		gridSuperior = new GridPane();
-
-		gridSuperior.setPrefWidth(2000);
-
-		borderInterno.setTop(gridSuperior);
-
-	}
 
 	private void initBorderInterno() {
 
@@ -125,11 +81,10 @@ public class DetalhesDisciplina {
 
 		borderInterno.setPadding(new Insets(15));
 
-		borderInterno.setStyle("-fx-background-color: #FF9DBA; -fx-background-radius: 20px; -fx-border-radius: 20px;");
+		borderInterno.setStyle("-fx-background-color:"+ disciplina.getCor() +"; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 
 		gridAtividade.add(borderInterno, 0, 1);
 		gridAtividade.setAlignment(Pos.CENTER);
-//        gridAtividade.setGridLinesVisible(true);
 	}
 
 	private void initGridAtividade() {
@@ -157,104 +112,48 @@ public class DetalhesDisciplina {
 
 	}
 
-	private void initPrazoDeEntrega(Date prazo) {
-
-		lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
-		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
-		lblDataDeEntrega.setTextAlignment(TextAlignment.RIGHT);
-
-		lblNumDeDias = new Label("Faltam " + 2 + " dias");
-		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
-		lblNumDeDias.setTextAlignment(TextAlignment.RIGHT);
-
-//		lblDataDeEntrega.setAlignment(Pos.CENTER);
-//		lblNumDeDias.setAlignment(Pos.CENTER);
-
-		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 20, FontWeight.BOLD);
-		Util.setFontePadrao(new Label[] { lblNumDeDias }, 20, FontWeight.NORMAL);
-
-		gridData = new GridPane();
-
-		gridData.add(lblDataDeEntrega, 0, 0);
-		gridData.add(lblNumDeDias, 0, 1);
-
-		gridData.setValignment(lblDataDeEntrega, VPos.CENTER);
-		gridData.setHalignment(lblDataDeEntrega, HPos.RIGHT);
-		gridData.setValignment(lblNumDeDias, VPos.CENTER);
-		gridData.setHalignment(lblNumDeDias, HPos.RIGHT);
-
-		gridSuperior.add(gridData, 2, 0);
-
-	}
-
-	private void verificarGroup(boolean group) {
-
-		if (group) {
-
-			carregarImageGroup("src\\view\\img\\group 1.png");
-
-		} else {
-
-			carregarImageGroup("src\\view\\img\\user 1.png");
-
-		}
-
-	}
-
-	private void carregarImageGroup(String path) {
-		try {
-			Image imagem = new Image(new FileInputStream(path));
-
-			ivGroup = new ImageView(imagem);
-			ivGroup.setFitWidth(80.0);
-			ivGroup.setFitHeight(80.0);
-			gridSuperior.add(ivGroup, 0, 0);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	private void initDisciplina(String disciplina) {
-
-		lblDisciplina = new Label(disciplina);
-		lblDisciplina.setTextFill(Color.web("#000000", 0.5));
-
-		Util.setFontePadrao(new Label[] { lblDisciplina }, 20, FontWeight.NORMAL);
-
-		lblDisciplina.setPadding(new Insets(2));
-		lblDisciplina.setAlignment(Pos.CENTER);
-		lblDisciplina.setStyle(lblDisciplina.getStyle()
-				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px;");
-
-//		lblDisciplina.setTextFill(corDisciplina);
-		borderInterno.setBottom(lblDisciplina);
-		borderInterno.setAlignment(lblDisciplina, Pos.CENTER);
-	}
-
-	private void initCentroCard(String titulo, String legenda) {
-
-		gridTituloLegenda = new GridPane();
+	private void initCentroCard(String titulo) {
 
 		lblTitulo = new Label(titulo);
-		lblTitulo.setPadding(new Insets(0, 0, 0, 10));
+		lblTitulo.setPadding(new Insets(0, 10, 0, 10));
 		lblTitulo.setTextFill(Color.web("#000000", 0.5));
 		lblTitulo.setAlignment(Pos.CENTER);
 
-		lblLegenda = new Label(legenda);
-		lblLegenda.setTextFill(Color.web("#000000", 0.5));
-		lblLegenda.setAlignment(Pos.CENTER);
 
 		Util.setFontePadrao(new Label[] { lblTitulo }, 25, FontWeight.BOLD);
-		Util.setFontePadrao(new Label[] { lblLegenda }, 20, FontWeight.LIGHT);
-
-		gridTituloLegenda.add(lblTitulo, 0, 0);
-		gridTituloLegenda.add(lblLegenda, 0, 1);
-		gridTituloLegenda.setAlignment(Pos.CENTER);
-		double tamanho = borderPrincipal.getWidth() - (260 + 80);
-
-		gridTituloLegenda.setPrefWidth(tamanho);
-		gridSuperior.add(gridTituloLegenda, 1, 0);
+		
+		lblTitulo.setStyle(lblTitulo.getStyle() + "-fx-background-color: rgba(0, 0, 0, 0.2); -fx-background-radius: 10px; -fx-border-radius: 10px;");
+		
+		borderInterno.setTop(lblTitulo);
+		borderInterno.setAlignment(lblTitulo, Pos.CENTER);
+		
 
 	}
+	
+	public void setTable(TableView<AtividadeEntrega> table) {
+		
+		borderInterno.setCenter(table);		
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public BorderPane getBorderPrincipal() {
+		return borderPrincipal;
+	}
+	
+	public BorderPane getBorderInterno() {
+		return borderInterno;
+	}
+
+
+	
+	
+	
 }

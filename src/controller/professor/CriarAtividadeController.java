@@ -16,6 +16,7 @@ import model.Professor;
 import model.Turma;
 import persistence.DisciplinaDao;
 import persistence.TurmaDao;
+import model.DisciplinaTurmaProfessor;
 import view.professor.CriarAtividade;
 
 public class CriarAtividadeController{
@@ -42,9 +43,10 @@ public class CriarAtividadeController{
 		atividade.setDescricao(viewCriarAtividade.getTaDescricao().getText());
 		
 		atividade.setDtEntrega(Date.from(viewCriarAtividade.getDtEntrega().getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		
+
 		atividade.setDiscTurmaProf(criaDiscTurmaProfessor());
-		
+//		DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(new , , viewCriarAtividade.getProfessor());
+	
 		atividade.setDtEmissao(new Date());
 		
 		

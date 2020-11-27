@@ -1,5 +1,6 @@
 package view.aluno;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
@@ -21,6 +22,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Aluno;
 import model.Atividade;
 import view.Util;
 
@@ -47,7 +49,7 @@ public class EntregaAtividadeAluno {
 	private Label lblLegenda;
 
 	private Label lblEntrega;
-	
+
 	private Label lblTarefa;
 
 	private Label lblArquivos;
@@ -60,9 +62,11 @@ public class EntregaAtividadeAluno {
 
 	private Label lblNomeAtividade;
 
+	private Button btBaixarArquivos;
+
 	private HBox hboxButtons;
-	
-	private FileChooser file = new FileChooser();
+
+	private FileChooser chooser = new FileChooser();
 
 	private GridPane gridCentral;
 
@@ -70,13 +74,19 @@ public class EntregaAtividadeAluno {
 
 	private GridPane gridSuperior;
 
+	private File file;
+
 	private GridPane gridTituloLegenda;
 
 	private Atividade atividade;
-	
-	private ControllerEntregaAtividade controller = new ControllerEntregaAtividade(this);
 
-	public EntregaAtividadeAluno(Atividade atividade, BorderPane pane) {
+	private ControllerEntregaAtividade controller;
+
+	private Aluno aluno;
+
+	public EntregaAtividadeAluno(Atividade atividade, BorderPane pane, Aluno aluno) {
+
+		this.aluno = aluno;
 
 		this.atividade = atividade;
 
@@ -85,6 +95,8 @@ public class EntregaAtividadeAluno {
 		clearBorderPrincipal();
 
 		initAtividade();
+
+		controller = new ControllerEntregaAtividade(this, atividade, aluno);
 
 	}
 
@@ -127,15 +139,18 @@ public class EntregaAtividadeAluno {
 
 		btEntregar.setTextFill(Color.WHITE);
 		btEntregar.setStyle(btEntregar.getStyle() + "-fx-background-color: #1D5959;");
-		
+
+		Util.hoverFade(btEntregar);
+		Util.hoverSize(btEntregar);
+
 		btEntregar.setOnMouseClicked((x) -> {
-			
-		     if(!lblEntrega.getText().equals("Clique para adicionar Arquivo") && !lblAtividade.getText().isEmpty()) {
-		    	 
-		    	 controller.entregarTarefa();
-		    	 
-		     }			
-		    	 
+
+			if (!lblEntrega.getText().equals("Clique para adicionar Arquivo") && !lblAtividade.getText().isEmpty()) {
+
+				controller.entregarTarefa();
+
+			}
+
 		});
 
 		borderInterno.setRight(btEntregar);
@@ -150,14 +165,26 @@ public class EntregaAtividadeAluno {
 
 		Util.setFontePadrao(new Button[] { btAdicionar, btRemover }, 15, FontWeight.BOLD);
 
-		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D;");
+		Util.hoverFade(btAdicionar);
+		Util.hoverFade(btRemover);
+		
+		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D; -fx-pointer: hand;");
 		btRemover.setStyle(btRemover.getStyle() + "-fx-background-color: #F55B51;");
 
 		btAdicionar.setOnMouseClicked((x) -> {
-		
-			lblEntrega.setText(file.showOpenDialog(new Stage()).getPath());
+
+			file = chooser.showOpenDialog(new Stage());
+
+			lblEntrega.setText(file.getName());
+
 		});
-		
+
+		btRemover.setOnMouseClicked((x) -> {
+
+			controller.deletarTarefa();
+
+		});
+
 		initHbox();
 
 		hboxButtons.getChildren().addAll(btRemover, btAdicionar);
@@ -176,17 +203,16 @@ public class EntregaAtividadeAluno {
 
 	private void initLabelEntrega() {
 
-
 		lblEntrega = new Label("Clique para adicionar Arquivo");
-		lblArquivos = new Label("Clique para baixar tarefa");
-		
-		Util.setFontePadrao(new Label[] { lblEntrega, lblArquivos }, 18, FontWeight.NORMAL);
+		btBaixarArquivos = new Button("Baixar Atividade");
 
-		lblArquivos.setStyle(lblArquivos.getStyle() + "-fx-color: blue;");
-		lblEntrega.setStyle(lblEntrega.getStyle() + "-fx-color: blue;");
+		Util.setFontePadrao(new Label[] { lblEntrega }, 18, FontWeight.NORMAL);
+		Util.setFontePadrao(new Button[] { btBaixarArquivos }, 18, FontWeight.NORMAL);
+
+		btBaixarArquivos.setOnMouseClicked((x) -> controller.baixarArquivoAtividade());
 
 		gridCentral.add(lblEntrega, 0, 3);
-		gridCentral.add(lblArquivos, 0, 1);
+		gridCentral.add(btBaixarArquivos, 0, 1);
 
 	}
 
@@ -399,8 +425,20 @@ public class EntregaAtividadeAluno {
 		return atividade;
 	}
 
-	
-	
-	
+	public BorderPane getBorderPrincipal() {
+		return borderPrincipal;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
 
 }

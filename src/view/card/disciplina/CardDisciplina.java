@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import model.Aluno;
 import model.Disciplina;
 import model.Professor;
 import view.Util;
@@ -17,6 +18,8 @@ import view.card.ICard;
 public class CardDisciplina implements ICard{
 	
 	private BorderPane borderPrincipal;
+	
+	private BorderPane borderCar;
 
 	private Label lblDisciplina;
 	
@@ -24,21 +27,33 @@ public class CardDisciplina implements ICard{
 	
 	private Disciplina disciplina;
 	
-	public CardDisciplina(Double width, Double height, Disciplina disciplina, Professor p) {
+	private Professor professor;
+	
+	private Aluno aluno;
+	
+	public CardDisciplina(Double width, Double height, Disciplina disciplina, Professor professor, Aluno aluno, BorderPane borderPrincipal) {
+		
+		this.borderPrincipal = borderPrincipal;
+		this.professor = professor;
+		this.aluno = aluno;
+		
 		this.disciplina  = disciplina;
+		this.borderCar = new BorderPane();
+		this.borderCar.setPrefSize(width, height);
+		this.borderCar.setStyle("-fx-background-color: "+ disciplina.getCor() +"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
 		
-		
-		this.borderPrincipal = new BorderPane();
-		this.borderPrincipal.setPrefSize(width, height);
-		this.borderPrincipal.setStyle("-fx-background-color: "+ disciplina.getCor() +"; -fx-background-radius: 20px; -fx-border-radius: 20px;");
-		
-		initLabel(disciplina.getNome(),p.getNome() + " " + p.getSobrenome());
+		initLabel(disciplina.getNome(),professor.getNome() + " " + professor.getSobrenome());
 		
 		initEvent();
 	}
 	
 	private void initEvent() {
-		Util.hoverFade(this.borderPrincipal);
+		
+		borderCar.setOnMouseClicked((x) -> new DetalhesDisciplina(this.borderPrincipal, disciplina, aluno));
+		
+		Util.hoverFade(this.borderCar);
+		
+		Util.hoverSize(this.borderCar);
 	}
 
 	private void initLabel(String disciplina, String professor) {
@@ -56,15 +71,15 @@ public class CardDisciplina implements ICard{
 		Util.setFontePadrao(new Label[] {lblDisciplina}, 19, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] {lblProfessor}, 14, FontWeight.NORMAL);
 		
-		borderPrincipal.setCenter(lblDisciplina);
-		borderPrincipal.setBottom(lblProfessor);
-		borderPrincipal.setAlignment(lblDisciplina, Pos.BOTTOM_LEFT);
-		borderPrincipal.setMargin(lblDisciplina, new Insets(0, 0, 0, 15));
+		borderCar.setCenter(lblDisciplina);
+		borderCar.setBottom(lblProfessor);
+		borderCar.setAlignment(lblDisciplina, Pos.BOTTOM_LEFT);
+		borderCar.setMargin(lblDisciplina, new Insets(0, 0, 0, 15));
 	}
 
 	@Override
 	public Node getCard() {
-		return borderPrincipal;
+		return borderCar;
 	}
 
 	

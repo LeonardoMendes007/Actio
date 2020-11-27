@@ -1,10 +1,12 @@
 package view.professor;
 
+import controller.professor.AvaliarAtividadeController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -43,11 +45,13 @@ public class AvaliarAtividade {
 
 	private GridPane gridNotas;
 
-	private TableView<String> tableArquivos;
-	
+	private Button btBaixarArquivo;
+
 	private Aluno aluno;
-	
+
 	private Atividade atividade;
+	
+	private AvaliarAtividadeController controller;
 
 	public AvaliarAtividade(BorderPane borderPrincipal, Aluno aluno, Atividade atividade) {
 
@@ -87,6 +91,8 @@ public class AvaliarAtividade {
 		initButtonEnviar();
 
 		Util.setFontePadrao(new Label[] { lblArquivosEnviados, lblComentarios, lblNota }, 21, FontWeight.BOLD);
+	
+		controller = new AvaliarAtividadeController(this,aluno,atividade);
 	}
 
 	private void initTextFieldNota() {
@@ -95,11 +101,24 @@ public class AvaliarAtividade {
 		tfNota.setPrefWidth(borderInterno.getWidth() * 0.27);
 		tfNota.setPrefHeight(borderInterno.getHeight() * 0.14);
 
-		borderInterno.widthProperty().addListener((x) -> tfNota.setPrefWidth(borderInterno.getWidth() * 0.27));
-		borderInterno.heightProperty()
-				.addListener((x) -> tfNota.setPrefHeight(borderInterno.getHeight() * 0.14));
+		Util.setFontePadrao(new TextField[] { tfNota }, 21, FontWeight.BOLD);
 
-		gridNotas.add(tfNota, 0,1);
+		tfNota.lengthProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if (newValue.intValue() > oldValue.intValue()) {
+					char ch = tfNota.getText().charAt(oldValue.intValue());
+					if (!(ch >= '0' && ch <= '9')) {
+						tfNota.setText(tfNota.getText().substring(0, tfNota.getText().length() - 1));
+					}
+				}
+			}
+		});
+
+		borderInterno.widthProperty().addListener((x) -> tfNota.setPrefWidth(borderInterno.getWidth() * 0.20));
+		borderInterno.heightProperty().addListener((x) -> tfNota.setPrefHeight(borderInterno.getHeight() * 0.14));
+
+		gridNotas.add(tfNota, 0, 1);
 
 	}
 
@@ -125,7 +144,7 @@ public class AvaliarAtividade {
 		btEnviar = new Button("Enviar");
 
 		btEnviar.setPrefWidth(180);
-		
+
 		btEnviar.setTextFill(Color.WHITE);
 
 		Util.setFontePadrao(new Button[] { btEnviar }, 27, FontWeight.BOLD);
@@ -139,16 +158,20 @@ public class AvaliarAtividade {
 
 	private void initTableArquivos() {
 
-		tableArquivos = new TableView<>();
+		btBaixarArquivo = new Button("Baixar Arquivo");
 
-		tableArquivos.setPrefWidth(borderInterno.getWidth() * 0.65);
-		tableArquivos.setPrefHeight(borderInterno.getHeight() * 0.50);
+		Util.hoverFade(btBaixarArquivo);
+		Util.hoverSize(btBaixarArquivo);
+		Util.setFontePadrao(new Button[] { btBaixarArquivo }, 23, FontWeight.BOLD);
 
-		borderInterno.widthProperty().addListener((x) -> tableArquivos.setPrefWidth(borderInterno.getWidth() * 0.65));
-		borderInterno.heightProperty()
-				.addListener((x) -> tableArquivos.setPrefHeight(borderInterno.getHeight() * 0.50));
+		btBaixarArquivo.setStyle(btBaixarArquivo.getStyle() + " -fx-background-color: #1D5959;");
 
-		gridInterno.add(tableArquivos, 0, 1);
+		btBaixarArquivo.setPrefWidth(300);
+		btBaixarArquivo.setPrefHeight(40);
+		
+		btBaixarArquivo.setOnMouseClicked((x) -> controller.baixarArquivoEntrega());
+
+		gridInterno.add(btBaixarArquivo, 0, 1);
 	}
 
 	private void initTextAreaComentarios() {
@@ -158,7 +181,9 @@ public class AvaliarAtividade {
 		taComentarios.setPrefWidth(borderInterno.getWidth() * 0.65);
 		taComentarios.setPrefHeight(borderInterno.getHeight() * 0.50);
 
-		borderInterno.widthProperty().addListener((x) -> taComentarios.setPrefWidth(borderInterno.getWidth() * 0.65));
+		Util.setFontePadrao(new TextArea[] { taComentarios }, 17, FontWeight.NORMAL);
+
+		borderInterno.widthProperty().addListener((x) -> taComentarios.setPrefWidth(borderInterno.getWidth() * 0.70));
 		borderInterno.heightProperty()
 				.addListener((x) -> taComentarios.setPrefHeight(borderInterno.getHeight() * 0.50));
 
@@ -194,11 +219,11 @@ public class AvaliarAtividade {
 	private void initBorderInterno() {
 
 		borderInterno = new BorderPane();
-		
+
 		borderInterno.setStyle("-fx-background-color: #BEBDBD; -fx-background-radius: 10px; -fx-border-radius: 10px;");
 
 		borderInterno.setPadding(new Insets(10));
-		
+
 		borderInterno.setPrefSize(2000, 2000);
 
 		gridPrincipal.add(borderInterno, 0, 3);

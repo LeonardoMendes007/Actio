@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import model.Aluno;
 import model.Atividade;
 import view.Util;
 import view.aluno.EntregaAtividadeAluno;
@@ -42,9 +43,12 @@ public class CardTarefaHorizontal implements ICard {
 	private GridPane gridData;
 
 	private Color corDisciplina;
+	
+	private Aluno aluno;
 
-	public CardTarefaHorizontal(BorderPane borderPrincipal, Atividade atividade) {
+	public CardTarefaHorizontal(BorderPane borderPrincipal, Atividade atividade, Aluno aluno) {
 
+		this.aluno = aluno;
 		this.borderPrincipal = borderPrincipal;
 		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
 
@@ -174,7 +178,7 @@ public class CardTarefaHorizontal implements ICard {
 	private void initEvent(Atividade atividade) {
 		hboxPrincipal.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(atividade, borderPrincipal);
+	        new EntregaAtividadeAluno(atividade, borderPrincipal, aluno);
 			
 		});
 
