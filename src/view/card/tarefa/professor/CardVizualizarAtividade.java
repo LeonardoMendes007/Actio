@@ -10,110 +10,106 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import model.Aluno;
 import model.Atividade;
+import model.Entrega;
 import view.Util;
 import view.professor.AvaliarAtividade;
 
 public class CardVizualizarAtividade {
-	
+
 	private GridPane gridCard;
 
 	private Label lblEntregue;
 
 	private Label lblAluno;
-	
+
 	private Button btCorrigir;
-	
+
 	private BorderPane borderPrincipal;
-	
-	private Aluno aluno;
-	
-	private Atividade atividade;
-	
-	public CardVizualizarAtividade(BorderPane borderPrincipal, Aluno aluno, Atividade atividade) {
+
+	private Entrega entrega;
+
+	public CardVizualizarAtividade(BorderPane borderPrincipal, Entrega entrega) {
 
 		this.borderPrincipal = borderPrincipal;
-		this.aluno = aluno;
-		this.atividade = atividade;
 
-        initGridCard();
-        
-        initLabels(aluno.getNome());
-        
-        initButton();
-        
-        initEvent();
+		this.entrega = entrega;
+
+		initGridCard();
+
+		initLabels(entrega.getAluno().getNome());
+
+		initButton();
+
+		initEvent();
 
 	}
 
 	private void initEvent() {
-		
+
 		gridCard.widthProperty().addListener((x) -> {
-			
-			lblAluno.setPrefWidth(gridCard.getWidth()*0.37);
-			lblEntregue.setPrefWidth(gridCard.getWidth()*0.37);
-			btCorrigir.setPrefWidth(gridCard.getWidth()*0.25);
-			
+
+			lblAluno.setPrefWidth(gridCard.getWidth() * 0.40);
+			lblEntregue.setPrefWidth(gridCard.getWidth() * 0.40);
+			btCorrigir.setPrefWidth(gridCard.getWidth() * 0.19);
+
 		});
-		
-		
-		
+
 	}
 
 	private void initButton() {
-		
+
 		btCorrigir = new Button("Corrigir");
-		
-		Util.setFontePadrao(new Button[] {btCorrigir}, 18, FontWeight.BOLD);
-		
+
+		Util.setFontePadrao(new Button[] { btCorrigir }, 18, FontWeight.BOLD);
+
 		btCorrigir.setStyle(btCorrigir.getStyle() + "-fx-background-color: #53BDBE; -fx-cursor: hand;");
-		
+
 		Util.hoverFade(btCorrigir);
-		
+
 		btCorrigir.setAlignment(Pos.CENTER);
-		
+
 		btCorrigir.setTextFill(Color.WHITE);
-		
-		btCorrigir.setOnMouseClicked((x) -> new AvaliarAtividade(borderPrincipal, aluno, atividade));
-		
+
+		btCorrigir.setOnMouseClicked(
+				(x) -> new AvaliarAtividade(borderPrincipal, entrega.getAluno(), entrega.getAtividade()));
+
 		gridCard.add(btCorrigir, 2, 0);
 	}
 
 	private void initLabels(String nome) {
-		
+
 		lblAluno = new Label(nome);
-		
-		
-		if (!atividade.getPathArquivo().isEmpty()) {
-			lblEntregue = new Label("SIM");
-		}else {
-			lblEntregue = new Label("NÃO");
+
+		if (entrega.getNota() == -1) {
+			lblEntregue = new Label("Não Avaliada");
+		} else {
+			lblEntregue = new Label("" + entrega.getNota());
 		}
-		
+
 		lblAluno.setAlignment(Pos.CENTER);
 		lblEntregue.setAlignment(Pos.CENTER);
-		
-		Util.setFontePadrao(new Label[] {lblAluno, lblEntregue}, 20, FontWeight.BOLD);
-		
+
+		Util.setFontePadrao(new Label[] { lblAluno, lblEntregue }, 20, FontWeight.BOLD);
+
 		gridCard.add(lblAluno, 0, 0);
 		gridCard.add(lblEntregue, 1, 0);
 	}
 
 	private void initGridCard() {
-		
+
 		gridCard = new GridPane();
 		gridCard.setPrefWidth(borderPrincipal.getWidth());
 		gridCard.setPrefHeight(35);
 		gridCard.setAlignment(Pos.CENTER);
-		gridCard.setPadding(new Insets(7));
-		
+		gridCard.setPadding(new Insets(7,7,7,30));
+
 		gridCard.setStyle("-fx-background-color: #D5D5D5; -fx-background-radius: 5px; -fx-border-radius: 5px;");
-		
-	    borderPrincipal.widthProperty().addListener((x) -> gridCard.setPrefWidth(borderPrincipal.getWidth()*0.90));
+
+		borderPrincipal.widthProperty().addListener((x) -> gridCard.setPrefWidth(borderPrincipal.getWidth() * 0.90));
 	}
-	
+
 	public GridPane getCard() {
 		return gridCard;
 	}
 
-	
 }

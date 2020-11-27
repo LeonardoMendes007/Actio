@@ -89,7 +89,6 @@ public class VisualizarAtividade {
 		gridInterno.widthProperty().addListener((x) -> gridTituloBotao.setPrefWidth(gridInterno.getWidth()));
 
 		gridInterno.add(gridTituloBotao, 0, 0);
-		gridTituloBotao.setGridLinesVisible(true);
 	}
 
 	private void initLista() {
@@ -115,6 +114,10 @@ public class VisualizarAtividade {
 
 		scrollLista.setStyle("-fx-background-color: #EAEAEA; -fx-background-radius: 5px; -fx-border-radius: 5px;");
 
+		scrollLista.setMinHeight(borderPrincipal.getHeight() - 300);
+		
+		borderPrincipal.heightProperty().addListener((x) -> scrollLista.setMinHeight(borderPrincipal.getHeight() - 300));
+		
 		gridInterno.add(scrollLista, 0, 3);
 	}
 
@@ -136,7 +139,7 @@ public class VisualizarAtividade {
 		btDelete = new Button("Deletar");
 		btDelete.setTextFill(Color.WHITE);
 
-		Util.setFontePadrao(new Button[] { btDelete }, 21, FontWeight.BOLD);
+		Util.setFontePadrao(new Button[] { btDelete }, 24, FontWeight.BOLD);
 		btDelete.setStyle(btDelete.getStyle()
 				+ "-fx-background-color: #1D5959; -fx-background-radius: 10px; -fx-border-radius: 10px;");
 
@@ -144,9 +147,11 @@ public class VisualizarAtividade {
 		
 		btDelete.setOnMouseClicked((x) -> controller.deleteAtividade());
 		
-		gridTituloBotao.add(btDelete, 1, 0);
+		gridInterno.add(btDelete, 0, 4);
 		
-		gridTituloBotao.setHalignment(btDelete, HPos.RIGHT);
+		gridInterno.setMargin(btDelete, new Insets(15, 0, 0, 0));
+		
+		gridInterno.setHalignment(btDelete, HPos.RIGHT);
 	
 
 	}
@@ -166,7 +171,7 @@ public class VisualizarAtividade {
 	}
 
 	private void initLabelEntregue() {
-		lblEntregue = new Label("Entregue");
+		lblEntregue = new Label("Nota");
 
 		Util.setFontePadrao(new Label[] { lblEntregue }, 20, FontWeight.BOLD);
 
@@ -180,7 +185,7 @@ public class VisualizarAtividade {
 	}
 
 	private void initLabelAluno() {
-		lblNota = new Label("Nota");
+		lblNota = new Label();
 
 		Util.setFontePadrao(new Label[] { lblNota }, 20, FontWeight.BOLD);
 
