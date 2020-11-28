@@ -139,9 +139,9 @@ public class VisualizarAtividade {
 		btDelete = new Button("Deletar");
 		btDelete.setTextFill(Color.WHITE);
 
-		Util.setFontePadrao(new Button[] { btDelete }, 24, FontWeight.BOLD);
+		Util.setFontePadrao(new Button[] { btDelete }, 25, FontWeight.BOLD);
 		btDelete.setStyle(btDelete.getStyle()
-				+ "-fx-background-color: #1D5959; -fx-background-radius: 10px; -fx-border-radius: 10px;");
+				+ "-fx-background-color: #F55B51; -fx-background-radius: 10px; -fx-border-radius: 10px;");
 
 		Util.hoverFade(btDelete);
 		

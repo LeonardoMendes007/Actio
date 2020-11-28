@@ -11,10 +11,9 @@ import model.Aluno;
 import model.Atividade;
 import model.Disciplina;
 import model.Entrega;
-import persistence.interfaces.IEntrega;
 import persistence.interfaces.IGenericDao;
 
-public class EntregaDao implements IEntrega {
+public class EntregaDao {
 
 	private Connection c;
 
@@ -24,7 +23,6 @@ public class EntregaDao implements IEntrega {
 		c = gDao.getConnection();
 	}
 
-	@Override
 	public void insert(Entrega entrega) throws SQLException {
 
 		String sql = "insert into tbEntrega(arquivosEntrega, dtEntrega, nota, idAtividade, idAluno)"
@@ -41,8 +39,7 @@ public class EntregaDao implements IEntrega {
 
 	}
 
-	@Override
-	public void update(Entrega entrega) throws SQLException {
+	public void updateAluno(Entrega entrega) throws SQLException {
 		String sql = "UPDATE tbEntrega " + "SET arquivosEntrega = ?, dtEntrega = GETDATE() " + "WHERE idEntrega = ? ";
 
 		PreparedStatement ps = c.prepareStatement(sql);
@@ -53,7 +50,17 @@ public class EntregaDao implements IEntrega {
 		ps.close();
 	}
 
-	@Override
+	public void updateProfessor(Entrega entrega) throws SQLException {
+		String sql = "UPDATE tbEntrega " + "SET nota = ?  WHERE idEntrega = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setDouble(1, entrega.getNota());
+		ps.setInt(2, entrega.getId());
+
+		ps.execute();
+		ps.close();
+	}
+
 	public void delete(Entrega entrega) throws SQLException {
 
 		String sql = "DELETE FROM tbEntrega WHERE idEntrega = ? ";
@@ -63,18 +70,6 @@ public class EntregaDao implements IEntrega {
 		ps.execute();
 		ps.close();
 
-	}
-
-	@Override
-	public Entrega findEntrega(Entrega entrega) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Entrega> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public List<Entrega> findAllEntregaAluno(Aluno aluno) throws SQLException {
@@ -194,16 +189,13 @@ public class EntregaDao implements IEntrega {
 
 	public List<Entrega> findAlunoAtividade(Atividade atividade) throws SQLException {
 
-		String sql = "SELECT e.*, u.* "
-				+ "FROM tbEntrega e, tbAtividade a, tbAluno al, tbUsuario u "
-				+ "WHERE e.idAtividade = a.idAtividade "
-				+ "AND e.idAluno = al.idAluno "
-				+ "AND u.idUsuario = al.idAluno "
-				+ "AND a.idAtividade = ? ";
+		String sql = "SELECT e.*, u.* " + "FROM tbEntrega e, tbAtividade a, tbAluno al, tbUsuario u "
+				+ "WHERE e.idAtividade = a.idAtividade " + "AND e.idAluno = al.idAluno "
+				+ "AND u.idUsuario = al.idAluno " + "AND a.idAtividade = ? ";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, atividade.getId());
-		
+
 		ResultSet rs = ps.executeQuery();
 
 		List<Entrega> entregas = new ArrayList<>();
@@ -215,7 +207,6 @@ public class EntregaDao implements IEntrega {
 			entrega.setPathArquivos(rs.getString(2));
 			entrega.setDtEntrega(rs.getDate(3));
 			entrega.setNota(rs.getFloat(4));
-			
 
 			Aluno aluno = new Aluno();
 			aluno.setId(rs.getInt("idUsuario"));
@@ -233,5 +224,98 @@ public class EntregaDao implements IEntrega {
 		}
 
 		return entregas;
+	}
+
+	public String selectAVG(Aluno aluno, Disciplina disciplina) throws SQLException {
+
+		String sql = "SELECT AVG(e.nota) FROM tbDisciplina d , tbDisciplinaTurmaProfessor dtp, tbAtividade a, tbAluno aluno, tbEntrega e "
+				+ "WHERE d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = a.idDisciplinaTurmaProfessor "
+				+ "AND a.idAtividade = e.idAtividade "
+				+ "AND d.idDisciplina = ? "
+				+ "AND e.idAluno = ? "
+				+ "GROUP BY d.idDisciplina, dtp.idDisciplina, a.idDisciplinaTurmaProfessor, e.idAtividade, a.idAtividade, d.idDisciplina, e.idAluno ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, disciplina.getId());
+		ps.setInt(2, aluno.getId());
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			return rs.getInt(1) + "";
+		}
+
+		return "0";
+
+	}
+
+	public String selectCount(Aluno aluno , Disciplina disciplina) throws SQLException {
+
+		String sql = "SELECT COUNT(e.nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
+				+ "WHERE e.idAluno = a.idAluno "
+				+ "AND d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND dtp.idDisciplina = ? "
+				+ "AND a.idAluno = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, disciplina.getId());
+		ps.setInt(2, aluno.getId());
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			return rs.getInt(1) + "";
+		}
+
+		return "0";
+
+	}
+	
+	public String selectMax(Aluno aluno , Disciplina disciplina) throws SQLException {
+
+		String sql = "SELECT Max(e.nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
+				+ "WHERE e.idAluno = a.idAluno "
+				+ "AND d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND dtp.idDisciplina = ? "
+				+ "AND a.idAluno = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, disciplina.getId());
+		ps.setInt(2, aluno.getId());
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			return rs.getInt(1) + "";
+		}
+
+		return "0";
+
+	}
+	
+	public String selectMin(Aluno aluno , Disciplina disciplina) throws SQLException {
+
+		String sql = "SELECT Min(e.nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
+				+ "WHERE e.idAluno = a.idAluno "
+				+ "AND d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND dtp.idDisciplina = ? "
+				+ "AND a.idAluno = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, disciplina.getId());
+		ps.setInt(2, aluno.getId());
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			return rs.getInt(1) + "";
+		}
+
+		return "0";
+
 	}
 }

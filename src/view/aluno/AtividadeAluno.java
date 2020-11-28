@@ -48,13 +48,12 @@ public class AtividadeAluno {
 
 	private AtividadeAlunoController controller = new AtividadeAlunoController(this);
 
-	
 	private Aluno aluno;
-	
+
 	public AtividadeAluno(BorderPane border, Aluno a) {
 		this.borderPrincipal = border;
 		setAluno(a);
-		
+
 		initTela();
 	}
 
@@ -84,9 +83,12 @@ public class AtividadeAluno {
 
 	private void initEventCombox() {
 
-		cbDisciplina.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarDisciplina(cbDisciplina.getValue()));
-		cbPessoas.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarPessoas(cbPessoas.getValue()));
-		cbStatus.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarStatus(cbStatus.getValue()));
+		cbDisciplina.getSelectionModel().selectedIndexProperty()
+				.addListener((x) -> controller.filtrarDisciplina(cbDisciplina.getValue()));
+		cbPessoas.getSelectionModel().selectedIndexProperty()
+				.addListener((x) -> controller.filtrarPessoas(cbPessoas.getValue()));
+		cbStatus.getSelectionModel().selectedIndexProperty()
+				.addListener((x) -> controller.filtrarStatus(cbStatus.getValue()));
 
 	}
 
@@ -130,14 +132,13 @@ public class AtividadeAluno {
 		cbDisciplina = new ComboBox<>();
 
 		cbStatus.getItems().addAll("Aberto", "Fechado", "Todas");
-		cbPessoas.getItems().addAll("Individual", "Grupo" , "Todas");
-		
+		cbPessoas.getItems().addAll("Individual", "Grupo", "Todas");
+
 		gridFiltro.add(cbStatus, 1, 1);
 		gridFiltro.add(cbPessoas, 2, 1);
 		gridFiltro.add(cbDisciplina, 3, 1);
 
 	}
-
 
 	private void initLabelFiltro() {
 		lblFiltro = new Label("Filtrar por:");
@@ -222,7 +223,6 @@ public class AtividadeAluno {
 		initEventCard(card);
 
 		vboxAtividade.getChildren().add(card.getCard());
-		
 
 	}
 
@@ -237,7 +237,7 @@ public class AtividadeAluno {
 			}
 
 		});
-		
+
 		card.getHboxPrincipal().setMinWidth(gridFiltro.getWidth() - 10);
 
 	}
@@ -254,5 +254,4 @@ public class AtividadeAluno {
 		return cbDisciplina;
 	}
 
-	
 }

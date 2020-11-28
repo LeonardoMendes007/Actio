@@ -151,6 +151,8 @@ public class AvaliarAtividade {
 
 		btEnviar.setStyle(btEnviar.getStyle()
 				+ "-fx-background-color: #1D5959; -fx-background-radius: 10px; -fx-border-radius: 10px;");
+		
+		btEnviar.setOnMouseClicked((x) -> controller.avaliarAtividade());
 
 		borderInterno.setBottom(btEnviar);
 		borderInterno.setAlignment(btEnviar, Pos.BOTTOM_RIGHT);
@@ -259,4 +261,14 @@ public class AvaliarAtividade {
 
 		gridPrincipal.setStyle(gridPrincipal.getStyle());
 	}
+
+	public TextArea getTaComentarios() {
+		return taComentarios;
+	}
+
+	public TextField getTfNota() {
+		return tfNota;
+	}
+	
+	
 }
