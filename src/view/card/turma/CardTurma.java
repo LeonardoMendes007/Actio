@@ -12,25 +12,28 @@ import model.Disciplina;
 import model.Turma;
 import view.Util;
 import view.card.ICard;
+import view.professor.DetalhesTurmaProfessor;
 
 public class CardTurma implements ICard{
+	
+	private BorderPane borderCard;
 	
 	private BorderPane borderPrincipal;
 
 	private Label lblTurma;
 	
-	
 	private Turma turma;
 	
 	private Disciplina disciplina;
 	
-	public CardTurma(Double width, Double height, Disciplina disciplina, Turma turma) {
+	public CardTurma(BorderPane borderPrincipal, Double width, Double height, Disciplina disciplina, Turma turma) {
 		
+		this.borderPrincipal = borderPrincipal;
 		setDisciplina(disciplina);
 		setTurma(turma);
-		this.borderPrincipal = new BorderPane();
-		this.borderPrincipal.setPrefSize(width, height);
-		this.borderPrincipal.setStyle("-fx-background-color: "+ disciplina.getCor()+"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
+		this.borderCard = new BorderPane();
+		this.borderCard.setPrefSize(width, height);
+		this.borderCard.setStyle("-fx-background-color: "+ disciplina.getCor()+"; -fx-background-radius: 20px; -fx-border-radius: 20px; -fx-cursor: hand;");
 		
 		initLabel(turma.getSemestre()+ "° " +turma.getCurso()+" - " + turma.getPeriodo());
 		
@@ -40,9 +43,9 @@ public class CardTurma implements ICard{
 	}
 	
 	private void initEvent() {
-		borderPrincipal.setOnMouseClicked((x) -> System.out.println("Você clicou em " + lblTurma.getText()));
+		borderCard.setOnMouseClicked((x) -> new DetalhesTurmaProfessor(borderPrincipal, disciplina, turma));
 		
-		Util.hoverFade(this.borderPrincipal);
+		Util.hoverFade(this.borderCard);
 	}
 
 	private void initLabel(String turma) {
@@ -55,13 +58,13 @@ public class CardTurma implements ICard{
 		Util.setFontePadrao(new Label[] {lblTurma}, 16, FontWeight.BOLD);
 		
 
-		borderPrincipal.setCenter(lblTurma);
-		borderPrincipal.setAlignment(lblTurma, Pos.BOTTOM_LEFT);
+		borderCard.setCenter(lblTurma);
+		borderCard.setAlignment(lblTurma, Pos.BOTTOM_LEFT);
 	}
 
 	@Override
 	public Node getCard() {
-		return borderPrincipal;
+		return borderCard;
 	}
 	
 	public void setDisciplina(Disciplina disciplina) {
