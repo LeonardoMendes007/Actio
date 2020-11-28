@@ -33,8 +33,8 @@ public class AtividadeDao implements IAtividadeDao{
 	public void insert(Atividade atividade) throws SQLException {
 		
 		String sql = "insert into tbAtividade (nomeAtividade, descAtividade, dtEmissaoAtividade, dtPublicacaoAtividade, " + 
-				"					dtFechamentoAtividade, idTipoAtividade, idDisciplinaTurmaProfessor)	"
-				+ " VALUES (?,?,?,?,?,?,?)";
+				"					dtFechamentoAtividade, pathArquivo, idTipoAtividade, idDisciplinaTurmaProfessor)	"
+				+ " VALUES (?,?,?,?,?, ?, ?,?)";
 	
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, atividade.getNome());
@@ -46,14 +46,14 @@ public class AtividadeDao implements IAtividadeDao{
 		ps.setDate(3, dtEmissaoSql);
 		ps.setDate(4, dtPublicacaoSql);
 		ps.setDate(5, dtEntregaSql);
-
+		ps.setString(6, atividade.getPathArquivo());
 		if(atividade.isGrupo() == true) {
-			ps.setInt(6, 2);
+			ps.setInt(7, 2);
 		}else {
-			ps.setInt(6, 1);
+			ps.setInt(7, 1);
 			
 		}
-		ps.setInt(7, atividade.getDiscTurmaProf().getId());
+		ps.setInt(8, atividade.getDiscTurmaProf().getId());
 		
 		ps.execute();
 		ps.close();
@@ -125,7 +125,7 @@ public class AtividadeDao implements IAtividadeDao{
 			a.setDtPublicacao(rs.getDate("dtPublicacaoAtividade"));
 			a.setDtEntrega(rs.getDate("dtFechamentoAtividade"));
 			a.setGrupo(isGrupo(rs.getInt("idTipoAtividade")));
-			
+			a.setPathArquivo(rs.getString("pathArquivo"));
 			
 			Disciplina disc = new Disciplina();
 			disc.setId(rs.getInt("idDisciplina"));
@@ -234,6 +234,7 @@ public class AtividadeDao implements IAtividadeDao{
 			a.setDtEmissao(rs.getDate("dtEmissaoAtividade"));
 			a.setDtPublicacao(rs.getDate("dtPublicacaoAtividade"));
 			a.setDtEntrega(rs.getDate("dtFechamentoAtividade"));
+			a.setPathArquivo(rs.getString("pathArquivo"));
 			a.setGrupo(isGrupo(rs.getInt("idTipoAtividade")));
 			
 			
@@ -287,7 +288,7 @@ public class AtividadeDao implements IAtividadeDao{
 			Atividade a = new Atividade();
 			a.setId(rs.getInt("idAtividade"));
 			a.setNome(rs.getString("nomeAtividade"));
-
+			a.setPathArquivo(rs.getString("pathArquivo"));
 			
 			usuarios.add(a);
 		}

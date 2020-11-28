@@ -3,12 +3,16 @@ package controller.professor;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import model.Atividade;
 import model.Disciplina;
@@ -18,6 +22,7 @@ import model.Turma;
 import persistence.AtividadeDao;
 import persistence.DisciplinaDao;
 import persistence.DisciplinaTurmaProfessorDao;
+import persistence.EntregaDao;
 import persistence.TurmaDao;
 import model.DisciplinaTurmaProfessor;
 import view.professor.CriarAtividade;
@@ -61,6 +66,10 @@ public class CriarAtividadeController{
 		
 			atividade.setDtEmissao(new Date());
 
+			
+			moverArquivo();
+			System.out.println(atividade.getPathArquivo());
+			
 			if(atividade.getDtPublicacao() == null) {
 				atividade.setDtPublicacao(new Date());
 			}
@@ -172,11 +181,64 @@ public class CriarAtividadeController{
 		return dtp;
 	}
 	
-	
-	
-	
+	private void moverArquivo() {
+
+		try {
+
+			File source = new File(viewCriarAtividade.getFile().getAbsolutePath());
+
+			File dest = new File(
+					"tmp//" + atividade.getDiscTurmaProf().getId() + "//"
+							+ viewCriarAtividade.getDtEntrega().getValue() + "//"
+							+ viewCriarAtividade.getTfAtividade().getText());
+			
+			if (dest.exists()) {
+				FileUtils.forceDelete(dest);
+			}
+
+			dest = new File("tmp//" + atividade.getDiscTurmaProf().getId() + "//"
+					+ viewCriarAtividade.getDtEntrega().getValue() + "//"
+					+ viewCriarAtividade.getTfAtividade().getText());
 
 
+			FileUtils.copyFileToDirectory(source, dest);
+
+			//adrSystem.out.println(dest.getAbsolutePath());
+			atividade.setPathArquivo("tmp//" + atividade.getDiscTurmaProf().getId() + "//"
+					+ viewCriarAtividade.getDtEntrega().getValue() + "//"
+					+ viewCriarAtividade.getTfAtividade().getText());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 	
+	public void deletarTarefa() {
+
+			File file = viewCriarAtividade.getFile();
+
+			if (file.exists()) {
+				try {
+					FileUtils.forceDelete(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					
+				viewCriarAtividade.getLblEntrega().setText("Clique para adicionar um arquivo");
+			}
+				
+			
+
+			
+		
 
 }
+}	
+	
+	
+	
+	
+
+
+	

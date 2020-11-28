@@ -54,7 +54,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 	public List<DisciplinaTurmaProfessor> findDisciplinaAluno(Aluno a) throws SQLException{
 		
 		
-		String sql = "select tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor tbDisciplina.*, tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario from tbDisciplina " + 
+		String sql = "select tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor, tbDisciplina.*, tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario from tbDisciplina " + 
 				"inner join tbDisciplinaTurmaProfessor " + 
 				"on tbDisciplina.idDisciplina = tbDisciplinaTurmaProfessor.idDisciplina " + 
 				"inner join tbTurma " + 

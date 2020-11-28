@@ -1,6 +1,7 @@
 package view.professor;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import controller.professor.CriarAtividadeController;
 import javafx.beans.value.ChangeListener;
@@ -17,9 +18,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Disciplina;
 import model.Professor;
 import model.Turma;
@@ -77,7 +81,19 @@ public class CriarAtividade {
 	
 	private Label lblTurma;
 	
-	private Label lblStatusOperação;
+	private Label lblEntrega;
+	
+	private Button btBaixarArquivos;
+	
+	private Button btAdicionar;
+	
+	private Button btRemover;
+	
+	private FileChooser chooser = new FileChooser();
+	
+	private File file;
+	
+	private HBox hboxButtons;
 
 	private ComboBox<String> cbGrupo;
 	
@@ -137,9 +153,10 @@ public class CriarAtividade {
 		initDisciplinaAtividade();
 		
 		initTurmaAtividade();
+
+		initLabelEntrega();
 		
-		
-		//initStatusOperacao();
+		initAddArquivo();
 		
 		initGridData();
 
@@ -152,15 +169,63 @@ public class CriarAtividade {
 	}
 
 	
-	private void initStatusOperacao() {
+	private void initAddArquivo() {
 
-		lblStatusOperação = new Label();
+		btAdicionar = new Button("Adicionar");
+		btRemover = new Button("Remover");
+
+		Util.setFontePadrao(new Button[] { btAdicionar, btRemover }, 15, FontWeight.BOLD);
+
+		Util.hoverFade(btAdicionar);
+		Util.hoverFade(btRemover);
 		
-		Util.setFontePadrao(new Label[] { lblStatusOperação }, 15, FontWeight.BOLD);
+		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D; -fx-pointer: hand;");
+		btRemover.setStyle(btRemover.getStyle() + "-fx-background-color: #F55B51;");
 
-		gridInterno.add(lblStatusOperação, 0, 10);
+		btAdicionar.setOnMouseClicked((x) -> {
+
+			file = chooser.showOpenDialog(new Stage());
+
+			lblEntrega.setText(file.getName());
+
+		});
+
+		btRemover.setOnMouseClicked((x) -> {
+
+			controller.deletarTarefa();
+
+		});
+
+		initHbox();
+
+		hboxButtons.getChildren().addAll(btRemover, btAdicionar);
+		hboxButtons.setMargin(btAdicionar, new Insets(0, 0, 0, 10));
+
 		
 	}
+	
+	private void initHbox() {
+
+		hboxButtons = new HBox();
+
+		hboxButtons.setPadding(new Insets(10, 10, 10, 0));
+
+		gridInterno.add(hboxButtons, 0, 5);
+	}
+	
+	private void initLabelEntrega() {
+
+		lblEntrega = new Label("Clique para adicionar Arquivo");
+
+		Util.setFontePadrao(new Label[] { lblEntrega }, 23, FontWeight.SEMI_BOLD);
+
+		
+		gridInterno.add(lblEntrega, 0, 4);
+		
+		gridInterno.setMargin(lblEntrega, new Insets(15, 0, 15, 0));
+
+	}
+	
 	private void initTurmaAtividade() {
 		lblTurma = new Label("Turma");
 
@@ -263,7 +328,7 @@ public class CriarAtividade {
 		borderAgendar.setAlignment(btConcluir, Pos.CENTER);
 		borderAgendar.setMargin(btConcluir, new Insets(10));
 
-		btConcluir.setOnMouseClicked((x) -> lblStatusOperação.setText(controller.addDataAtividade()));
+		btConcluir.setOnMouseClicked((x) -> controller.addDataAtividade());
 
 	}
 
@@ -557,6 +622,22 @@ public class CriarAtividade {
 
 	public void setCbTurma(ComboBox<String> cbTurma) {
 		this.cbTurma = cbTurma;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public Label getLblEntrega() {
+		return lblEntrega;
+	}
+
+	public void setLblEntrega(Label lblEntrega) {
+		this.lblEntrega = lblEntrega;
 	}
 	
 	

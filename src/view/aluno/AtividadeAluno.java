@@ -84,11 +84,11 @@ public class AtividadeAluno {
 	private void initEventCombox() {
 
 		cbDisciplina.getSelectionModel().selectedIndexProperty()
-				.addListener((x) -> controller.filtrarDisciplina(cbDisciplina.getValue()));
+				.addListener((x) -> controller.filtroAtividades(cbStatus.getValue(), cbPessoas.getValue(), cbDisciplina.getValue()));
 		cbPessoas.getSelectionModel().selectedIndexProperty()
-				.addListener((x) -> controller.filtrarPessoas(cbPessoas.getValue()));
+				.addListener((x) -> controller.filtroAtividades(cbStatus.getValue(), cbPessoas.getValue(), cbDisciplina.getValue()));
 		cbStatus.getSelectionModel().selectedIndexProperty()
-				.addListener((x) -> controller.filtrarStatus(cbStatus.getValue()));
+				.addListener((x) -> controller.filtroAtividades(cbStatus.getValue(), cbPessoas.getValue(), cbDisciplina.getValue()));
 
 	}
 
