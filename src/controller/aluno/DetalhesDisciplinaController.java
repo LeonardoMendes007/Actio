@@ -174,7 +174,7 @@ public class DetalhesDisciplinaController {
 	private void calcularCount() {
 
 		try {
-
+			
 			tfSoma.setText(dao.selectCount(viewDetalhesDisciplina.getAluno(), viewDetalhesDisciplina.getDisciplina()));
 
 		} catch (SQLException e) {

@@ -50,8 +50,6 @@ public class EntregaAtividadeAluno {
 
 	private Label lblEntrega;
 
-	private Label lblTarefa;
-
 	private Label lblArquivos;
 
 	private Button btRemover;
@@ -206,13 +204,21 @@ public class EntregaAtividadeAluno {
 		lblEntrega = new Label("Clique para adicionar Arquivo");
 		btBaixarArquivos = new Button("Baixar Atividade");
 
-		Util.setFontePadrao(new Label[] { lblEntrega }, 18, FontWeight.NORMAL);
-		Util.setFontePadrao(new Button[] { btBaixarArquivos }, 18, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] { lblEntrega }, 23, FontWeight.SEMI_BOLD);
+		Util.setFontePadrao(new Button[] { btBaixarArquivos }, 23, FontWeight.BOLD);
+
+		btBaixarArquivos.setStyle(btBaixarArquivos.getStyle() + " -fx-background-color: #91CF2D;");
+
+		btBaixarArquivos.setPrefWidth(300);
+		btBaixarArquivos.setPrefHeight(40);
 
 		btBaixarArquivos.setOnMouseClicked((x) -> controller.baixarArquivoAtividade());
-
+		
 		gridCentral.add(lblEntrega, 0, 3);
 		gridCentral.add(btBaixarArquivos, 0, 1);
+		
+		gridCentral.setMargin(lblEntrega, new Insets(15, 0, 15, 0));
+		gridCentral.setMargin(btBaixarArquivos, new Insets(15, 0, 15, 0));
 
 	}
 
@@ -396,16 +402,16 @@ public class EntregaAtividadeAluno {
 		lblTitulo.setAlignment(Pos.CENTER);
 
 		lblLegenda = new Label(legenda);
-		lblLegenda.setPadding(new Insets(0, 0, 0, 10));
+		lblLegenda.setPadding(new Insets(10, 0, 0, 10));
 		lblLegenda.setTextFill(Color.web("#000000", 0.5));
-		lblLegenda.setAlignment(Pos.CENTER);
+		lblLegenda.setAlignment(Pos.CENTER_LEFT);
 
 		Util.setFontePadrao(new Label[] { lblTitulo }, 25, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblLegenda }, 20, FontWeight.LIGHT);
 
 		gridTituloLegenda.add(lblTitulo, 0, 0);
 		gridTituloLegenda.add(lblLegenda, 0, 1);
-		gridTituloLegenda.setAlignment(Pos.CENTER);
+		gridTituloLegenda.setHalignment(lblLegenda, HPos.LEFT);
 		double tamanho = borderPrincipal.getWidth() - (260 + 80);
 
 		gridTituloLegenda.setPrefWidth(tamanho);

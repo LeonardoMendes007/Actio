@@ -206,8 +206,8 @@ public class DetalhesDisciplina {
 		tf.setAlignment(Pos.CENTER);
 		tf.setEditable(false);
 
-		gridFuncaoDeAgregacao.setMargin(lbl, new Insets(0, 0, 0, 10));
-		gridFuncaoDeAgregacao.setMargin(tf, new Insets(0, 5, 0, 0));
+		gridFuncaoDeAgregacao.setMargin(lbl, new Insets(10, 0, 0, 10));
+		gridFuncaoDeAgregacao.setMargin(tf, new Insets(10, 5, 0, 0));
 
 	}
 

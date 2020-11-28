@@ -228,13 +228,13 @@ public class EntregaDao {
 
 	public String selectAVG(Aluno aluno, Disciplina disciplina) throws SQLException {
 
-		String sql = "SELECT AVG(e.nota) FROM tbDisciplina d , tbDisciplinaTurmaProfessor dtp, tbAtividade a, tbAluno aluno, tbEntrega e "
-				+ "WHERE d.idDisciplina = dtp.idDisciplina "
-				+ "AND dtp.idDisciplinaTurmaProfessor = a.idDisciplinaTurmaProfessor "
-				+ "AND a.idAtividade = e.idAtividade "
-				+ "AND d.idDisciplina = ? "
-				+ "AND e.idAluno = ? "
-				+ "GROUP BY d.idDisciplina, dtp.idDisciplina, a.idDisciplinaTurmaProfessor, e.idAtividade, a.idAtividade, d.idDisciplina, e.idAluno ";
+		String sql = "SELECT AVG(e.nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
+				+ "WHERE e.idAluno = a.idAluno "
+				+ "AND d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND e.idAtividade = ati.idAtividade "
+				+ "AND dtp.idDisciplina = ? "
+				+ "AND a.idAluno = ? ";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, disciplina.getId());
@@ -256,6 +256,7 @@ public class EntregaDao {
 				+ "WHERE e.idAluno = a.idAluno "
 				+ "AND d.idDisciplina = dtp.idDisciplina "
 				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND e.idAtividade = ati.idAtividade "
 				+ "AND dtp.idDisciplina = ? "
 				+ "AND a.idAluno = ? ";
 
@@ -279,6 +280,7 @@ public class EntregaDao {
 				+ "WHERE e.idAluno = a.idAluno "
 				+ "AND d.idDisciplina = dtp.idDisciplina "
 				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND e.idAtividade = ati.idAtividade "
 				+ "AND dtp.idDisciplina = ? "
 				+ "AND a.idAluno = ? ";
 
@@ -302,6 +304,7 @@ public class EntregaDao {
 				+ "WHERE e.idAluno = a.idAluno "
 				+ "AND d.idDisciplina = dtp.idDisciplina "
 				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND e.idAtividade = ati.idAtividade "
 				+ "AND dtp.idDisciplina = ? "
 				+ "AND a.idAluno = ? ";
 
