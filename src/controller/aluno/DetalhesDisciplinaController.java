@@ -8,8 +8,10 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.FontWeight;
 import model.AtividadeEntrega;
@@ -33,7 +35,25 @@ public class DetalhesDisciplinaController {
 	private TableColumn<AtividadeEntrega, String> colunaDataTermino;
 
 	private TableColumn<AtividadeEntrega, Double> colunaNota;
+
+	private Label lblAVG;
+
+	private TextField tfAVG;
+
+	private Label lblSoma;
+
+	private TextField tfSoma;
+
+	private Label lblMax;
+
+	private TextField tfMax;
+
+	private Label lblMin;
+
+	private TextField tfMin;
 	
+	private EntregaDao dao;
+
 	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
 	private ObservableList<AtividadeEntrega> dados = FXCollections.observableArrayList();
@@ -49,9 +69,8 @@ public class DetalhesDisciplinaController {
 	private void initTable() {
 
 		table = new TableView<>();
-		
-		Util.setFontePadrao(new TableView[] {table},  15, FontWeight.NORMAL);
 
+		Util.setFontePadrao(new TableView[] { table }, 15, FontWeight.NORMAL);
 
 		colunaAtividade = new TableColumn<>("Atividade");
 		colunaAtividade.setCellValueFactory(new PropertyValueFactory<>("atividade"));
@@ -63,7 +82,7 @@ public class DetalhesDisciplinaController {
 		colunaDataTermino.setCellValueFactory(new PropertyValueFactory<>("dtTermino"));
 		colunaNota = new TableColumn<>("Nota");
 		colunaNota.setCellValueFactory(new PropertyValueFactory<>("nota"));
-				
+
 		table.getColumns().addAll(colunaAtividade, colunaDataEntrega, colunaArquivo, colunaDataTermino, colunaNota);
 
 		colunaAtividade.setPrefWidth(table.getWidth() * 0.23);
@@ -78,9 +97,123 @@ public class DetalhesDisciplinaController {
 
 		viewDetalhesDisciplina.setTable(table);
 
-		viewDetalhesDisciplina.getBorderInterno().setMargin(table, new Insets(65, 80, 65, 80));
+		viewDetalhesDisciplina.getBorderInterno().setMargin(table, new Insets(30, 70, 10, 70));
 
-		buscarElementos();
+		initAVG();
+
+		initCount();
+
+		initMax();
+
+		initMin();
+		
+		try {
+			dao = new EntregaDao();
+			
+			buscarElementos();
+
+			calcularAVG();
+
+			calcularCount();
+
+			calcularMax();
+
+			calcularMin();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println("Erro ao tentar se conectar com o Banco");
+		}
+
+		
+
+	}
+
+	private void calcularMin() {
+		try {
+
+			tfMin.setText(dao.selectMin(viewDetalhesDisciplina.getAluno(), viewDetalhesDisciplina.getDisciplina()));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void calcularMax() {
+		try {
+
+			tfMax.setText(dao.selectMax(viewDetalhesDisciplina.getAluno(), viewDetalhesDisciplina.getDisciplina()));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void initMin() {
+
+		lblMin = new Label("Nota mínima: ");
+
+		tfMin = new TextField();
+
+		viewDetalhesDisciplina.initMin(lblMin, tfMin);
+
+	}
+
+	private void initMax() {
+		lblMax = new Label("Nota máxima: ");
+
+		tfMax = new TextField();
+
+		viewDetalhesDisciplina.initMax(lblMax, tfMax);
+
+	}
+
+	private void calcularCount() {
+
+		try {
+			
+			tfSoma.setText(dao.selectCount(viewDetalhesDisciplina.getAluno(), viewDetalhesDisciplina.getDisciplina()));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void calcularAVG() {
+
+		try {
+
+			tfAVG.setText(dao.selectAVG(viewDetalhesDisciplina.getAluno(), viewDetalhesDisciplina.getDisciplina()));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void initAVG() {
+
+		lblAVG = new Label("Média: ");
+
+		tfAVG = new TextField();
+
+		viewDetalhesDisciplina.initAVG(lblAVG, tfAVG);
+
+	}
+
+	private void initCount() {
+
+		lblSoma = new Label("Total de Tarefas: ");
+
+		tfSoma = new TextField();
+
+		viewDetalhesDisciplina.initCount(lblSoma, tfSoma);
 
 	}
 
@@ -97,7 +230,6 @@ public class DetalhesDisciplinaController {
 	public void buscarElementos() {
 
 		try {
-			EntregaDao dao = new EntregaDao();
 
 			entregas = dao.findEntregaAtividade(viewDetalhesDisciplina.getDisciplina(),
 					viewDetalhesDisciplina.getAluno());
@@ -107,9 +239,6 @@ public class DetalhesDisciplinaController {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -123,14 +252,12 @@ public class DetalhesDisciplinaController {
 			AtividadeEntrega ae = new AtividadeEntrega(entrega.getAtividade().getNome(),
 					format.format(entrega.getAtividade().getDtEntrega()), new File(entrega.getPathArquivos()).getName(),
 					format.format(entrega.getDtEntrega()), entrega.getNota());
-			
+
 			System.out.println(ae.toString());
 
 			table.getItems().add(ae);
 
 		}
-
-	
 
 	}
 

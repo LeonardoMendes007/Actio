@@ -101,7 +101,7 @@ public class CardVizualizarAtividade {
 		gridCard.setPrefWidth(borderPrincipal.getWidth());
 		gridCard.setPrefHeight(35);
 		gridCard.setAlignment(Pos.CENTER);
-		gridCard.setPadding(new Insets(7,7,7,30));
+		gridCard.setPadding(new Insets(7,7,7,0));
 
 		gridCard.setStyle("-fx-background-color: #D5D5D5; -fx-background-radius: 5px; -fx-border-radius: 5px;");
 

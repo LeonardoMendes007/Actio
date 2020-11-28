@@ -60,7 +60,7 @@ public class AtividadeProfessorController {
 					.contains(atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
 							+ atividade.getDiscTurmaProf().getTurma().getPeriodo())) {
 
-				viewAtividadeProfessor.getCbTurma().getItems().add(atividade.getDiscTurmaProf().getTurma().getCurso()
+				viewAtividadeProfessor.getCbTurma().getItems().add(atividade.getDiscTurmaProf().getTurma().getPeriodo()+"° "+ atividade.getDiscTurmaProf().getTurma().getCurso()
 						+ " - " + atividade.getDiscTurmaProf().getTurma().getPeriodo());
 
 			}

@@ -42,7 +42,7 @@ public class TurmaProfessorController implements ITurmaController{
 	}
 	
 	public void addDisciplina(DisciplinaTurmaProfessor disc) {
-		CardTurma card = new CardTurma(300.0, 300.0, disc.getDisciplina(), disc.getTurma());
+		CardTurma card = new CardTurma(viewTurmaProf.getBorderPrincipal(),300.0, 300.0, disc.getDisciplina(), disc.getTurma());
 
 
 			
@@ -89,7 +89,7 @@ public class TurmaProfessorController implements ITurmaController{
 		for(DisciplinaTurmaProfessor disc : lista) {
 			
 			if(disc.getDisciplina().getId() == d.getId()) {
-				CardTurma card = new CardTurma(300.0, 150.0, disc.getDisciplina(), disc.getTurma());
+				CardTurma card = new CardTurma(viewTurmaProf.getBorderPrincipal(),300.0, 150.0, disc.getDisciplina(), disc.getTurma());
 
 				
 				teste.getChildren().add(card.getCard());

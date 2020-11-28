@@ -75,7 +75,7 @@ public class ControllerEntregaAtividade {
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//"
 					+ viewEntregaAtividade.getAluno().getId() + "//" + viewEntregaAtividade.getFile().getName());
 
-			dao.update(entrega);
+			dao.updateAluno(entrega);
 
 			moverArquivo();
 
