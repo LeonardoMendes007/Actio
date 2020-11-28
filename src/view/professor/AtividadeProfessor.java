@@ -93,9 +93,9 @@ public class AtividadeProfessor {
 	
 	private void initEventCombox() {
 
-		cbDisciplina.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarDisciplina(cbDisciplina.getValue()));
-		cbTurma.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarTurma(cbTurma.getValue()));
-		cbStatus.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtrarStatus(cbStatus.getValue()));
+		cbDisciplina.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtroAtividades(cbStatus.getValue(), cbDisciplina.getValue(),cbTurma.getValue()));
+		cbTurma.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtroAtividades(cbStatus.getValue(), cbDisciplina.getValue(),cbTurma.getValue()));
+		cbStatus.getSelectionModel().selectedIndexProperty().addListener((x) -> controller.filtroAtividades(cbStatus.getValue(), cbDisciplina.getValue(),cbTurma.getValue()));
 
 	}
 
