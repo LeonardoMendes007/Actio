@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,20 +32,33 @@ public class AtividadeDao implements IAtividadeDao{
 	@Override
 	public void insert(Atividade atividade) throws SQLException {
 		
-		String sql = "insert into tbAtividade (nomeAtividade, descAtividade, dtEmissaoAtividade, dtPublicacaoAtividade,\n" + 
-				"					dtFechamentoAtividade, arquivosAtividade, idTipoAtividade, idTurma)	"
+		String sql = "insert into tbAtividade (nomeAtividade, descAtividade, dtEmissaoAtividade, dtPublicacaoAtividade, " + 
+				"					dtFechamentoAtividade, idTipoAtividade, idDisciplinaTurmaProfessor)	"
 				+ " VALUES (?,?,?,?,?,?,?)";
 	
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, atividade.getNome());
 		ps.setString(2, atividade.getDescricao());
-		ps.setDate(3, (Date) atividade.getDtEmissao());
-		ps.setDate(4, (Date) atividade.getDtPublicacao());
-		ps.setDate(5, (Date) atividade.getDtEntrega());
-		ps.setString(6, atividade.getPathArquivo());
-//		ps.setInt(7, atividade.getDiscTurmaProf().getTurma().);
+		
+		Date dtEmissaoSql = new Date(atividade.getDtEmissao().getTime());
+		Date dtPublicacaoSql = new Date(atividade.getDtPublicacao().getTime());
+		Date dtEntregaSql = new Date(atividade.getDtEntrega().getTime());
+		ps.setDate(3, dtEmissaoSql);
+		ps.setDate(4, dtPublicacaoSql);
+		ps.setDate(5, dtEntregaSql);
+
+		if(atividade.isGrupo() == true) {
+			ps.setInt(6, 2);
+		}else {
+			ps.setInt(6, 1);
+			
+		}
+		ps.setInt(7, atividade.getDiscTurmaProf().getId());
+		
 		ps.execute();
 		ps.close();
+		
+		System.out.println("Atividade inserida com sucesso");
 	}
 
 	@Override
@@ -81,7 +95,7 @@ public class AtividadeDao implements IAtividadeDao{
 	public List<Atividade> findAtividadeTurma(Turma turma) throws SQLException {
 		
 		System.out.println("Id da turma" + turma.getId());
-		String sql = "select tbAtividade.*, " + 
+		String sql = "select tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor, tbAtividade.*, " + 
 				"tbDisciplina.idDisciplina, tbDisciplina.nomeDisciplina, tbDisciplina.corDisciplina, " + 
 				"tbTurma.cursoTurma, tbTurma.periodoTurma, tbTurma.semestreTurma, " + 
 				"tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario " + 
@@ -110,7 +124,6 @@ public class AtividadeDao implements IAtividadeDao{
 			a.setDtEmissao(rs.getDate("dtEmissaoAtividade"));
 			a.setDtPublicacao(rs.getDate("dtPublicacaoAtividade"));
 			a.setDtEntrega(rs.getDate("dtFechamentoAtividade"));
-			a.setPathArquivo(rs.getString("arquivosAtividade"));
 			a.setGrupo(isGrupo(rs.getInt("idTipoAtividade")));
 			
 			
@@ -131,7 +144,7 @@ public class AtividadeDao implements IAtividadeDao{
 			p.setNome(rs.getString("nomeUsuario"));
 			p.setSobrenome(rs.getString("sobrenomeUsuario"));
 			
-			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(disc, t, p);
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(rs.getInt("idDisciplinaTurmaProfessor"),  disc, t, p);
 			
 			a.setDiscTurmaProf(dtp);
 			
@@ -192,7 +205,7 @@ public class AtividadeDao implements IAtividadeDao{
 	public List<Atividade> findAtividadeTurmaProfessor(Professor professor) throws SQLException {
 
 		
-		String sql = "select tbAtividade.*, " + 
+		String sql = "select tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor, tbAtividade.*, " + 
 				"tbDisciplina.idDisciplina, tbDisciplina.nomeDisciplina, tbDisciplina.corDisciplina, " + 
 				"tbTurma.idTurma, tbTurma.cursoTurma, tbTurma.periodoTurma, tbTurma.semestreTurma " + 
 				"from tbAtividade " + 
@@ -221,7 +234,6 @@ public class AtividadeDao implements IAtividadeDao{
 			a.setDtEmissao(rs.getDate("dtEmissaoAtividade"));
 			a.setDtPublicacao(rs.getDate("dtPublicacaoAtividade"));
 			a.setDtEntrega(rs.getDate("dtFechamentoAtividade"));
-			a.setPathArquivo(rs.getString("arquivosAtividade"));
 			a.setGrupo(isGrupo(rs.getInt("idTipoAtividade")));
 			
 			
@@ -237,7 +249,7 @@ public class AtividadeDao implements IAtividadeDao{
 			t.setPeriodo(rs.getString("periodoTurma"));
 			
 	
-			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(disc, t, professor);
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(rs.getInt("idDisciplinaTurmaProfessor"), disc, t, professor);
 			
 			a.setDiscTurmaProf(dtp);
 			

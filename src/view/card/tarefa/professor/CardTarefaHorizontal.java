@@ -60,7 +60,8 @@ public class CardTarefaHorizontal implements ICard {
         
         verificarGroup(atividade.isGrupo());
 		
-		initCentroCard(atividade.getNome(), atividade.getDescricao());
+        String turma = atividade.getDiscTurmaProf().getTurma().getSemestre()+"° " + atividade.getDiscTurmaProf().getTurma().getCurso() + " - " + atividade.getDiscTurmaProf().getTurma().getPeriodo();
+		initCentroCard(atividade.getNome(), turma);
 
 		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
 		

@@ -1,7 +1,8 @@
 package model;
 
 public class DisciplinaTurmaProfessor {
-
+	
+	private int id;
 	private Disciplina disciplina;
 	private Turma turma;
 	private Professor professor;
@@ -12,7 +13,8 @@ public class DisciplinaTurmaProfessor {
 		
 	}
 	
-	public DisciplinaTurmaProfessor(Disciplina d,Turma t, Professor p) {
+	public DisciplinaTurmaProfessor(int id, Disciplina d,Turma t, Professor p) {
+		setId(id);
 		setDisciplina(d);
 		setTurma(t);
 		setProfessor(p);
@@ -37,6 +39,14 @@ public class DisciplinaTurmaProfessor {
 
 	public void setTurma(Turma turma) {
 		this.turma = turma;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

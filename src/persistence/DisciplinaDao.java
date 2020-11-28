@@ -54,7 +54,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 	public List<DisciplinaTurmaProfessor> findDisciplinaAluno(Aluno a) throws SQLException{
 		
 		
-		String sql = "select tbDisciplina.*, tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario from tbDisciplina " + 
+		String sql = "select tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor tbDisciplina.*, tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario from tbDisciplina " + 
 				"inner join tbDisciplinaTurmaProfessor " + 
 				"on tbDisciplina.idDisciplina = tbDisciplinaTurmaProfessor.idDisciplina " + 
 				"inner join tbTurma " + 
@@ -91,7 +91,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 			p.setNome(rs.getString("nomeUsuario"));
 			p.setSobrenome(rs.getString("sobrenomeUsuario"));
 			
-			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(d, t, p);
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(rs.getInt("idDisciplinaTurmaProfessor"), d, t, p);
 			
 			
 			
@@ -106,7 +106,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 	public List<DisciplinaTurmaProfessor> findTurmaDisciplinaProfessor(Professor p) throws SQLException{
 		
 		
-		String sql = "select tbDisciplina.*, tbTurma.* from tbDisciplinaTurmaProfessor " + 
+		String sql = "select idDisciplinaTurmaProfessor, tbDisciplina.*, tbTurma.* from tbDisciplinaTurmaProfessor " + 
 					"inner join tbDisciplina on tbDisciplinaTurmaProfessor.idDisciplina = tbDisciplina.idDisciplina " + 
 					"inner join tbTurma on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma " + 
 					"where idProfessor = ?";
@@ -137,7 +137,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 			t.setSemestre(rs.getInt("semestreTurma"));
 			
 			
-			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(d, t, p);
+			DisciplinaTurmaProfessor dtp = new DisciplinaTurmaProfessor(rs.getInt("idDisciplinaTurmaProfessor"), d, t, p);
 			
 			
 			

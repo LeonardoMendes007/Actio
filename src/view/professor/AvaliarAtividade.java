@@ -147,7 +147,7 @@ public class AvaliarAtividade {
 
 		btEnviar.setTextFill(Color.WHITE);
 
-		Util.setFontePadrao(new Button[] { btEnviar }, 27, FontWeight.BOLD);
+		Util.setFontePadrao(new Button[] { btEnviar }, 20, FontWeight.BOLD);
 
 		btEnviar.setStyle(btEnviar.getStyle()
 				+ "-fx-background-color: #1D5959; -fx-background-radius: 10px; -fx-border-radius: 10px;");
@@ -159,12 +159,12 @@ public class AvaliarAtividade {
 	private void initTableArquivos() {
 
 		btBaixarArquivo = new Button("Baixar Arquivo");
-
+		btBaixarArquivo.setTextFill(Color.WHITE);
 		Util.hoverFade(btBaixarArquivo);
 		Util.hoverSize(btBaixarArquivo);
-		Util.setFontePadrao(new Button[] { btBaixarArquivo }, 23, FontWeight.BOLD);
+		Util.setFontePadrao(new Button[] { btBaixarArquivo }, 20, FontWeight.BOLD);
 
-		btBaixarArquivo.setStyle(btBaixarArquivo.getStyle() + " -fx-background-color: #1D5959;");
+		btBaixarArquivo.setStyle(btBaixarArquivo.getStyle() + " -fx-background-color: #1D5959; -fx-border-radius: 10px;");
 
 		btBaixarArquivo.setPrefWidth(300);
 		btBaixarArquivo.setPrefHeight(40);
@@ -194,7 +194,7 @@ public class AvaliarAtividade {
 	private void initLabelComentarios() {
 
 		lblComentarios = new Label("Comentários");
-
+		lblComentarios.setTextFill(Color.web("#000000", 0.5));
 		gridInterno.add(lblComentarios, 0, 2);
 		gridInterno.setMargin(lblComentarios, new Insets(15, 0, 5, 0));
 
@@ -233,8 +233,8 @@ public class AvaliarAtividade {
 	private void initLabelNomeAluno() {
 
 		lblNomeAluno = new Label(aluno.getNome());
-
-		Util.setFontePadrao(new Label[] { lblNomeAluno }, 25, FontWeight.BOLD);
+		lblNomeAluno.setTextFill(Color.web("#000000", 0.5));
+		Util.setFontePadrao(new Label[] { lblNomeAluno }, 20, FontWeight.BOLD);
 
 		gridPrincipal.add(lblNomeAluno, 0, 2);
 
@@ -243,8 +243,8 @@ public class AvaliarAtividade {
 	private void initLabelAtividade() {
 
 		lblNomeAtividade = new Label(atividade.getNome());
-
-		Util.setFontePadrao(new Label[] { lblNomeAtividade }, 20, FontWeight.NORMAL);
+		lblNomeAtividade.setTextFill(Color.web("#000000", 0.5));
+		Util.setFontePadrao(new Label[] { lblNomeAtividade }, 15, FontWeight.NORMAL);
 
 		gridPrincipal.add(lblNomeAtividade, 0, 1);
 

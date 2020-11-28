@@ -115,6 +115,8 @@ public class AtividadeProfessor {
 		
 		btCriarAtividade.setStyle(btCriarAtividade.getStyle() + "-fx-background-color: #57BEBE; -fx-background-radius: 20px; -fx-border-radius: 20px;");
 		
+		btCriarAtividade.setTextFill(Color.WHITE);
+		btCriarAtividade.setPrefHeight(20);
 		Util.initButtons(new Button[] {btCriarAtividade});
 		
 		Util.hoverFade(btCriarAtividade);

@@ -76,6 +76,8 @@ public class CriarAtividade {
 	private Label lblDisciplina;
 	
 	private Label lblTurma;
+	
+	private Label lblStatusOperação;
 
 	private ComboBox<String> cbGrupo;
 	
@@ -136,6 +138,9 @@ public class CriarAtividade {
 		
 		initTurmaAtividade();
 		
+		
+		//initStatusOperacao();
+		
 		initGridData();
 
 		initLabelDataPublicacao();
@@ -146,6 +151,16 @@ public class CriarAtividade {
 
 	}
 
+	
+	private void initStatusOperacao() {
+
+		lblStatusOperação = new Label();
+		
+		Util.setFontePadrao(new Label[] { lblStatusOperação }, 15, FontWeight.BOLD);
+
+		gridInterno.add(lblStatusOperação, 0, 10);
+		
+	}
 	private void initTurmaAtividade() {
 		lblTurma = new Label("Turma");
 
@@ -174,17 +189,16 @@ public class CriarAtividade {
 		
 		
 		controller.addDiscComboBox(getProfessor());
-		
+
 
 		cbDisciplina.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println(cbDisciplina.getValue() );
+				System.out.println(cbDisciplina.getValue());
 				Disciplina d = new Disciplina();
 				d.setNome(cbDisciplina.getValue());
-				controller.addTurmasComboBox(d);
-				
+				controller.addTurmasComboBox(d);	
 			}
 		});
 		
@@ -192,10 +206,7 @@ public class CriarAtividade {
 
 	}
 	
-	private void testeEvent(ActionListener a) {
-		System.out.println("Selecionou");
-	}
-	
+
 	
 	private void initAtividadeEmGrupo() {
 
@@ -252,7 +263,7 @@ public class CriarAtividade {
 		borderAgendar.setAlignment(btConcluir, Pos.CENTER);
 		borderAgendar.setMargin(btConcluir, new Insets(10));
 
-		btConcluir.setOnMouseClicked((x) -> controller.criarAtividade());
+		btConcluir.setOnMouseClicked((x) -> lblStatusOperação.setText(controller.addDataAtividade()));
 
 	}
 
@@ -374,7 +385,7 @@ public class CriarAtividade {
 
 		btAgendar.setPrefWidth(borderInterno.getWidth() * 0.23);
 
-		btAgendar.setOnMouseClicked((x) -> mostrarAgendar());
+		
 
 		borderInterno.widthProperty().addListener((x) -> btAgendar.setPrefWidth(borderInterno.getWidth() * 0.23));
 
@@ -387,6 +398,8 @@ public class CriarAtividade {
 		Util.hoverFade(btAgendar);
 
 		gridButtons.add(btAgendar, 0, 0);
+		
+		btAgendar.setOnMouseClicked((x) -> mostrarAgendar());
 	}
 
 	private void initTextArea() {
