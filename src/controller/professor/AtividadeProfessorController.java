@@ -57,10 +57,12 @@ public class AtividadeProfessorController {
 			}
 
 			if (!viewAtividadeProfessor.getCbTurma().getItems()
-					.contains(atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
+					.contains(atividade.getDiscTurmaProf().getTurma().getPeriodo()
+							+"° "+atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
 							+ atividade.getDiscTurmaProf().getTurma().getPeriodo())) {
 
-				viewAtividadeProfessor.getCbTurma().getItems().add(atividade.getDiscTurmaProf().getTurma().getPeriodo()+"° "+ atividade.getDiscTurmaProf().getTurma().getCurso()
+				viewAtividadeProfessor.getCbTurma().getItems().add(atividade.getDiscTurmaProf().getTurma().getPeriodo()
+							+"° "+ atividade.getDiscTurmaProf().getTurma().getCurso()
 						+ " - " + atividade.getDiscTurmaProf().getTurma().getPeriodo());
 
 			}
@@ -103,7 +105,8 @@ public class AtividadeProfessorController {
 
 		for (int i = 0; i < atividades.size(); i++) {
 
-			if (s.equals(atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+			if (s.equals(atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo()
+					+"° "+atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
 					+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())  || s.equals("Todas")) {
 
 				CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
