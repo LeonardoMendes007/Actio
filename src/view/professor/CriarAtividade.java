@@ -1,15 +1,13 @@
 package view.professor;
 
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import controller.professor.CriarAtividadeController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -26,7 +24,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Disciplina;
 import model.Professor;
-import model.Turma;
 import view.Util;
 
 public class CriarAtividade {
@@ -76,29 +73,29 @@ public class CriarAtividade {
 	private GridPane gridData;
 
 	private Label lblAtividadeEmGrupo;
-	
+
 	private Label lblDisciplina;
-	
+
 	private Label lblTurma;
-	
+
 	private Label lblEntrega;
-	
+
 	private Button btBaixarArquivos;
-	
+
 	private Button btAdicionar;
-	
+
 	private Button btRemover;
-	
+
 	private FileChooser chooser = new FileChooser();
-	
+
 	private File file;
-	
+
 	private HBox hboxButtons;
 
 	private ComboBox<String> cbGrupo;
-	
+
 	private ComboBox<String> cbDisciplina;
-	
+
 	private ComboBox<String> cbTurma;
 
 	private CriarAtividadeController controller = new CriarAtividadeController(this);
@@ -149,15 +146,15 @@ public class CriarAtividade {
 		initBorderAgendar();
 
 		initAtividadeEmGrupo();
-		
+
 		initDisciplinaAtividade();
-		
+
 		initTurmaAtividade();
 
 		initLabelEntrega();
-		
+
 		initAddArquivo();
-		
+
 		initGridData();
 
 		initLabelDataPublicacao();
@@ -168,7 +165,6 @@ public class CriarAtividade {
 
 	}
 
-	
 	private void initAddArquivo() {
 
 		btAdicionar = new Button("Adicionar");
@@ -178,7 +174,7 @@ public class CriarAtividade {
 
 		Util.hoverFade(btAdicionar);
 		Util.hoverFade(btRemover);
-		
+
 		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D; -fx-pointer: hand;");
 		btRemover.setStyle(btRemover.getStyle() + "-fx-background-color: #F55B51;");
 
@@ -186,7 +182,12 @@ public class CriarAtividade {
 
 			file = chooser.showOpenDialog(new Stage());
 
-			lblEntrega.setText(file.getName());
+			if(file != null) {
+				
+				lblEntrega.setText(file.getName());
+				
+			}
+			
 
 		});
 
@@ -201,9 +202,8 @@ public class CriarAtividade {
 		hboxButtons.getChildren().addAll(btRemover, btAdicionar);
 		hboxButtons.setMargin(btAdicionar, new Insets(0, 0, 0, 10));
 
-		
 	}
-	
+
 	private void initHbox() {
 
 		hboxButtons = new HBox();
@@ -212,20 +212,19 @@ public class CriarAtividade {
 
 		gridInterno.add(hboxButtons, 0, 5);
 	}
-	
+
 	private void initLabelEntrega() {
 
 		lblEntrega = new Label("Clique para adicionar Arquivo");
 
 		Util.setFontePadrao(new Label[] { lblEntrega }, 23, FontWeight.SEMI_BOLD);
 
-		
 		gridInterno.add(lblEntrega, 0, 4);
-		
+
 		gridInterno.setMargin(lblEntrega, new Insets(15, 0, 15, 0));
 
 	}
-	
+
 	private void initTurmaAtividade() {
 		lblTurma = new Label("Turma");
 
@@ -233,15 +232,13 @@ public class CriarAtividade {
 
 		gridButtons.add(lblTurma, 0, 8);
 		gridButtons.setMargin(lblTurma, new Insets(20, 0, 0, 0));
-		
+
 		cbTurma = new ComboBox<>();
-		
-		
-				
+
 		gridButtons.add(cbTurma, 0, 9);
 
 	}
-	
+
 	private void initDisciplinaAtividade() {
 		lblDisciplina = new Label("Disciplina");
 
@@ -249,30 +246,26 @@ public class CriarAtividade {
 
 		gridButtons.add(lblDisciplina, 0, 6);
 		gridButtons.setMargin(lblDisciplina, new Insets(20, 0, 0, 0));
-		
+
 		cbDisciplina = new ComboBox<>();
-		
-		
+
 		controller.addDiscComboBox(getProfessor());
 
-
 		cbDisciplina.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println(cbDisciplina.getValue());
 				Disciplina d = new Disciplina();
 				d.setNome(cbDisciplina.getValue());
-				controller.addTurmasComboBox(d);	
+				controller.addTurmasComboBox(d);
 			}
 		});
-		
+
 		gridButtons.add(cbDisciplina, 0, 7);
 
 	}
-	
 
-	
 	private void initAtividadeEmGrupo() {
 
 		lblDataEntrega = new Label("Grupo");
@@ -281,11 +274,11 @@ public class CriarAtividade {
 
 		gridButtons.add(lblDataEntrega, 0, 4);
 		gridButtons.setMargin(lblDataEntrega, new Insets(20, 0, 0, 0));
-		
+
 		cbGrupo = new ComboBox<>();
-		
-		cbGrupo.getItems().addAll("Individual" , " Grupo ");
-		
+
+		cbGrupo.getItems().addAll("Individual", " Grupo ");
+
 		gridButtons.add(cbGrupo, 0, 5);
 
 	}
@@ -328,7 +321,15 @@ public class CriarAtividade {
 		borderAgendar.setAlignment(btConcluir, Pos.CENTER);
 		borderAgendar.setMargin(btConcluir, new Insets(10));
 
-		btConcluir.setOnMouseClicked((x) -> controller.addDataAtividade());
+		btConcluir.setOnMouseClicked((x) -> {
+
+			if (file != null) {
+				controller.addDataAtividade();
+			} else {
+				Util.warningDialog("Problema com o arquivo", "Anexe um arquivo", "Por favor anexe o arquivo da tarefa para que seus alunos possam faze-la");
+			}
+
+		});
 
 	}
 
@@ -450,8 +451,6 @@ public class CriarAtividade {
 
 		btAgendar.setPrefWidth(borderInterno.getWidth() * 0.23);
 
-		
-
 		borderInterno.widthProperty().addListener((x) -> btAgendar.setPrefWidth(borderInterno.getWidth() * 0.23));
 
 		btAgendar.setTextFill(Color.WHITE);
@@ -463,7 +462,7 @@ public class CriarAtividade {
 		Util.hoverFade(btAgendar);
 
 		gridButtons.add(btAgendar, 0, 0);
-		
+
 		btAgendar.setOnMouseClicked((x) -> mostrarAgendar());
 	}
 
@@ -639,7 +638,5 @@ public class CriarAtividade {
 	public void setLblEntrega(Label lblEntrega) {
 		this.lblEntrega = lblEntrega;
 	}
-	
-	
 
 }

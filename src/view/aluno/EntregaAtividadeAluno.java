@@ -152,9 +152,7 @@ public class EntregaAtividadeAluno {
 				controller.entregarTarefa();
 
 			} else {
-
-				JOptionPane.showMessageDialog(null, "Por favor anexar um arquivo para o envio");
-
+				Util.warningDialog("Arquivo inexistente ", "Por favor anexar um arquivo para envio", "Anexe um arquivo para que seu professor possa corrigir");
 			}
 
 		});
@@ -181,15 +179,11 @@ public class EntregaAtividadeAluno {
 
 			file = chooser.showOpenDialog(new Stage());
 
-			try {
+			if(file != null){
 
 				lblEntrega.setText(file.getName());
 
-			} catch (NullPointerException e) {
-
-				JOptionPane.showMessageDialog(null, "Por favor envie um arquivo");
-			}
-
+			} 
 		});
 
 		btRemover.setOnMouseClicked((x) -> {

@@ -44,7 +44,7 @@ public class HomeAlunoController {
 		for (Atividade atividade : atividades) {
 			if (atividade.getDtEntrega().after(new Date())) {
 				CardNotificacao not = new CardNotificacao(atividade.getNome(),
-						atividade.getDiscTurmaProf().getDisciplina().getNome(), atividade.getDtEntrega());
+						atividade.getDiscTurmaProf().getDisciplina().getNome(), atividade.getDtPublicacao());
 
 				viewHomeAluno.addCardNotificacao(not);
 			}

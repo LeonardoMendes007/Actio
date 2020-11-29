@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.commons.io.FileUtils;
 
@@ -12,6 +13,7 @@ import model.Aluno;
 import model.Atividade;
 import model.Entrega;
 import persistence.EntregaDao;
+import view.Util;
 import view.aluno.EntregaAtividadeAluno;
 
 public class ControllerEntregaAtividade {
@@ -87,6 +89,13 @@ public class ControllerEntregaAtividade {
 			dao.updateAluno(entrega);
 
 			moverArquivo();
+			
+			GregorianCalendar gc = new GregorianCalendar();
+			
+			gc.setTime(entrega.getDtEntrega());
+			
+			Util.confirmationDialog("Sucesso", "Atulização na entrega concluida", "A sua entrega foi modificada.  \n"
+					+ "você poderá modifica-la até dia " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH)+1) + " - " + gc.get(GregorianCalendar.HOUR_OF_DAY) + ":" + gc.get(GregorianCalendar.MINUTE));
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -112,6 +121,8 @@ public class ControllerEntregaAtividade {
 			dao.insert(entrega);
 
 			moverArquivo();
+			
+			Util.confirmationDialog("Sucesso", "Entrega efetuada com sucesso", "A sua entrega foi feita agora é a hora de rezar");
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
