@@ -53,7 +53,7 @@ public class EntregaDao {
 	}
 
 	public void updateProfessor(Entrega entrega) throws SQLException {
-		String sql = "UPDATE tbEntrega " + "SET nota = ?, comentariosEntrega = ?  WHERE idEntrega = ? ";
+		String sql = "UPDATE tbEntrega " + "SET nota = ?, comentariosEntrega = ?, dtCorrecao = GETDATE()  WHERE idEntrega = ? ";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setDouble(1, entrega.getNota());
