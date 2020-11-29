@@ -162,7 +162,6 @@ public class ControllerEntregaAtividade {
 	public void baixarArquivoAtividade() {
 
 		try {
-			// System.out.println(viewEntregaAtividade.getAtividade().getPathArquivo());
 			Desktop.getDesktop().open(new File(viewEntregaAtividade.getAtividade().getPathArquivo()));
 
 		} catch (IOException e) {

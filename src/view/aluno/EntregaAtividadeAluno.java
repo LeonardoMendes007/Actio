@@ -339,7 +339,9 @@ public class EntregaAtividadeAluno {
 		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
 		lblDataDeEntrega.setTextAlignment(TextAlignment.RIGHT);
 
-		lblNumDeDias = new Label("Faltam " + 2 + " dias");
+		
+		
+		lblNumDeDias = new Label("Faltam " + 5  + " dias");
 		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
 		lblNumDeDias.setTextAlignment(TextAlignment.RIGHT);
 
@@ -379,8 +381,8 @@ public class EntregaAtividadeAluno {
 			Image imagem = new Image(new FileInputStream(path));
 
 			ivGroup = new ImageView(imagem);
-			ivGroup.setFitWidth(80.0);
-			ivGroup.setFitHeight(80.0);
+			ivGroup.setFitWidth(50.0);
+			ivGroup.setFitHeight(50.0);
 			gridSuperior.add(ivGroup, 0, 0);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -391,11 +393,11 @@ public class EntregaAtividadeAluno {
 	private void initDisciplina(String disciplina) {
 
 		lblDisciplina = new Label(disciplina);
-		lblDisciplina.setTextFill(Color.web("#000000", 0.5));
+		lblDisciplina.setTextFill(Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor()));
 
-		Util.setFontePadrao(new Label[] { lblDisciplina }, 20, FontWeight.NORMAL);
+		Util.setFontePadrao(new Label[] { lblDisciplina }, 15, FontWeight.NORMAL);
 
-		lblDisciplina.setPadding(new Insets(2));
+		lblDisciplina.setPadding(new Insets(8));
 		lblDisciplina.setAlignment(Pos.CENTER);
 		lblDisciplina.setStyle(lblDisciplina.getStyle()
 				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px;");

@@ -119,7 +119,7 @@ public class DetalhesDisciplina {
 
 		lblTitulo = new Label(titulo);
 		lblTitulo.setPadding(new Insets(0, 10, 0, 10));
-		lblTitulo.setTextFill(Color.web("#000000", 0.5));
+		lblTitulo.setTextFill(Color.web(disciplina.getCor()));
 		lblTitulo.setAlignment(Pos.CENTER);
 
 		Util.setFontePadrao(new Label[] { lblTitulo }, 25, FontWeight.BOLD);

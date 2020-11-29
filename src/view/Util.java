@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Date;
+
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -119,6 +121,29 @@ public class Util {
      	alert.setContentText(context);
 		alert.showAndWait();
 
+	}
+	
+	
+	public static int diasRestarntes (Date dataEntrega) {
+		
+		
+		Date dataAtual = new Date();
+		
+		long dateDiff = dataEntrega.getTime() - dataAtual.getTime();
+		
+	
+		
+		Long dias = new Long(dateDiff / (1000 * 60 * 60 * 24)); 
+		
+		
+		//java.time.Duration diff = java.time.Duration.between(dataEntrega.toInstant(), dataAtual.toInstant());
+		
+
+		//long diffDias = diff.toDays();
+		
+		//int dias = (int) diffDias;
+		
+		return dias.intValue();
 	}
 
 }

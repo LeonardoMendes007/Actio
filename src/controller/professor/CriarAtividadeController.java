@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import javafx.scene.Node;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -172,6 +173,9 @@ public class CriarAtividadeController {
 			atividade.setDtPublicacao(Date.from(viewCriarAtividade.getDtDataPublicacao().getValue()
 					.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		}
+		
+		System.out.println(atividade.getDtPublicacao());
+		criarAtividade();
 
 	}
 
@@ -205,11 +209,6 @@ public class CriarAtividadeController {
 			TurmaDao turmaDao = new TurmaDao();
 			turmas = turmaDao.findTurmaDisciplina(d);
 
-			/*
-			 * for(Turma t : turmas) {
-			 * viewCriarAtividade.getCbTurma().getItems().add(t.getSemestre() + "° " +
-			 * t.getCurso() + " - " + t.getPeriodo()); }
-			 */
 
 			for (int i = 0; i < turmas.size(); i++) {
 				viewCriarAtividade.getCbTurma().getItems().add(i, turmas.get(i).getSemestre() + "° "
@@ -292,4 +291,6 @@ public class CriarAtividadeController {
 		}
 
 	}
+	
+
 }

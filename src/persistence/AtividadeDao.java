@@ -99,17 +99,19 @@ public class AtividadeDao implements IAtividadeDao{
 				"tbDisciplina.idDisciplina, tbDisciplina.nomeDisciplina, tbDisciplina.corDisciplina, " + 
 				"tbTurma.cursoTurma, tbTurma.periodoTurma, tbTurma.semestreTurma, " + 
 				"tbUsuario.idUsuario, tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario " + 
-				"from tbAtividade\n" + 
+				"from tbAtividade " + 
 				"inner join tbDisciplinaTurmaProfessor on tbAtividade.idDisciplinaTurmaProfessor = tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor " + 
 				"inner join tbDisciplina on tbDisciplinaTurmaProfessor.idDisciplina = tbDisciplina.idDisciplina " + 
 				"inner join tbTurma on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma " + 
 				"inner join tbUsuario on tbDisciplinaTurmaProfessor.idProfessor = tbUsuario.idUsuario " +
-				"where tbDisciplinaTurmaProfessor.idTurma = ?";
+				"where tbDisciplinaTurmaProfessor.idTurma = ? and tbAtividade.dtPublicacaoAtividade <= ? ";
 	
 		
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, turma.getId());
-		
+		Date dtHoje = new Date(System.currentTimeMillis());
+
+		ps.setDate(2, dtHoje);
 		
 		ResultSet rs = ps.executeQuery();
 		
@@ -150,7 +152,7 @@ public class AtividadeDao implements IAtividadeDao{
 			
 			
 			atividades.add(a);
-			System.out.println(a.getNome() + " " + a.getDescricao() + " " + a.getDiscTurmaProf().getDisciplina().getNome());
+			System.out.println("ATIVIDADE HOJE alic"+ a.getNome() + " " + a.getDescricao() + " " + a.getDiscTurmaProf().getDisciplina().getNome());
 			
 		}
 		

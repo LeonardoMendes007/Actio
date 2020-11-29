@@ -217,7 +217,7 @@ public class CriarAtividade {
 
 		lblEntrega = new Label("Clique para adicionar Arquivo");
 
-		Util.setFontePadrao(new Label[] { lblEntrega }, 23, FontWeight.SEMI_BOLD);
+		Util.setFontePadrao(new Label[] { lblEntrega }, 15, FontWeight.SEMI_BOLD);
 
 		gridInterno.add(lblEntrega, 0, 4);
 
