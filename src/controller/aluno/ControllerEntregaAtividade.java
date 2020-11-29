@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 
@@ -49,6 +50,13 @@ public class ControllerEntregaAtividade {
 				viewEntregaAtividade.getLblEntrega().setText(file.getName());
 
 			}
+
+			if (viewEntregaAtividade.getAtividade().getDtEntrega().before(new Date())) {
+				viewEntregaAtividade.getBtAdicionar().setVisible(false);
+				viewEntregaAtividade.getBtRemover().setVisible(false);
+				viewEntregaAtividade.getBtEntregar().setVisible(false);
+			}
+
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -73,7 +81,8 @@ public class ControllerEntregaAtividade {
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getDisciplina().getId() + "//"
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getId() + "//"
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//"
-					+ viewEntregaAtividade.getAluno().getId() + "//" + viewEntregaAtividade.getFile().getName());
+					+ viewEntregaAtividade.getAtividade().getId() + "//" + viewEntregaAtividade.getAluno().getId()
+					+ "//" + viewEntregaAtividade.getFile().getName());
 
 			dao.updateAluno(entrega);
 
@@ -97,7 +106,8 @@ public class ControllerEntregaAtividade {
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getDisciplina().getId() + "//"
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getId() + "//"
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//"
-					+ viewEntregaAtividade.getAluno().getId() + "//" + viewEntregaAtividade.getFile().getName());
+					+ viewEntregaAtividade.getAtividade().getId() + "//" + viewEntregaAtividade.getAluno().getId()
+					+ "//" + viewEntregaAtividade.getFile().getName());
 
 			dao.insert(entrega);
 
@@ -115,11 +125,11 @@ public class ControllerEntregaAtividade {
 
 			File source = new File(viewEntregaAtividade.getFile().getAbsolutePath());
 
-			File dest = new File(
-					"tmp//" + viewEntregaAtividade.getAtividade().getDiscTurmaProf().getDisciplina().getId() + "//"
-							+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getId() + "//"
-							+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//"
-							+ viewEntregaAtividade.getAluno().getId());
+			File dest = new File("tmp//"
+					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getDisciplina().getId() + "//"
+					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getId() + "//"
+					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//"
+					+ viewEntregaAtividade.getAtividade().getId() + "//" + viewEntregaAtividade.getAluno().getId());
 
 			if (dest.exists()) {
 				FileUtils.forceDelete(dest);
@@ -128,7 +138,7 @@ public class ControllerEntregaAtividade {
 			dest = new File("tmp//" + viewEntregaAtividade.getAtividade().getDiscTurmaProf().getDisciplina().getId()
 					+ "//" + viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getId() + "//"
 					+ viewEntregaAtividade.getAtividade().getDiscTurmaProf().getTurma().getPeriodo() + "//"
-					+ viewEntregaAtividade.getAluno().getId());
+					+ viewEntregaAtividade.getAtividade().getId() + "//" + viewEntregaAtividade.getAluno().getId());
 
 			FileUtils.copyFileToDirectory(source, dest);
 
@@ -141,11 +151,11 @@ public class ControllerEntregaAtividade {
 	public void baixarArquivoAtividade() {
 
 		try {
-		//	System.out.println(viewEntregaAtividade.getAtividade().getPathArquivo());
+			// System.out.println(viewEntregaAtividade.getAtividade().getPathArquivo());
 			Desktop.getDesktop().open(new File(viewEntregaAtividade.getAtividade().getPathArquivo()));
 
 		} catch (IOException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}
@@ -156,25 +166,25 @@ public class ControllerEntregaAtividade {
 			EntregaDao dao;
 			try {
 				dao = new EntregaDao();
-				
+
 				File file = new File(entrega.getPathArquivos());
-				
+
 				dao.delete(entrega);
-				
+
 				if (file.exists()) {
 					FileUtils.forceDelete(file);
-					
+
 					viewEntregaAtividade.getLblEntrega().setText("Clique para adicionar um arquivo");
 				}
-				
+
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			
 		}
+		viewEntregaAtividade.getLblEntrega().setText("Clique para adicionar um arquivo");
 
 	}
 

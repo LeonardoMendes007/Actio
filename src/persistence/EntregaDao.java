@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Aluno;
@@ -25,14 +26,15 @@ public class EntregaDao {
 
 	public void insert(Entrega entrega) throws SQLException {
 
-		String sql = "insert into tbEntrega(arquivosEntrega, dtEntrega, nota, idAtividade, idAluno)"
-				+ "	values (?, GETDATE(), ?, ?, ?)";
+		String sql = "insert into tbEntrega(arquivosEntrega, dtEntrega, nota, comentariosEntrega, idAtividade, idAluno)"
+				+ "	values (?, GETDATE(), ?, ?, ?, ?)";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, entrega.getPathArquivos().replaceAll("//", "/"));
 		ps.setFloat(2, 0);
-		ps.setInt(3, entrega.getAtividade().getId());
-		ps.setInt(4, entrega.getAluno().getId());
+		ps.setString(3, entrega.getComentario());
+		ps.setInt(4, entrega.getAtividade().getId());
+		ps.setInt(5, entrega.getAluno().getId());
 
 		ps.execute();
 		ps.close();
@@ -51,11 +53,12 @@ public class EntregaDao {
 	}
 
 	public void updateProfessor(Entrega entrega) throws SQLException {
-		String sql = "UPDATE tbEntrega " + "SET nota = ?  WHERE idEntrega = ? ";
+		String sql = "UPDATE tbEntrega " + "SET nota = ?, comentariosEntrega = ?  WHERE idEntrega = ? ";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setDouble(1, entrega.getNota());
-		ps.setInt(2, entrega.getId());
+		ps.setString(2, entrega.getComentario());
+		ps.setInt(3, entrega.getId());
 
 		ps.execute();
 		ps.close();
@@ -91,18 +94,19 @@ public class EntregaDao {
 			entrega.setId(rs.getInt(1));
 			entrega.setPathArquivos(rs.getString(2));
 			entrega.setDtEntrega(rs.getDate(3));
-			entrega.setNota(rs.getFloat(4));
+			entrega.setNota(rs.getDouble(4));
+			entrega.setComentario(rs.getString(5));
 			entrega.setAluno(aluno);
 
 			Atividade a = new Atividade();
-			a.setId(rs.getInt(7));
-			a.setNome(rs.getString(8));
-			a.setDescricao(rs.getString(9));
-			a.setDtEmissao(rs.getDate(10));
-			a.setDtPublicacao(rs.getDate(11));
-			a.setDtEntrega(rs.getDate(12));
-			a.setPathArquivo(rs.getString(13));
-			a.setGrupo(isGrupo(rs.getInt(14)));
+			a.setId(rs.getInt(8));
+			a.setNome(rs.getString(9));
+			a.setDescricao(rs.getString(10));
+			a.setDtEmissao(rs.getDate(11));
+			a.setDtPublicacao(rs.getDate(12));
+			a.setDtEntrega(rs.getDate(13));
+			a.setPathArquivo(rs.getString(14));
+			a.setGrupo(isGrupo(rs.getInt(15)));
 
 			entrega.setAtividade(a);
 
@@ -135,7 +139,8 @@ public class EntregaDao {
 			entrega.setId(rs.getInt(1));
 			entrega.setPathArquivos(rs.getString(2));
 			entrega.setDtEntrega(rs.getDate(3));
-			entrega.setNota(rs.getFloat(4));
+			entrega.setNota(rs.getDouble(4));
+			entrega.setComentario(rs.getString(5));
 			entrega.setAtividade(atividade);
 			entrega.setAluno(aluno);
 		}
@@ -165,18 +170,19 @@ public class EntregaDao {
 			entrega.setId(rs.getInt(1));
 			entrega.setPathArquivos(rs.getString(2));
 			entrega.setDtEntrega(rs.getDate(3));
-			entrega.setNota(rs.getFloat(4));
+			entrega.setNota(rs.getDouble(4));
+			entrega.setComentario(rs.getString(5));
 			entrega.setAluno(aluno);
 
 			Atividade atividade = new Atividade();
-			atividade.setId(rs.getInt(7));
-			atividade.setNome(rs.getString(8));
-			atividade.setDescricao(rs.getString(9));
-			atividade.setDtEmissao(rs.getDate(10));
-			atividade.setDtPublicacao(rs.getDate(11));
-			atividade.setDtEntrega(rs.getDate(12));
-			atividade.setPathArquivo(rs.getString(13));
-			atividade.setGrupo(isGrupo(rs.getInt(14)));
+			atividade.setId(rs.getInt(8));
+			atividade.setNome(rs.getString(9));
+			atividade.setDescricao(rs.getString(10));
+			atividade.setDtEmissao(rs.getDate(11));
+			atividade.setDtPublicacao(rs.getDate(12));
+			atividade.setDtEntrega(rs.getDate(13));
+			atividade.setPathArquivo(rs.getString(14));
+			atividade.setGrupo(isGrupo(rs.getInt(15)));
 
 			entrega.setAtividade(atividade);
 
@@ -206,7 +212,7 @@ public class EntregaDao {
 			entrega.setId(rs.getInt(1));
 			entrega.setPathArquivos(rs.getString(2));
 			entrega.setDtEntrega(rs.getDate(3));
-			entrega.setNota(rs.getFloat(4));
+			entrega.setNota(rs.getDouble(4));
 
 			Aluno aluno = new Aluno();
 			aluno.setId(rs.getInt("idUsuario"));
@@ -321,4 +327,43 @@ public class EntregaDao {
 		return "0";
 
 	}
+
+//	public List<Entrega> findAllParaCorrigir(Professor professor) {
+//		String sql = "SELECT e.*, a.*  FROM tbEntrega e, tbAtividade a WHERE " + "e.idAtividade = a.idAtividade "
+//				+ "AND e.idAluno = ? " + "AND DATEDIFF(DAY, e.dtEntrega, GETDATE()) < 4 " + "AND e.nota <> 0 ";
+//
+//		PreparedStatement ps = c.prepareStatement(sql);
+//		ps.setInt(1, professor.getId());
+//
+//		ResultSet rs = ps.executeQuery();
+//
+//		List<Entrega> entregas = new ArrayList<>();
+//
+//		while (rs.next()) {
+//
+//			Entrega entrega = new Entrega();
+//			entrega = new Entrega();
+//			entrega.setId(rs.getInt(1));
+//			entrega.setPathArquivos(rs.getString(2));
+//			entrega.setDtEntrega(rs.getDate(3));
+//			entrega.setNota(rs.getFloat(4));
+//			entrega.setAluno(aluno);
+//
+//			Atividade a = new Atividade();
+//			a.setId(rs.getInt(7));
+//			a.setNome(rs.getString(8));
+//			a.setDescricao(rs.getString(9));
+//			a.setDtEmissao(rs.getDate(10));
+//			a.setDtPublicacao(rs.getDate(11));
+//			a.setDtEntrega(rs.getDate(12));
+//			a.setPathArquivo(rs.getString(13));
+//			a.setGrupo(isGrupo(rs.getInt(14)));
+//
+//			entrega.setAtividade(a);
+//
+//			entregas.add(entrega);
+//		}
+//
+//		return entregas;
+//	}
 }

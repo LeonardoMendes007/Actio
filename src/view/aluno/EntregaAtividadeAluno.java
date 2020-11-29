@@ -3,7 +3,11 @@ package view.aluno;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.swing.JOptionPane;
 
 import controller.aluno.ControllerEntregaAtividade;
 import javafx.geometry.HPos;
@@ -147,6 +151,10 @@ public class EntregaAtividadeAluno {
 
 				controller.entregarTarefa();
 
+			} else {
+
+				JOptionPane.showMessageDialog(null, "Por favor anexar um arquivo para o envio");
+
 			}
 
 		});
@@ -165,7 +173,7 @@ public class EntregaAtividadeAluno {
 
 		Util.hoverFade(btAdicionar);
 		Util.hoverFade(btRemover);
-		
+
 		btAdicionar.setStyle(btAdicionar.getStyle() + "-fx-background-color: #91CF2D; -fx-pointer: hand;");
 		btRemover.setStyle(btRemover.getStyle() + "-fx-background-color: #F55B51;");
 
@@ -173,7 +181,14 @@ public class EntregaAtividadeAluno {
 
 			file = chooser.showOpenDialog(new Stage());
 
-			lblEntrega.setText(file.getName());
+			try {
+
+				lblEntrega.setText(file.getName());
+
+			} catch (NullPointerException e) {
+
+				JOptionPane.showMessageDialog(null, "Por favor envie um arquivo");
+			}
 
 		});
 
@@ -213,10 +228,10 @@ public class EntregaAtividadeAluno {
 		btBaixarArquivos.setPrefHeight(40);
 
 		btBaixarArquivos.setOnMouseClicked((x) -> controller.baixarArquivoAtividade());
-		
+
 		gridCentral.add(lblEntrega, 0, 3);
 		gridCentral.add(btBaixarArquivos, 0, 1);
-		
+
 		gridCentral.setMargin(lblEntrega, new Insets(15, 0, 15, 0));
 		gridCentral.setMargin(btBaixarArquivos, new Insets(15, 0, 15, 0));
 
@@ -322,7 +337,11 @@ public class EntregaAtividadeAluno {
 
 	private void initPrazoDeEntrega(Date prazo) {
 
-		lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
+		GregorianCalendar gc = new GregorianCalendar();
+		
+		gc.setTime(prazo);
+
+		lblDataDeEntrega = new Label("Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" +(gc.get(GregorianCalendar.MONTH) + 1));
 		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
 		lblDataDeEntrega.setTextAlignment(TextAlignment.RIGHT);
 
@@ -445,6 +464,18 @@ public class EntregaAtividadeAluno {
 
 	public void setFile(File file) {
 		this.file = file;
+	}
+
+	public Button getBtRemover() {
+		return btRemover;
+	}
+
+	public Button getBtAdicionar() {
+		return btAdicionar;
+	}
+
+	public Button getBtEntregar() {
+		return btEntregar;
 	}
 
 }

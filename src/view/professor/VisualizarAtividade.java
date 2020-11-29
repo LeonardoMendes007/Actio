@@ -39,12 +39,16 @@ public class VisualizarAtividade {
 	private Label lblNota;
 
 	private Button btDelete;
+	
+	private Button btUpdate;
 
 	private GridPane gridTituloBotao;
 
 	private ScrollPane scrollLista;
 
 	private VBox vboxLista;
+	
+	private GridPane gridButto;
 
 	private Atividade atividade;
 
@@ -132,11 +136,13 @@ public class VisualizarAtividade {
 		initLabelNota();
 
 		initButtonDelete();
+		
+		initButtonUpdate();
 	}
 
 	private void initButtonDelete() {
 
-		btDelete = new Button("Deletar");
+		btDelete = new Button("Deletar Atividade");
 		btDelete.setTextFill(Color.WHITE);
 
 		Util.setFontePadrao(new Button[] { btDelete }, 25, FontWeight.BOLD);
@@ -147,11 +153,38 @@ public class VisualizarAtividade {
 		
 		btDelete.setOnMouseClicked((x) -> controller.deleteAtividade());
 		
-		gridInterno.add(btDelete, 0, 4);
+		gridButto = new GridPane();
 		
-		gridInterno.setMargin(btDelete, new Insets(15, 0, 0, 0));
+		gridButto.add(btDelete, 1, 0);
 		
-		gridInterno.setHalignment(btDelete, HPos.RIGHT);
+		gridButto.setAlignment(Pos.CENTER_LEFT);
+		
+		gridButto.setMargin(btDelete, new Insets(0, 0, 0, 15));
+		
+		gridInterno.add(gridButto, 0, 4);
+		
+		gridInterno.setMargin(gridButto, new Insets(15, 0, 0, 0));
+		
+		gridInterno.setHalignment(gridButto, HPos.RIGHT);
+	
+
+	}
+	
+	private void initButtonUpdate() {
+
+		btUpdate = new Button("Atulizar Atividade");
+		btUpdate.setTextFill(Color.WHITE);
+
+		Util.setFontePadrao(new Button[] { btUpdate }, 25, FontWeight.BOLD);
+		btUpdate.setStyle(btUpdate.getStyle()
+				+ "-fx-background-color: #53BDBE; -fx-background-radius: 10px; -fx-border-radius: 10px;");
+
+		Util.hoverFade(btUpdate);
+		
+		btUpdate.setOnMouseClicked((x) -> controller.updateAtividade());
+		
+		gridButto.add(btUpdate, 0, 0);
+		
 	
 
 	}

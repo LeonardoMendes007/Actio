@@ -66,13 +66,21 @@ public class AlunoDao implements IAlunoDao {
 	}
 
 	public List<AlunoEntregaTotalizado> findAllAlunoEntrega(Turma turma, Disciplina disciplina) throws SQLException {
-		String sql = "SELECT u.nomeUsuario + ' ' + u.sobrenomeUsuario, u.emailUsuario, AVG(e.nota) "
-				+ "FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati, tbUsuario u "
-				+ "WHERE  u.idUsuario = e.idAluno " + "AND e.idAluno = a.idAluno "
-				+ "AND d.idDisciplina = dtp.idDisciplina "
-				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
-				+ "AND e.idAtividade = ati.idAtividade " + "AND dtp.idTurma = ? " + "AND dtp.idDisciplina = ? "
-				+ "GROUP BY u.nomeUsuario, u.sobrenomeUsuario, u.emailUsuario";
+		String sql = "select tbUsuario.nomeUsuario + ' ' + tbUsuario.sobrenomeUsuario as nomeAluno, tbUsuario.emailUsuario, "
+				+ "	avg (case when (tbEntrega.nota is null) "
+				+ "	then "
+				+ "		0 "
+				+ "	else "
+				+ "		tbEntrega.nota "
+				+ "	end) as nota "
+				+ "	 from tbUsuario "
+				+ "inner join tbAluno on tbUsuario.idUsuario = tbAluno.idAluno "
+				+ "inner join tbTurma on tbTurma.idTurma = tbAluno.idTurma "
+				+ "inner join tbDisciplinaTurmaProfessor on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma "
+				+ "inner join tbAtividade on tbAtividade.idDisciplinaTurmaProfessor = tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor "
+				+ "left outer join tbEntrega on tbAtividade.idAtividade = tbEntrega.idAtividade "
+				+ "where tbDisciplinaTurmaProfessor.idTurma = ? and tbDisciplinaTurmaProfessor.idDisciplina = ? "
+				+ "group by tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario, tbUsuario.emailUsuario";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 

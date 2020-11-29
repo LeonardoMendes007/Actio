@@ -30,12 +30,34 @@ public class AvaliarAtividadeController {
 			EntregaDao dao = new EntregaDao();
 
 			entrega = dao.findEntregaAtividadeAluno(atividade, aluno);
+			
+			initCampos();
 		} catch (ClassNotFoundException | SQLException e) {
 			
 			System.err.println("Erro ao carregar aluno");
 			
 		}
 
+	}
+
+	private void initCampos() {
+		
+		if(entrega.getNota() == null) {
+			
+			viewAvaliarAtividade.getTfNota().setText(" - ");
+			
+		} else {
+			
+			viewAvaliarAtividade.getTfNota().setText("" + entrega.getNota());
+			
+		}
+		
+		System.out.println(entrega.getComentario());
+		
+		if(entrega.getComentario() != null) {
+			viewAvaliarAtividade.getTaComentarios().setText(entrega.getComentario());
+		}
+		
 	}
 
 	public void baixarArquivoEntrega() {
@@ -64,6 +86,7 @@ public class AvaliarAtividadeController {
 		if (!viewAvaliarAtividade.getTfNota().getText().isEmpty()) {
 
 			entrega.setNota(Double.parseDouble(viewAvaliarAtividade.getTfNota().getText()));
+			entrega.setComentario(viewAvaliarAtividade.getTaComentarios().getText());
 
 			try {
 				EntregaDao dao = new EntregaDao();

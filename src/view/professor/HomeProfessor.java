@@ -46,7 +46,6 @@ public class HomeProfessor {
 
 	private Label lblCalendario;
 
-	
 	private Professor professor;
 	
 	private HomeProfessorController controller = new HomeProfessorController(this);

@@ -36,7 +36,7 @@ public class CardVizualizarAtividade {
 
 		initGridCard();
 
-		initLabels(entrega.getAluno().getNome());
+		initLabels(entrega.getAluno().getNome() + " " + entrega.getAluno().getSobrenome());
 
 		initButton();
 

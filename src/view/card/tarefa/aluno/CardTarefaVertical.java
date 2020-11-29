@@ -3,6 +3,7 @@ package view.card.tarefa.aluno;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -77,8 +78,11 @@ public class CardTarefaVertical implements ICard {
 	
 
 	private void initPrazoDeEntrega(Date prazo) {
-		
-	    lblDataDeEntrega = new Label("Até " + atividade.getDtEntrega().getDay() + "/" + atividade.getDtEntrega().getMonth());
+		GregorianCalendar gc = new GregorianCalendar();
+
+		gc.setTime(prazo);
+
+		lblDataDeEntrega = new Label("Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
 	    lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
 	    
 	    lblNumDeDias = new Label("Faltam " + 2 + " dias");

@@ -65,4 +65,9 @@ public class VisualizarAtividadeController {
 
 	}
 
+	public void updateAtividade() {
+		
+		
+	}
+
 }

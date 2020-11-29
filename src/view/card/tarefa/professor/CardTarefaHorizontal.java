@@ -3,6 +3,7 @@ package view.card.tarefa.professor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -89,8 +90,11 @@ public class CardTarefaHorizontal implements ICard {
 	}
 
 	private void initPrazoDeEntrega(Date prazo) {
+		GregorianCalendar gc = new GregorianCalendar();
 
-		lblDataDeEntrega = new Label("Até " + prazo.getDay() + "/" + prazo.getMonth());
+		gc.setTime(prazo);
+
+		lblDataDeEntrega = new Label("Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
 		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
 
 		lblNumDeDias = new Label("Faltam " + 2 + " dias");
