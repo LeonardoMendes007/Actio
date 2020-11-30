@@ -12,10 +12,10 @@ public class GenericDao implements IGenericDao {
 
 	@Override
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		String hostName = "192.168.99.101";
+		String hostName = "192.168.99.100";
 		String dbName = "bdActio";
 		String user = "sa";
-		String senha = "Alicia@1234";
+		String senha = "Leonardo@321";
 	
 		Class.forName("net.sourceforge.jtds.jdbc.Driver");
 		c = DriverManager.getConnection(String.format(

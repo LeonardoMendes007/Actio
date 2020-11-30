@@ -1,9 +1,9 @@
 package controller.professor;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.FontWeight;
 import model.AlunoEntregaTotalizado;
-import model.AtividadeEntrega;
-import model.Entrega;
 import persistence.AlunoDao;
-import persistence.EntregaDao;
 import view.Util;
 import view.professor.DetalhesTurmaProfessor;
 
@@ -49,7 +46,7 @@ public class DetalhesTurmaController {
 	private Label lblMin;
 
 	private TextField tfMin;
-	
+
 	private AlunoDao dao;
 
 	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -98,48 +95,43 @@ public class DetalhesTurmaController {
 		initMax();
 
 		initMin();
-		
+
 		try {
 			dao = new AlunoDao();
-			
-			buscarElementos();
 
-			calcularAVG();
+			buscarElementos();
 
 			calcularCount();
 
 			calcularMax();
 
 			calcularMin();
-			
+
+			calcularAVG();
+
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Erro ao tentar se conectar com o Banco");
 		}
 
-		
-
 	}
 
 	private void calcularMin() {
-		try {
 
-			tfMin.setText(dao.selectMin(viewDetalhesTurmaProfessor.getTurma(), viewDetalhesTurmaProfessor.getDisciplina()));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (alunoEntregas.size() != 0) {
+			tfMin.setText(
+					alunoEntregas.stream().min((x, y) -> x.getNota().compareTo(y.getNota())).get().getNota() + "");
+		}else {
+			tfMin.setText("" + 0.0);
 		}
-
 	}
 
 	private void calcularMax() {
-		try {
 
-			tfMax.setText(dao.selectMax(viewDetalhesTurmaProfessor.getTurma(), viewDetalhesTurmaProfessor.getDisciplina()));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (alunoEntregas.size() != 0) {
+			tfMax.setText(
+					alunoEntregas.stream().max((x, y) -> y.getNota().compareTo(x.getNota())).get().getNota() + "");
+		}else {
+			tfMax.setText("" + 0.0);
 		}
 
 	}
@@ -165,26 +157,20 @@ public class DetalhesTurmaController {
 
 	private void calcularCount() {
 
-		try {
-			
-			tfSoma.setText(dao.selectCount(viewDetalhesTurmaProfessor.getTurma(), viewDetalhesTurmaProfessor.getDisciplina()));
+		System.err.println(alunoEntregas.stream().count());
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		tfSoma.setText(alunoEntregas.stream().count() + "");
 
 	}
 
 	private void calcularAVG() {
 
-		try {
+		System.out.println();
 
-			tfAVG.setText(dao.selectAVG(viewDetalhesTurmaProfessor.getTurma(), viewDetalhesTurmaProfessor.getDisciplina()));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(alunoEntregas.size() != 0) {
+			tfAVG.setText(alunoEntregas.stream().mapToDouble((x) -> x.getNota()).average().getAsDouble() + "");
+		}else {
+			tfAVG.setText("" + 0.0);
 		}
 
 	}
@@ -221,9 +207,24 @@ public class DetalhesTurmaController {
 
 		try {
 
-			alunoEntregas = dao.findAllAlunoEntrega(viewDetalhesTurmaProfessor.getTurma(), viewDetalhesTurmaProfessor.getDisciplina());
+			alunoEntregas = dao.findAlunoEntrega(viewDetalhesTurmaProfessor.getTurma(),
+					viewDetalhesTurmaProfessor.getDisciplina());
+
+			alunoEntregas.addAll(dao.findAlunoSemEntrega(viewDetalhesTurmaProfessor.getTurma(),
+					viewDetalhesTurmaProfessor.getDisciplina()));
 
 			if (alunoEntregas.size() > 0) {
+
+				for (int i = 0; i < alunoEntregas.size(); i++) {
+					for (int j = i + 1; j < alunoEntregas.size(); j++) {
+
+						if (alunoEntregas.get(i).getEmail().equals(alunoEntregas.get(j).getEmail())) {
+							alunoEntregas.remove(j);
+						}
+					}
+
+				}
+
 				preencherTabela();
 			}
 
@@ -238,7 +239,8 @@ public class DetalhesTurmaController {
 
 		for (AlunoEntregaTotalizado alunoEntrega : alunoEntregas) {
 
-			AlunoEntregaTotalizado aet = new AlunoEntregaTotalizado(alunoEntrega.getAluno(), alunoEntrega.getEmail(), alunoEntrega.getNota());
+			AlunoEntregaTotalizado aet = new AlunoEntregaTotalizado(alunoEntrega.getAluno(), alunoEntrega.getEmail(),
+					alunoEntrega.getNota());
 
 			System.out.println(aet.toString());
 

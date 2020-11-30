@@ -131,8 +131,6 @@ public class Util {
 		
 		long dateDiff = dataEntrega.getTime() - dataAtual.getTime();
 		
-	
-		
 		Long dias = new Long(dateDiff / (1000 * 60 * 60 * 24)); 
 		
 		

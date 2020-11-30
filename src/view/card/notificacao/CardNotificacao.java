@@ -52,7 +52,7 @@ public class CardNotificacao implements ICard {
 
 		gc.setTime(data);
 
-		lblData = new Label(gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1) + " - " + gc.get(GregorianCalendar.HOUR_OF_DAY) + ":" + gc.get(GregorianCalendar.MINUTE));
+		lblData = new Label(gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
 
 		Util.setFontePadrao(new Label[] { lblData }, 10, FontWeight.LIGHT);
 		lblData.setTextFill(Color.web("#000000", 0.5));

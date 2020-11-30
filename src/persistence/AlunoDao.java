@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import model.Aluno;
@@ -65,27 +66,99 @@ public class AlunoDao implements IAlunoDao {
 		return null;
 	}
 
-	public List<AlunoEntregaTotalizado> findAllAlunoEntrega(Turma turma, Disciplina disciplina) throws SQLException {
-		String sql = "select tbUsuario.nomeUsuario + ' ' + tbUsuario.sobrenomeUsuario as nomeAluno, tbUsuario.emailUsuario, "
-				+ "	avg (case when (tbEntrega.nota is null) "
-				+ "	then "
-				+ "		0 "
-				+ "	else "
-				+ "		tbEntrega.nota "
-				+ "	end) as nota "
-				+ "	 from tbUsuario "
-				+ "inner join tbAluno on tbUsuario.idUsuario = tbAluno.idAluno "
-				+ "inner join tbTurma on tbTurma.idTurma = tbAluno.idTurma "
-				+ "inner join tbDisciplinaTurmaProfessor on tbDisciplinaTurmaProfessor.idTurma = tbTurma.idTurma "
-				+ "inner join tbAtividade on tbAtividade.idDisciplinaTurmaProfessor = tbDisciplinaTurmaProfessor.idDisciplinaTurmaProfessor "
-				+ "left outer join tbEntrega on tbAtividade.idAtividade = tbEntrega.idAtividade "
-				+ "where tbDisciplinaTurmaProfessor.idTurma = ? and tbDisciplinaTurmaProfessor.idDisciplina = ? "
-				+ "group by tbUsuario.nomeUsuario, tbUsuario.sobrenomeUsuario, tbUsuario.emailUsuario";
+	public List<AlunoEntregaTotalizado> findAlunoEntrega(Turma turma, Disciplina disciplina) throws SQLException {
+		String sql = "SELECT u.idUsuario,  u.nomeUsuario + ' ' + u.sobrenomeUsuario, u.emailUsuario "
+				+ "FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati, tbUsuario u "
+				+ "WHERE  u.idUsuario = e.idAluno "
+				+ "AND e.idAluno = a.idAluno "
+				+ "AND d.idDisciplina = dtp.idDisciplina "
+				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "AND e.idAtividade = ati.idAtividade "
+				+ "AND dtp.idTurma = ? "
+				+ "AND dtp.idDisciplina = ? "
+				+ "GROUP BY u.nomeUsuario, u.sobrenomeUsuario, u.emailUsuario, u.idUsuario";
 
 		PreparedStatement ps = c.prepareStatement(sql);
 
 		ps.setInt(1, turma.getId());
 		ps.setInt(2, disciplina.getId());
+
+		ResultSet rs = ps.executeQuery();
+
+		List<AlunoEntregaTotalizado> alunoEntregas = new ArrayList<>();
+
+		while (rs.next()) {
+
+			AlunoEntregaTotalizado alunoEntrega = new AlunoEntregaTotalizado();
+			alunoEntrega.setAluno(rs.getString(2));
+			alunoEntrega.setEmail(rs.getString(3));
+			alunoEntrega.setNota((selectSumAluno(rs.getInt(1)) / selectCountAluno(disciplina.getId(), turma.getId())));
+
+			alunoEntregas.add(alunoEntrega);
+
+		}
+
+		return alunoEntregas;
+
+	}
+
+	private Double selectSumAluno(int idAluno) throws SQLException {
+
+		String sql = "SELECT SUM(e.nota) "
+				+ "FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati, tbUsuario u  "
+				+ "WHERE  u.idUsuario = e.idAluno  " + "AND e.idAluno = a.idAluno  "
+				+ "AND d.idDisciplina = dtp.idDisciplina  "
+				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor  "
+				+ "AND e.idAtividade = ati.idAtividade " + "AND e.idAluno = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, idAluno);
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			return rs.getDouble(1);
+		}
+
+		return 0.0;
+	}
+
+	private Integer selectCountAluno(int idDisciplina, int idTurma) throws SQLException {
+
+		String sql = "SELECT DISTINCT COUNT(ati.idAtividade) "
+				+ "FROM tbAtividade ati, tbAluno a, tbDisciplinaTurmaProfessor dtp "
+				+ "WHERE ati.idDisciplinaTurmaProfessor = dtp.idDisciplinaTurmaProfessor "
+				+ "AND dtp.idDisciplina = ? "
+				+ "AND dtp.idTurma = ? "
+				+ "GROUP BY a.idAluno";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setInt(1, idDisciplina);
+		ps.setInt(2, idTurma);
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			return rs.getInt(1);
+		}
+
+		return 0;
+	}
+
+
+	public List<AlunoEntregaTotalizado> findAlunoSemEntrega(Turma turma, Disciplina disciplina) throws SQLException {
+		
+		String sql = "SELECT DISTINCT u.nomeUsuario + ' ' + u.sobrenomeUsuario, u.emailUsuario, 0.0 "
+				+ "FROM  tbUsuario u inner join tbAluno a on u.idUsuario = a.idAluno "
+				+ "inner join tbDisciplinaTurmaProfessor dtp on a.idTurma = dtp.idTurma "
+				+ "inner join tbAtividade ati on dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
+				+ "left join tbEntrega on ati.idAtividade = tbEntrega.idAtividade "
+				+ "where dtp.idDisciplina = ? AND dtp.idTurma = ? ";
+
+		PreparedStatement ps = c.prepareStatement(sql);
+
+		ps.setInt(2, turma.getId());
+		ps.setInt(1, disciplina.getId());
 
 		ResultSet rs = ps.executeQuery();
 
@@ -103,87 +176,6 @@ public class AlunoDao implements IAlunoDao {
 		}
 
 		return alunoEntregas;
-
-	}
-
-	public String selectAVG(Turma turma, Disciplina disciplina) throws SQLException {
-
-		String sql = "SELECT AVG(nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
-				+ "WHERE e.idAluno = a.idAluno " + "AND d.idDisciplina = dtp.idDisciplina "
-				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
-				+ "AND e.idAtividade = ati.idAtividade " + "AND dtp.idTurma = ? " + "AND dtp.idDisciplina = ? ";
-
-		PreparedStatement ps = c.prepareStatement(sql);
-		ps.setInt(1, turma.getId());
-		ps.setInt(2, disciplina.getId());
-
-		ResultSet rs = ps.executeQuery();
-
-		if (rs.next()) {
-			return rs.getDouble(1) + "";
-		}
-
-		return "0";
-	}
-
-	public String selectCount(Turma turma, Disciplina disciplina) throws SQLException {
-		String sql = "SELECT COUNT(a.idAluno) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
-				+ "WHERE e.idAluno = a.idAluno " + "AND d.idDisciplina = dtp.idDisciplina "
-				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
-				+ "AND e.idAtividade = ati.idAtividade " + "AND dtp.idTurma = ? " + "AND dtp.idDisciplina = ? "
-						+ "GROUP BY e.idAluno";
-
-		PreparedStatement ps = c.prepareStatement(sql);
-		ps.setInt(1, turma.getId());
-		ps.setInt(2, disciplina.getId());
-
-		ResultSet rs = ps.executeQuery();
-
-		if (rs.next()) {
-			return rs.getInt(1) + "";
-		}
-
-		return "0";
-	}
-
-	public String selectMax(Turma turma, Disciplina disciplina) throws SQLException {
-		String sql = "SELECT MAX(e.nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
-				+ "WHERE e.idAluno = a.idAluno " + "AND d.idDisciplina = dtp.idDisciplina "
-				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
-				+ "AND e.idAtividade = ati.idAtividade " + "AND dtp.idTurma = ? " + "AND dtp.idDisciplina = ? ";
-
-		PreparedStatement ps = c.prepareStatement(sql);
-		ps.setInt(1, turma.getId());
-		ps.setInt(2, disciplina.getId());
-		
-		ResultSet rs = ps.executeQuery();
-
-		if (rs.next()) {
-			return rs.getDouble(1) + "";
-		}
-
-		return "0";
-	}
-
-	public String selectMin(Turma turma, Disciplina disciplina) throws SQLException {
-		String sql = "SELECT MIN(e.nota) FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati "
-				+ "WHERE e.idAluno = a.idAluno " + "AND d.idDisciplina = dtp.idDisciplina "
-				+ "AND dtp.idDisciplinaTurmaProfessor = ati.idDisciplinaTurmaProfessor "
-				+ "AND e.idAtividade = ati.idAtividade " + "AND dtp.idTurma = ? "
-		+ "AND dtp.idDisciplina = ? ";
-
-
-		PreparedStatement ps = c.prepareStatement(sql);
-		ps.setInt(1, turma.getId());
-		ps.setInt(2, disciplina.getId());
-
-		ResultSet rs = ps.executeQuery();
-
-		if (rs.next()) {
-			return rs.getDouble(1) + "";
-		}
-
-		return "0";
 	}
 
 }

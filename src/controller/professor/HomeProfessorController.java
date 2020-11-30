@@ -31,6 +31,8 @@ public class HomeProfessorController {
 			
 			addCards(atividades);
 			
+			addCorrigir();
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,30 +51,30 @@ public class HomeProfessorController {
 		
 	}
 
-//	private void addCorrigir() {
-//
-//		try {
-//			EntregaDao dao = new EntregaDao();
-//
-//			List<Entrega> entregas = dao.findAllParaCorrigir(viewHomeProfessor.getProfessor());
-//			
-//			for (Entrega entrega : entregas) {
-//
-//				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Para Corrigir", new Date());
-//
-//				viewHomeProfessor.addCardNotificacao(not);
-//					
-//				
-//			}
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
+	private void addCorrigir() {
+
+		try {
+			EntregaDao dao = new EntregaDao();
+
+			List<Entrega> entregas = dao.findAllParaCorrigir(viewHomeProfessor.getProfessor());
+			
+			for (Entrega entrega : entregas) {
+
+				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Para Corrigir", entrega.getDtEntrega());
+
+				viewHomeProfessor.addCardNotificacao(not);
+					
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	
 	
 }

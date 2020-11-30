@@ -93,12 +93,11 @@ public class EntregaAtividadeAluno {
 		this.atividade = atividade;
 
 		this.borderPrincipal = pane;
-
+		
 		clearBorderPrincipal();
 
 		initAtividade();
 
-		controller = new ControllerEntregaAtividade(this, atividade, aluno);
 
 	}
 
@@ -115,7 +114,6 @@ public class EntregaAtividadeAluno {
 		initBorderInterno();
 		initGridSuperior();
 		initCentroCard(atividade.getNome(), atividade.getDescricao());
-		initPrazoDeEntrega(atividade.getDtEntrega());
 		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
 		verificarGroup(atividade.isGrupo());
 
@@ -130,6 +128,12 @@ public class EntregaAtividadeAluno {
 		initButtonEntregar();
 
 		initEventReponsivel();
+		
+		controller = new ControllerEntregaAtividade(this, atividade, aluno);
+		
+		initPrazoDeEntrega(atividade.getDtEntrega());
+		
+		
 
 	}
 
@@ -341,7 +345,7 @@ public class EntregaAtividadeAluno {
 
 		
 		
-		lblNumDeDias = new Label("Faltam " + 5  + " dias");
+		lblNumDeDias = new Label(controller.diferencaData());
 		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
 		lblNumDeDias.setTextAlignment(TextAlignment.RIGHT);
 

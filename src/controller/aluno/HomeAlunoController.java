@@ -42,13 +42,12 @@ public class HomeAlunoController {
 	private void addNotificacoes() {
 
 		for (Atividade atividade : atividades) {
-			if (atividade.getDtEntrega().after(new Date())) {
+			if(atividade.getDtEntrega().after(new Date())) {
 				CardNotificacao not = new CardNotificacao(atividade.getNome(),
 						atividade.getDiscTurmaProf().getDisciplina().getNome(), atividade.getDtPublicacao());
 
 				viewHomeAluno.addCardNotificacao(not);
 			}
-
 		}
 
 		addNotEntrega();
@@ -64,7 +63,7 @@ public class HomeAlunoController {
 			
 			for (Entrega entrega : entregas) {
 
-				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Corrigida", new Date());
+				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Corrigida", entrega.getDtCorrecao());
 
 				viewHomeAluno.addCardNotificacao(not);
 					

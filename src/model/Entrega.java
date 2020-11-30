@@ -9,6 +9,7 @@ public class Entrega {
 	private Date dtEntrega;
 	private Double nota;
 	private String comentario;
+	private Date dtCorrecao;
 	private Atividade atividade;
 	private Aluno aluno;
 
@@ -80,5 +81,15 @@ public class Entrega {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
+
+	public Date getDtCorrecao() {
+		return dtCorrecao;
+	}
+
+	public void setDtCorrecao(Date dtCorrecao) {
+		this.dtCorrecao = dtCorrecao;
+	}
+	
+	
 
 }
