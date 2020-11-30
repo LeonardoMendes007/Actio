@@ -25,7 +25,7 @@ import view.card.ICard;
 public class CardTarefaVertical implements ICard {
 
 	private BorderPane borderPrincipal;
-	
+
 	private BorderPane borderCard;
 
 	private Label lblDisciplina;
@@ -33,7 +33,7 @@ public class CardTarefaVertical implements ICard {
 	private Label lblTitulo;
 
 	private Label lblLegenda;
-	
+
 	private Pane paneGroupEPrazo;
 
 	private Label lblDataDeEntrega;
@@ -41,41 +41,38 @@ public class CardTarefaVertical implements ICard {
 	private Label lblNumDeDias;
 
 	private Color corDisciplina;
-	
+
 	private Atividade atividade;
-	
+
 	private Aluno aluno;
-	
+
 	public CardTarefaVertical(BorderPane pane, Atividade atividade, Aluno aluno) {
-		
 
 		this.aluno = aluno;
-		this.borderPrincipal = pane; 
+		this.borderPrincipal = pane;
 		this.atividade = atividade;
 
 		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
-		
-		
+
 		this.borderCard = new BorderPane();
 		this.borderCard.setPrefSize(280, 150);
-		this.borderCard.setStyle("-fx-background-color: "+atividade.getDiscTurmaProf().getDisciplina().getCor()+" ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
+		this.borderCard.setStyle("-fx-background-color: " + atividade.getDiscTurmaProf().getDisciplina().getCor()
+				+ " ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.borderCard.setPadding(new Insets(5));
 
 		paneGroupEPrazo = new Pane();
 		borderCard.setTop(paneGroupEPrazo);
-		
-		
+
 		initCentroCard(atividade.getNome(), atividade.getDescricao());
 
 		initDisciplina(atividade.getDiscTurmaProf().getDisciplina().getNome());
 
 		verificarGroup(atividade.isGrupo());
-		
+
 		initPrazoDeEntrega(atividade.getDtEntrega());
-		
+
 		initEvent(atividade);
 	}
-	
 
 	private void initPrazoDeEntrega(Date prazo) {
 		GregorianCalendar gc = new GregorianCalendar();
@@ -83,21 +80,20 @@ public class CardTarefaVertical implements ICard {
 		gc.setTime(prazo);
 		gc.add(GregorianCalendar.DAY_OF_MONTH, -1);
 
-		lblDataDeEntrega = new Label("Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
-	    lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
-	    
-	    
-	    lblNumDeDias = new Label("Faltam " +  Util.diasRestarntes(prazo)+ " dias");
+		lblDataDeEntrega = new Label(
+				"Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
+		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
+
+		lblNumDeDias = new Label("Faltam " + Util.diasRestarntes(prazo) + " dias");
 		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
-		
-		
+
 		lblDataDeEntrega.setAlignment(Pos.TOP_RIGHT);
-		
+
 		Util.setFontePadrao(new Label[] { lblDataDeEntrega }, 12, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblNumDeDias }, 12, FontWeight.NORMAL);
 
 		GridPane gridData = new GridPane();
-		
+
 		gridData.add(lblDataDeEntrega, 0, 0);
 		gridData.add(lblNumDeDias, 0, 1);
 		gridData.setLayoutX(190);
@@ -129,15 +125,11 @@ public class CardTarefaVertical implements ICard {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		
 
 	}
 
 	private void initDisciplina(String disciplina) {
 
-
-		
 		lblDisciplina = new Label(disciplina);
 		Util.setFontePadrao(new Label[] { lblDisciplina }, 12, FontWeight.NORMAL);
 
@@ -145,40 +137,38 @@ public class CardTarefaVertical implements ICard {
 		lblDisciplina.setStyle(lblDisciplina.getStyle()
 				+ "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10px; -fx-border-radius: 10px; ");
 
-
 		lblDisciplina.setTextFill(corDisciplina);
 
 		borderCard.setBottom(lblDisciplina);
 		borderCard.setAlignment(lblDisciplina, Pos.CENTER);
 
-	}  
+	}
 
 	private void initCentroCard(String titulo, String legenda) {
 
 		lblTitulo = new Label(titulo);
 		lblTitulo.setTextFill(Color.web("#000000", 0.5));
-		
+
 		lblLegenda = new Label(legenda);
 		lblLegenda.setTextFill(Color.web("#000000", 0.5));
-		
+
 		Util.setFontePadrao(new Label[] { lblTitulo }, 15, FontWeight.BOLD);
 		Util.setFontePadrao(new Label[] { lblLegenda }, 10, FontWeight.LIGHT);
-		
 
 		GridPane gridInterno = new GridPane();
 		gridInterno.add(lblTitulo, 0, 0);
 		gridInterno.add(lblLegenda, 0, 1);
-        gridInterno.setPadding(new Insets(6, 0, 0, 10));
-		
-        borderCard.setCenter(gridInterno);
-        borderCard.setAlignment(gridInterno, Pos.BOTTOM_LEFT);
+		gridInterno.setPadding(new Insets(6, 0, 0, 10));
+
+		borderCard.setCenter(gridInterno);
+		borderCard.setAlignment(gridInterno, Pos.BOTTOM_LEFT);
 	}
 
 	private void initEvent(Atividade atividade) {
 		borderCard.setOnMouseClicked((x) -> {
 
-	        new EntregaAtividadeAluno(atividade, borderPrincipal, aluno);
-			
+			new EntregaAtividadeAluno(atividade, borderPrincipal, aluno);
+
 		});
 
 		Util.hoverFade(borderCard);

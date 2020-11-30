@@ -54,6 +54,7 @@ public class HomeProfessorController {
 	private void addCorrigir() {
 
 		try {
+			
 			EntregaDao dao = new EntregaDao();
 
 			List<Entrega> entregas = dao.findAllParaCorrigir(viewHomeProfessor.getProfessor());

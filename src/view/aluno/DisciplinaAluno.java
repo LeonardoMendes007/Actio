@@ -72,7 +72,6 @@ public class DisciplinaAluno {
 	private void initScrollDisciplina() {
 		
 		scrollDisciplina = new ScrollPane();
-		scrollDisciplina.setPrefSize(2000, 2000);
 		scrollDisciplina.setHbarPolicy(ScrollBarPolicy.NEVER);
 	
 		scrollDisciplina.setStyle("-fx-background-color:transparent;");

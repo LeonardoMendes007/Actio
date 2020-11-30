@@ -198,7 +198,7 @@ public class HomeProfessor {
 
 	private void initLabels() {
 
-		lblAtividade = new Label("Atividades para corrigir");
+		lblAtividade = new Label("Atividades para Corrigir");
 		lblNotificacoes = new Label("Notificações");
 		lblCalendario = new Label("Calendario");
 

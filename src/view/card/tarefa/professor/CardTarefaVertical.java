@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -52,7 +53,7 @@ public class CardTarefaVertical implements ICard {
 		corDisciplina = Color.web(atividade.getDiscTurmaProf().getDisciplina().getCor());
 
 		this.border = new BorderPane();
-		this.border.setPrefSize(280, 150);
+		this.border.setPrefSize(300, 150);
 		this.border.setStyle("-fx-background-color: " + atividade.getDiscTurmaProf().getDisciplina().getCor()
 				+ " ; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-cursor: hand;");
 		this.border.setPadding(new Insets(5));
@@ -93,6 +94,7 @@ public class CardTarefaVertical implements ICard {
 		GridPane gridData = new GridPane();
 
 		gridData.add(lblDataDeEntrega, 0, 0);
+		gridData.setHalignment(lblDataDeEntrega, HPos.RIGHT);
 		gridData.add(lblNumDeDias, 0, 1);
 		gridData.setLayoutX(190);
 		paneGroupEPrazo.getChildren().add(gridData);
