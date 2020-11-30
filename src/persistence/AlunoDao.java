@@ -59,13 +59,7 @@ public class AlunoDao implements IAlunoDao {
 
 		return a;
 	}
-
 	@Override
-	public List<Aluno> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public List<AlunoEntregaTotalizado> findAlunoEntrega(Turma turma, Disciplina disciplina) throws SQLException {
 		String sql = "SELECT u.idUsuario,  u.nomeUsuario + ' ' + u.sobrenomeUsuario, u.emailUsuario "
 				+ "FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati, tbUsuario u "
@@ -101,8 +95,8 @@ public class AlunoDao implements IAlunoDao {
 		return alunoEntregas;
 
 	}
-
-	private Double selectSumAluno(int idAluno) throws SQLException {
+	@Override
+	public Double selectSumAluno(int idAluno) throws SQLException {
 
 		String sql = "SELECT SUM(e.nota) "
 				+ "FROM tbEntrega e, tbAluno a, tbDisciplina d, tbDisciplinaTurmaProfessor dtp, tbAtividade ati, tbUsuario u  "
@@ -122,8 +116,8 @@ public class AlunoDao implements IAlunoDao {
 
 		return 0.0;
 	}
-
-	private Integer selectCountAluno(int idDisciplina, int idTurma) throws SQLException {
+	@Override
+	public Integer selectCountAluno(int idDisciplina, int idTurma) throws SQLException {
 
 		String sql = "SELECT DISTINCT COUNT(ati.idAtividade) "
 				+ "FROM tbAtividade ati, tbAluno a, tbDisciplinaTurmaProfessor dtp "
@@ -145,7 +139,7 @@ public class AlunoDao implements IAlunoDao {
 		return 0;
 	}
 
-
+	@Override
 	public List<AlunoEntregaTotalizado> findAlunoSemEntrega(Turma turma, Disciplina disciplina) throws SQLException {
 		
 		String sql = "SELECT DISTINCT u.nomeUsuario + ' ' + u.sobrenomeUsuario, u.emailUsuario, 0.0 "

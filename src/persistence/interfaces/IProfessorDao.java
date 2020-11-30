@@ -9,6 +9,5 @@ import model.Usuario;
 public interface IProfessorDao {
 	
 	public Professor findProfessor(Professor professor) throws SQLException;
-	public List<Professor> findAll() throws SQLException;
 
 }

@@ -8,6 +8,7 @@ import model.Atividade;
 import model.Entrega;
 import persistence.AtividadeDao;
 import persistence.EntregaDao;
+import persistence.interfaces.IEntregaDao;
 import view.aluno.HomeAluno;
 import view.card.notificacao.CardNotificacao;
 import view.card.tarefa.aluno.CardTarefaVertical;

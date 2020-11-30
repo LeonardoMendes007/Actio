@@ -16,8 +16,6 @@ public interface IAtividadeDao {
 	public Atividade findAtividade(Atividade atividade) throws SQLException;
 	public List<Atividade> findAtividadeTurma(Turma turma) throws SQLException;
 	public List<Atividade> findAtividadeTurmaProfessor(Professor professor) throws SQLException;
-
-//	public List<Atividade> findAtividadeDisciplina
 	public List<Atividade> findAll() throws SQLException;
 	
 }

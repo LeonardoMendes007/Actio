@@ -50,7 +50,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 		return disciplina;
 	}
 
-	
+	@Override
 	public List<DisciplinaTurmaProfessor> findDisciplinaAluno(Aluno a) throws SQLException{
 		
 		
@@ -102,7 +102,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 		return disciplinas;
 	}
 	
-	
+	@Override
 	public List<DisciplinaTurmaProfessor> findTurmaDisciplinaProfessor(Professor p) throws SQLException{
 		
 		
@@ -148,7 +148,7 @@ public class DisciplinaDao implements IDisciplinaDao{
 		return disciplinas;
 	}
 	
-	
+	@Override
 	public List<Disciplina> findDisciplinaProfessor(Professor p) throws SQLException{
 		
 		
@@ -179,10 +179,6 @@ public class DisciplinaDao implements IDisciplinaDao{
 		
 		return disciplinas;
 	}
-	@Override
-	public List<Disciplina> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

@@ -13,9 +13,10 @@ import model.Atividade;
 import model.Disciplina;
 import model.Entrega;
 import model.Professor;
+import persistence.interfaces.IEntregaDao;
 import persistence.interfaces.IGenericDao;
 
-public class EntregaDao {
+public class EntregaDao implements IEntregaDao {
 
 	private Connection c;
 
@@ -119,7 +120,7 @@ public class EntregaDao {
 
 	}
 
-	private boolean isGrupo(int tipo) {
+	public boolean isGrupo(int tipo) {
 		return tipo == 1;
 	}
 

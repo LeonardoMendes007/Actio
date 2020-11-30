@@ -12,9 +12,10 @@ import model.Atividade;
 import model.Disciplina;
 import model.DisciplinaTurmaProfessor;
 import model.Turma;
+import persistence.interfaces.IDisciplinaProfessorDao;
 import persistence.interfaces.IGenericDao;
 
-public class DisciplinaTurmaProfessorDao {
+public class DisciplinaTurmaProfessorDao implements IDisciplinaProfessorDao {
 
 private Connection c;
 	
@@ -24,7 +25,7 @@ private Connection c;
 	    c = gDao.getConnection();
 	}
 	
-	
+	@Override
 	public void inserir(int idDisc, int idTurma, int idProfessor) throws SQLException {
 		String sql = "insert into tbDisciplinaTurmaProfessor (idDisciplina, idTurma, idProfessor) "  
 				+ " VALUES (?,?,?)";
@@ -38,7 +39,7 @@ private Connection c;
 		ps.close();
 	}
 	
-	
+	@Override
 	public DisciplinaTurmaProfessor buscaDisciplinaTurmaProfessor(int idDisc, int idTurma, int idProfessor) throws SQLException{
 		
 		String sql = "SELECT idDisciplinaTurmaProfessor from tbDisciplinaTurmaProfessor where idDisciplina = ? and idTurma = ? and idProfessor = ?";

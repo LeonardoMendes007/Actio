@@ -107,10 +107,5 @@ public class TurmaDao implements ITurmaDao{
 	
 	return t;
 	}
-	@Override
-	public List<Turma> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

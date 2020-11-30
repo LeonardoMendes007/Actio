@@ -50,10 +50,5 @@ public class UsuarioDao implements IUsuarioDao{
 		return usuario;
 	}
 
-	@Override
-	public List<Usuario> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
