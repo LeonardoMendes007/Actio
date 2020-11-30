@@ -97,24 +97,11 @@ public class LoginController {
 				login.setErro("Email ou senha inválido");
 			}
 			
-			criarLog(email, senha);
-			
 		} catch (ClassNotFoundException | SQLException e) {
 			login.setErro(e.getMessage());
 		} 
 		
 	}
 
-	private void criarLog(String email, String senha) {
-	
-
-		try (BufferedWriter wt = new BufferedWriter(new FileWriter(new File("log.txt")))){
-			 wt.write(email);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
 }

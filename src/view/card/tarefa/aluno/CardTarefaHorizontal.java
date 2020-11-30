@@ -94,6 +94,7 @@ public class CardTarefaHorizontal implements ICard {
 		GregorianCalendar gc = new GregorianCalendar();
 
 		gc.setTime(prazo);
+		gc.add(GregorianCalendar.DAY_OF_MONTH, -1);
 
 		lblDataDeEntrega = new Label("Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
 		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
