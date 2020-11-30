@@ -8,7 +8,10 @@ import model.Entrega;
 import persistence.AlunoDao;
 import persistence.AtividadeDao;
 import persistence.EntregaDao;
+import view.aluno.AtividadeAluno;
 import view.card.tarefa.professor.CardVizualizarAtividade;
+import view.professor.CriarAtividade;
+import view.professor.EditarAtividade;
 import view.professor.HomeProfessor;
 import view.professor.VisualizarAtividade;
 
@@ -67,7 +70,8 @@ public class VisualizarAtividadeController {
 
 	public void updateAtividade() {
 		
-		
+		viewVisualizar.getBorderPrincipal().getChildren().clear();
+		new EditarAtividade(viewVisualizar.getBorderPrincipal(), viewVisualizar.getAtividade());
 	}
 
 }

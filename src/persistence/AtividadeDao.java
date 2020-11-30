@@ -63,7 +63,34 @@ public class AtividadeDao implements IAtividadeDao {
 
 	@Override
 	public void update(Atividade atividade) throws SQLException {
+		String sql = "UPDATE tbAtividade "
+				+ "SET nomeAtividade = ?,  descAtividade = ?, dtEmissaoAtividade = ?, dtPublicacaoAtividade = ?, "
+				+ " dtFechamentoAtividade = ?, pathArquivo = ?, idTipoAtividade = ?, idDisciplinaTurmaProfessor = ? " 
+				+ "WHERE idAtividade = ? ";
 
+		PreparedStatement ps = c.prepareStatement(sql);
+		ps.setString(1, atividade.getNome());
+		ps.setString(2, atividade.getDescricao());
+		
+		Date dtEmissaoSql = new Date(atividade.getDtEmissao().getTime());
+		Date dtPublicacaoSql = new Date(atividade.getDtPublicacao().getTime());
+		Date dtEntregaSql = new Date(atividade.getDtEntrega().getTime());
+		ps.setDate(3, dtEmissaoSql);
+		ps.setDate(4, dtPublicacaoSql);
+		ps.setDate(5, dtEntregaSql);
+		ps.setString(6, atividade.getPathArquivo());
+		if(atividade.isGrupo() == true) {
+			ps.setInt(7, 2);
+		}else {
+			ps.setInt(7, 1);
+			
+		}
+		ps.setInt(8, atividade.getDiscTurmaProf().getId());
+		ps.setInt(9, atividade.getId());
+		
+		System.out.println("Atividade atualizada com sucesso");
+		ps.execute();
+		ps.close();
 	}
 
 	@Override
