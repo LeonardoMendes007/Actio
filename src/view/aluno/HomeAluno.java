@@ -1,5 +1,6 @@
 package view.aluno;
 
+import java.io.IOException;
 import java.util.List;
 
 import controller.aluno.HomeAlunoController;
@@ -8,6 +9,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -204,12 +212,41 @@ public class HomeAluno {
 
 		lblAtividade = new Label("Atividades");
 		lblNotificacoes = new Label("Notificações");
-		lblCalendario = new Label("Calendario");
+		
+		
+		lblCalendario = new Label();
+		
+		
+		Image imagem = null;
+		ImageView fundoCalendario = null;
+		
+		try {
+			imagem = new Image(getClass().getClassLoader().getResource("Calendario2.png").openStream());
+			fundoCalendario = new ImageView(imagem);
+			fundoCalendario.setFitWidth(300);
+			fundoCalendario.setFitHeight(300);
 
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		BackgroundImage backgroundimage = new BackgroundImage(imagem, BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+				new BackgroundSize(100, 100, true, true, true, true));
+
+		Background background = new Background(backgroundimage);
+		 
+
+		
+		
 		lblAtividade.setPadding(new Insets(0, 0, 0, 10));
 		lblNotificacoes.setPadding(new Insets(0, 0, 0, 10));
-		lblCalendario.setPadding(new Insets(0, 0, 0, 10));
-
+		
+		lblCalendario.setBackground(background);
+		lblCalendario.setPadding(new Insets(0, 0, 0, 100));
+		
 		setFontePadrao(new Label[] { lblAtividade, lblNotificacoes, lblCalendario }, 25);
 
 		gridAtividades.add(lblAtividade, 0, 0);

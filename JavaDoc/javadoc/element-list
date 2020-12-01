@@ -1,0 +1,16 @@
+controller
+controller.aluno
+controller.interfaces
+controller.professor
+model
+persistence
+persistence.interfaces
+view
+view.aluno
+view.card
+view.card.disciplina
+view.card.notificacao
+view.card.tarefa.aluno
+view.card.tarefa.professor
+view.card.turma
+view.professor
