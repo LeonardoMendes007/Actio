@@ -99,8 +99,17 @@ public class CardTarefaHorizontal implements ICard {
 		lblDataDeEntrega = new Label("Até " + gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" + (gc.get(GregorianCalendar.MONTH) + 1));
 		lblDataDeEntrega.setTextFill(Color.web("#FFFFFF"));
 
-		lblNumDeDias = new Label("Faltam " + Util.diasRestarntes(prazo) + " dias");
-		lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
+		if(Util.diasRestarntes(prazo) < 0) {
+			lblNumDeDias = new Label("Vencido");
+			lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
+		}else if(Util.diasRestarntes(prazo) > 0){
+			lblNumDeDias = new Label("Faltam " + Util.diasRestarntes(prazo) + " dias");
+			lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
+		}else {
+			lblNumDeDias = new Label("Hoje");
+			lblNumDeDias.setTextFill(Color.web("#FFFFFF"));
+		}
+		
 
 		lblDataDeEntrega.setAlignment(Pos.CENTER);
 		lblNumDeDias.setAlignment(Pos.CENTER);

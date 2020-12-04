@@ -43,7 +43,7 @@ public class HomeAlunoController {
 	private void addNotificacoes() {
 
 		for (Atividade atividade : atividades) {
-			if(atividade.getDtEntrega().after(new Date())) {
+			if (atividade.getDtEntrega().after(new Date())) {
 				CardNotificacao not = new CardNotificacao(atividade.getNome(),
 						atividade.getDiscTurmaProf().getDisciplina().getNome(), atividade.getDtPublicacao());
 
@@ -61,14 +61,14 @@ public class HomeAlunoController {
 			EntregaDao dao = new EntregaDao();
 
 			List<Entrega> entregas = dao.findAllEntregaAluno(viewHomeAluno.getAluno());
-			
+
 			for (Entrega entrega : entregas) {
 
-				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Corrigida", entrega.getDtCorrecao());
+				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Corrigida",
+						entrega.getDtCorrecao());
 
 				viewHomeAluno.addCardNotificacao(not);
-					
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -83,10 +83,12 @@ public class HomeAlunoController {
 	private void addCards() {
 
 		for (Atividade atividade : atividades) {
-			CardTarefaVertical card = new CardTarefaVertical(viewHomeAluno.getBorderPrincipal(), atividade,
-					viewHomeAluno.getAluno());
+			if (atividade.getDtEntrega().after(new Date()) || atividade.getDtEntrega().equals(new Date())) {
+				CardTarefaVertical card = new CardTarefaVertical(viewHomeAluno.getBorderPrincipal(), atividade,
+						viewHomeAluno.getAluno());
 
-			viewHomeAluno.addCardAtividade(card);
+				viewHomeAluno.addCardAtividade(card);
+			}
 
 		}
 

@@ -131,7 +131,7 @@ public class AtividadeAluno {
 		cbPessoas = new ComboBox<>();
 		cbDisciplina = new ComboBox<>();
 
-		cbStatus.getItems().addAll("Aberto", "Fechado", "Todas");
+		cbStatus.getItems().addAll("Aberto", "Fechado");
 		cbPessoas.getItems().addAll("Individual", "Grupo", "Todas");
 
 		gridFiltro.add(cbStatus, 1, 1);

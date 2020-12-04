@@ -206,6 +206,7 @@ public class CriarAtividadeController {
 
 	public void addTurmasComboBox(Disciplina d) {
 		try {
+			viewCriarAtividade.getCbTurma().getItems().clear();
 			TurmaDao turmaDao = new TurmaDao();
 			turmas = turmaDao.findTurmaDisciplina(d);
 
@@ -261,7 +262,7 @@ public class CriarAtividadeController {
 
 			dest = new File(
 					"tmp//" + atividade.getDiscTurmaProf().getId() + "//" + viewCriarAtividade.getDtEntrega().getValue()
-							+ "//" + viewCriarAtividade.getTfAtividade().getText());
+							+ "//" + viewCriarAtividade.getTfAtividade().getText().trim());
 
 			FileUtils.copyFileToDirectory(source, dest);
 

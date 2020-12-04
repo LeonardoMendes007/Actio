@@ -1,20 +1,28 @@
 package view.professor;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import controller.professor.HomeProfessorController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.Professor;
 import view.card.ICard;
-import view.card.turma.CardTurma;
 
 public class HomeProfessor {
 
@@ -198,21 +206,47 @@ public class HomeProfessor {
 
 	private void initLabels() {
 
-		lblAtividade = new Label("Atividades para Corrigir");
-		lblNotificacoes = new Label("Notificações");
-		lblCalendario = new Label("Calendario");
+        lblAtividade = new Label("Atividades para Corrigir");
+        lblNotificacoes = new Label("Notificações");
 
-		lblAtividade.setPadding(new Insets(0, 0, 0, 10));
-		lblNotificacoes.setPadding(new Insets(0, 0, 0, 10));
-		lblCalendario.setPadding(new Insets(0, 0, 0, 10));
 
-		setFontePadrao(new Label[] { lblAtividade, lblNotificacoes, lblCalendario }, 25);
+        lblCalendario = new Label();
+        lblCalendario.setPrefWidth(300);
+        lblCalendario.setPrefHeight(300);
 
-		gridAtividades.add(lblAtividade, 0, 0);
-		gridNotificacoes.add(lblNotificacoes, 0, 0);
-		gridCalendario.add(lblCalendario, 0, 0);
+        Image imagem = null;
+        ImageView fundoCalendario = null;
 
-	}
+        try {
+            imagem = new Image(new FileInputStream("src\\view\\img\\Calendario2.png"));
+            fundoCalendario = new ImageView(imagem);
+            fundoCalendario.setFitWidth(300);
+            fundoCalendario.setFitHeight(300);
+
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        BackgroundImage backgroundimage = new BackgroundImage(imagem, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(300, 300, true, true, true, true));
+
+        Background background = new Background(backgroundimage);
+
+        lblAtividade.setPadding(new Insets(0, 0, 0, 10));
+        lblNotificacoes.setPadding(new Insets(0, 0, 0, 10));
+
+        lblCalendario.setBackground(background);
+        lblCalendario.setPadding(new Insets(0, 0, 0, 50));
+        setFontePadrao(new Label[] { lblAtividade, lblNotificacoes, lblCalendario }, 25);
+
+        gridAtividades.add(lblAtividade, 0, 0);
+        gridNotificacoes.add(lblNotificacoes, 0, 0);
+        gridCalendario.add(lblCalendario, 0, 0);
+
+    }
 
 	private void setFontePadrao(Node[] texts, int tamanho) {
 

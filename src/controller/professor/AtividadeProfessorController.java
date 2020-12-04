@@ -1,6 +1,7 @@
 package controller.professor;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import model.Atividade;
@@ -57,13 +58,14 @@ public class AtividadeProfessorController {
 			}
 
 			if (!viewAtividadeProfessor.getCbTurma().getItems()
-					.contains(atividade.getDiscTurmaProf().getTurma().getSemestre()
-							+"° "+atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
+					.contains(atividade.getDiscTurmaProf().getTurma().getSemestre() + "° "
+							+ atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
 							+ atividade.getDiscTurmaProf().getTurma().getPeriodo())) {
 
-				viewAtividadeProfessor.getCbTurma().getItems().add(atividade.getDiscTurmaProf().getTurma().getSemestre()
-							+"° "+ atividade.getDiscTurmaProf().getTurma().getCurso()
-						+ " - " + atividade.getDiscTurmaProf().getTurma().getPeriodo());
+				viewAtividadeProfessor.getCbTurma().getItems()
+						.add(atividade.getDiscTurmaProf().getTurma().getSemestre() + "° "
+								+ atividade.getDiscTurmaProf().getTurma().getCurso() + " - "
+								+ atividade.getDiscTurmaProf().getTurma().getPeriodo());
 
 			}
 		}
@@ -83,96 +85,158 @@ public class AtividadeProfessorController {
 
 	}
 
-
 	public void filtroAtividades(String status, String disciplina, String turma) {
 		viewAtividadeProfessor.clearCardAtvidade();
 
 		for (int i = 0; i < atividades.size(); i++) {
 
-			//Sem validação de status
-			if(status == null) {
-				
-				if(disciplina == null) {
-					
-					if(turma == null) {
-						CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
-								atividades.get(i));
+			// Sem validação de status
+			if (status == null) {
+
+				if (disciplina == null) {
+
+					if (turma == null) {
+						CardTarefaHorizontal card = new CardTarefaHorizontal(
+								viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
 
 						viewAtividadeProfessor.addCardAtividade(card);
-					}else {
-						//Somente turma
-						if (turma.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre()
-								+"° "+atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
-								+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())  || turma.equals("Todas")) {
+					} else {
+						// Somente turma
+						if (turma
+								.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre() + "° "
+										+ atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+										+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())
+								|| turma.equals("Todas")) {
 
-							CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
-									atividades.get(i));
+							CardTarefaHorizontal card = new CardTarefaHorizontal(
+									viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
 
 							viewAtividadeProfessor.addCardAtividade(card);
 						}
 					}
 
-				
-				}else {
-				
-					if (disciplina.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome()) || disciplina.equals("Todas")) {
+				} else {
 					
-						if (turma.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre()
-								+"° "+atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
-								+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())  || turma.equals("Todas")) {
+					if (disciplina.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome())
+							|| disciplina.equals("Todas")) {
 
-							CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
-								atividades.get(i));
-
-							viewAtividadeProfessor.addCardAtividade(card);
-						}
-					}
-				}
-			}else {
-				//Com validacao de status
-				if (atividades.get(i).getDtEntrega().after(atividades.get(i).getDtEmissao())) {
-				
-					if(disciplina == null) {
-						
-						if(turma == null) {
-							CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
-									atividades.get(i));
+						if (turma == null) {
+							CardTarefaHorizontal card = new CardTarefaHorizontal(
+									viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
 
 							viewAtividadeProfessor.addCardAtividade(card);
-						}else {
-							//Somente turma
-							if (turma.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre()
-									+"° "+atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
-									+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())  || turma.equals("Todas")) {
+						} else {
+							// Somente turma
+							if (turma
+									.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre() + "° "
+											+ atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+											+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())
+									|| turma.equals("Todas")) {
 
-								CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
-										atividades.get(i));
+								CardTarefaHorizontal card = new CardTarefaHorizontal(
+										viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
 
 								viewAtividadeProfessor.addCardAtividade(card);
 							}
 						}
+					}
+				}
+			} else {
+				// Com validacao de status
+				if (status.equals("Aberto")) {
 
-					
-					}else {
-					
-						if (disciplina.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome()) || disciplina.equals("Todas")) {
-						
-							if (turma.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre()
-									+"° "+atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
-									+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())  || turma.equals("Todas")) {
+					if (atividades.get(i).getDtEntrega().after(new Date())) {
 
-								CardTarefaHorizontal card = new CardTarefaHorizontal(viewAtividadeProfessor.getBorderPrincipal(),
-									atividades.get(i));
+						if (disciplina == null) {
+
+							if (turma == null) {
+								CardTarefaHorizontal card = new CardTarefaHorizontal(
+										viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
 
 								viewAtividadeProfessor.addCardAtividade(card);
+							} else {
+								// Somente turma
+								if (turma
+										.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre() + "° "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())
+										|| turma.equals("Todas")) {
+
+									CardTarefaHorizontal card = new CardTarefaHorizontal(
+											viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
+
+									viewAtividadeProfessor.addCardAtividade(card);
+								}
+							}
+
+						} else {
+
+							if (disciplina.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome())
+									|| disciplina.equals("Todas")) {
+
+								if (turma
+										.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre() + "° "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())
+										|| turma.equals("Todas")) {
+
+									CardTarefaHorizontal card = new CardTarefaHorizontal(
+											viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
+
+									viewAtividadeProfessor.addCardAtividade(card);
+								}
+							}
+						}
+					}
+
+				} else {
+					if (atividades.get(i).getDtEntrega().before(new Date())) {
+						if (disciplina == null) {
+
+							if (turma == null) {
+								CardTarefaHorizontal card = new CardTarefaHorizontal(
+										viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
+
+								viewAtividadeProfessor.addCardAtividade(card);
+							} else {
+								// Somente turma
+								if (turma
+										.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre() + "° "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())
+										|| turma.equals("Todas")) {
+
+									CardTarefaHorizontal card = new CardTarefaHorizontal(
+											viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
+
+									viewAtividadeProfessor.addCardAtividade(card);
+								}
+							}
+
+						} else {
+
+							if (disciplina.equals(atividades.get(i).getDiscTurmaProf().getDisciplina().getNome())
+									|| disciplina.equals("Todas")) {
+
+								if (turma
+										.equals(atividades.get(i).getDiscTurmaProf().getTurma().getSemestre() + "° "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getCurso() + " - "
+												+ atividades.get(i).getDiscTurmaProf().getTurma().getPeriodo())
+										|| turma.equals("Todas")) {
+
+									CardTarefaHorizontal card = new CardTarefaHorizontal(
+											viewAtividadeProfessor.getBorderPrincipal(), atividades.get(i));
+
+									viewAtividadeProfessor.addCardAtividade(card);
+								}
 							}
 						}
 					}
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 }

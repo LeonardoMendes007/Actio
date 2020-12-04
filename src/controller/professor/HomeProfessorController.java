@@ -1,6 +1,5 @@
 package controller.professor;
 
-
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -22,50 +21,49 @@ public class HomeProfessorController {
 	}
 
 	public void verificarCards() {
-		
+
 		try {
 			AtividadeDao atividadeDao = new AtividadeDao();
-			
+
 			List<Atividade> atividades = atividadeDao.findAtividadeTurmaProfessor(viewHomeProfessor.getProfessor());
 
-			
 			addCards(atividades);
-			
+
 			addCorrigir();
-			
+
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	private void addCards(List<Atividade> atividades) {
-		
+
 		for (Atividade atividade : atividades) {
-			CardTarefaVertical card = new CardTarefaVertical(viewHomeProfessor.getBorderPrincipal(), atividade);
-			
-			viewHomeProfessor.addCardAtividade(card);
-			
-			
+			if (atividade.getDtEntrega().before(new Date())) {
+				CardTarefaVertical card = new CardTarefaVertical(viewHomeProfessor.getBorderPrincipal(), atividade);
+
+				viewHomeProfessor.addCardAtividade(card);
+			}
 		}
-		
+
 	}
 
 	private void addCorrigir() {
 
 		try {
-			
+
 			EntregaDao dao = new EntregaDao();
 
 			List<Entrega> entregas = dao.findAllParaCorrigir(viewHomeProfessor.getProfessor());
-			
+
 			for (Entrega entrega : entregas) {
 
-				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Para Corrigir", entrega.getDtEntrega());
+				CardNotificacao not = new CardNotificacao(entrega.getAtividade().getNome(), "Tarefa Para Corrigir",
+						entrega.getDtEntrega());
 
 				viewHomeProfessor.addCardNotificacao(not);
-					
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -76,7 +74,5 @@ public class HomeProfessorController {
 		}
 
 	}
-	
-	
-}
 
+}
